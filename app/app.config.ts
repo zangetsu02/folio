@@ -3,20 +3,21 @@ export default defineAppConfig({
     meetingLink: 'https://todo.com',
   },
   profile: {
-    email: 'christian.palladini2@gmail.com',
+    email: 'hello@christianpalladini.me',
     phone: '(+33) 6 21 56 22 18',
-    pictureDark: 'https://media.licdn.com/dms/image/v2/C4D03AQFtSgjLZrGXVQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1662145465629?e=1755129600&v=beta&t=A8ec7iRNhZyCTd1HASogkeM0YULCIQ6HJg80HETlAag',
-    pictureLight: 'https://media.licdn.com/dms/image/v2/C4D03AQFtSgjLZrGXVQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1662145465629?e=1755129600&v=beta&t=A8ec7iRNhZyCTd1HASogkeM0YULCIQ6HJg80HETlAag',
+    pictureDark: 'https://avatars.githubusercontent.com/zangetsu02',
+    pictureLight: 'https://avatars.githubusercontent.com/zangetsu02',
   },
   seo: {
     title: 'Christian Palladini',
-    description: 'Frontend Architect, Designer & OSS Contributor based in Rome.',
+    description:
+      'Frontend Architect, Designer & OSS Contributor based in Rome.',
     url: 'https://christianpalladini.me',
     lang: 'en',
   },
   socials: {
     github: 'https://github.com/zangetsu02',
-    twitter: 'https://x.com/c_palladini',
+    twitter: 'https://x.com/_zangetsu02',
     linkedin: 'https://www.linkedin.com/in/christian-palladini/',
   },
   link: [
@@ -41,10 +42,6 @@ export default defineAppConfig({
       type: 'image/png',
       sizes: '16x16',
       href: '/favicon-16x16.png',
-    },
-    {
-      rel: 'manifest',
-      href: '/site.webmanifest',
     },
   ],
   ui: {
