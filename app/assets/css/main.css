@@ -4,8 +4,8 @@
 @import "./animations.css";
 
 @theme static {
-  --font-serif: "Newsreader", serif;
-  --font-sans: "Geist", sans-serif;
+  --font-serif: "PP Neue Montreal", serif;
+  --font-sans: "Geist Mono", sans-serif;
   --font-mono: "Geist Mono", sans-serif;
 }
 
@@ -13,13 +13,13 @@
   scrollbar-color: var(--ui-border) transparent;
   scrollbar-width: thin;
 
-  --ui-primary: rgb(40, 83, 255) !important;
-  --ui-bg: rgb(248, 243, 238);
-  --ui-radius: 0
+  --ui-primary: rgb(21 93 252) !important;
+  --ui-bg: rgb(251 249 250);
+  --ui-radius: 0;
 }
 
 .dark {
-  --ui-primary: rgb(8, 73, 236) !important;
+  --ui-primary: rgb(21 93 252) !important;
   --ui-bg: rgb(2, 2, 2);
 }
 
@@ -33,15 +33,19 @@
   }
 
   .no-link {
-    @apply text-muted! border-none cursor-default font-normal not-italic!;
+    @apply text-muted border-none cursor-default font-normal not-italic;
   }
 
   .link {
-    @apply hover:border-primary focus-visible:outline-primary [&>code]:border-dashed hover:[&>code]:border-primary hover:[&>code]:text-primary transition-colors [&>code]:transition-colors italic border-b border-(--color-primary) text-highlighted font-medium 
+    @apply hover:border-primary focus-visible:outline-primary [&>code]:border-dashed hover:[&>code]:border-primary hover:[&>code]:text-primary transition-colors [&>code]:transition-colors italic border-b border-(--color-primary) text-highlighted font-medium;
   }
 
   .h1 {
-    @apply text-highlighted mb-8 scroll-mt-[calc(45px+var(--ui-header-height))] lg:scroll-mt-(--ui-header-height) text-2xl sm:text-3xl font-serif italic font-[500]
+    @apply text-highlighted mb-8 scroll-mt-[calc(45px+var(--ui-header-height))] lg:scroll-mt-(--ui-header-height) text-2xl sm:text-3xl font-serif italic font-[500];
+  }
+
+  p {
+    @apply my-5 leading-5 text-pretty text-muted;
   }
 }
 
