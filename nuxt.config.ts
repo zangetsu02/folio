@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxtjs/seo',
     '@nuxt/image',
+    '@nuxthub/core',
   ],
 
   css: ['~/assets/css/main.css'],
