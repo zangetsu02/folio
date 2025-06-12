@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { isr: true },/*  */
+    '/': { isr: true },
   },
 
   future: {
@@ -42,7 +42,16 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          langs: ['ts', 'js', 'json', 'vue', 'dockerfile', 'docker', 'yaml', 'css'],
+          langs: [
+            'ts',
+            'js',
+            'json',
+            'vue',
+            'dockerfile',
+            'docker',
+            'yaml',
+            'css',
+          ],
           theme: {
             light: 'github-light',
             dark: 'github-dark',
