@@ -15,16 +15,16 @@ const items = ref<TabsItem[]>([
     label: 'Timeline',
     value: 'timeline',
     slot: 'timeline',
-    to: '/about/timeline',
+    to: '/timeline',
   },
 ])
 
 const active = computed({
   get() {
-    return route.path === '/about/timeline' ? 'timeline' : 'about'
+    return route.path === '/timeline' ? 'timeline' : 'about'
   },
   set(tab) {
-    router.push(tab === 'timeline' ? '/about/timeline' : '/about')
+    router.push(tab === 'timeline' ? '/timeline' : '/about')
   },
 })
 </script>

@@ -74,7 +74,7 @@ export default defineNuxtConfig({
         '/sitemap.xml',
         '/works',
         '/about',
-        '/about/timeline',
+        '/timeline',
         '/writing',
       ],
       ignore: ['/notes', '/notes/**'],
