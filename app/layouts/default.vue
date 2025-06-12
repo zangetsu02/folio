@@ -49,7 +49,7 @@ const router = useRouter()
       </LayoutGroup>
 
       <span class="mt-2 text-xs text-center text-muted">
-        This website is fully open-source, you can find the source code on <NuxtLink to="https://github.com/HugoRCD/hr-folio" class="underline">GitHub</NuxtLink>
+        This website is fully open-source, you can find the source code on <NuxtLink to="https://github.com/zangetsu02/folio" class="underline">GitHub</NuxtLink>
       </span>
     </main>
   </UApp>
