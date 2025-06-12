@@ -32,6 +32,10 @@ export default defineNuxtConfig({
     '@nuxthub/core',
   ],
 
+  hub: {
+    workers: true,
+  },
+
   css: ['~/assets/css/main.css'],
 
   colorMode: {
