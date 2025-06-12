@@ -7,7 +7,6 @@ const { profile, global } = useAppConfig()
     <div class="flex items-center gap-2 mb-2">
       <NuxtImg
         v-if="profile.pictureDark && profile.pictureLight"
-        :dark="profile.pictureDark"
         :src="profile.pictureLight"
         alt="Christian Palladini"
         width="80"
@@ -29,10 +28,16 @@ const { profile, global } = useAppConfig()
       <slot mdc-unwrap="p" />
     </p>
     <div class="mt-2 flex gap-8">
-      <NuxtLink to="/contact" class="italic font-serif text-lg hover:underline decoration-primary">
+      <NuxtLink
+        to="/contact"
+        class="italic font-serif text-lg hover:underline decoration-primary"
+      >
         Send me a message
       </NuxtLink>
-      <NuxtLink :to="global.meetingLink" class="italic font-serif text-lg hover:underline decoration-primary cursor-pointer">
+      <NuxtLink
+        :to="global.meetingLink"
+        class="italic font-serif text-lg hover:underline decoration-primary cursor-pointer"
+      >
         Make a call
       </NuxtLink>
     </div>
