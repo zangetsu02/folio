@@ -9,9 +9,9 @@ export default defineAppConfig({
     pictureLight: 'https://avatars.githubusercontent.com/zangetsu02',
   },
   seo: {
-    title: 'Christian Palladini',
+    title: 'zangetsu',
     description:
-      'Frontend Architect, Designer & OSS Contributor based in Rome.',
+      'Software engineer, designer & OSS Contributor based in Rome.',
     url: 'https://christianpalladini.me',
     lang: 'en',
   },

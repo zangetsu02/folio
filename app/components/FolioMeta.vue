@@ -18,10 +18,10 @@ function getPageSEO() {
 
 function getTitleTemplate(title: string | undefined) {
   if (route.path === '/')
-    return title || `${seo.title} | Frontend Engineer at NuxtLabs`
+    return title || `${seo.title} | Software engineer`
   if (isWriting)
     return title
-  return `${title} | ${seo.title} - Frontend Engineer at NuxtLabs`
+  return `${title} | ${seo.title} - Software engineer`
 }
 
 const pageSEO = getPageSEO()
