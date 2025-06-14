@@ -5,7 +5,7 @@
 
 @theme static {
   --font-serif: "PP Neue Montreal", serif;
-  --font-sans: "Geist Mono", sans-serif;
+  --font-sans: "Inter", sans-serif;
   --font-mono: "Geist Mono", sans-serif;
 }
 
@@ -45,7 +45,11 @@
   }
 
   p {
-    @apply my-5 leading-5 text-pretty text-muted;
+    @apply my-5 leading-6 text-pretty;
+  }
+
+  span.iconify {
+    vertical-align: sub;
   }
 }
 

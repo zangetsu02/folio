@@ -1,10 +1,5 @@
 <script setup lang="ts">
 const { profile, global } = useAppConfig()
-
-defineOgImageComponent('Frame', {
-  title: profile.title,
-  description: profile.description,
-})
 </script>
 
 <template>

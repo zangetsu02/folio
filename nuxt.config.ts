@@ -12,6 +12,18 @@ export default defineNuxtConfig({
     indexable: true,
   },
 
+  $development: {
+    site: {
+      url: 'http://localhost:3000',
+    },
+  },
+
+  $production: {
+    site: {
+      url: 'https://christianpalladini.me',
+    },
+  },
+
   routeRules: {
     '/': { isr: true },
   },
