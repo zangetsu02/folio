@@ -13,8 +13,8 @@
   scrollbar-color: var(--ui-border) transparent;
   scrollbar-width: thin;
 
-  --ui-primary: rgb(21 93 252) !important;
-  --ui-bg: rgb(251 249 250);
+  --ui-primary: #084ccf !important;
+  --ui-bg: #f7f7f2f5;
   --ui-radius: 0;
 }
 

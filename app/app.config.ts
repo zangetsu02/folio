@@ -1,6 +1,6 @@
 export default defineAppConfig({
   global: {
-    meetingLink: 'https://todo.com',
+    meetingLink: 'https://cal.com/zangetsu',
   },
   profile: {
     email: 'hello@christianpalladini.me',

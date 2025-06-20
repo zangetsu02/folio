@@ -39,6 +39,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     'motion-v/nuxt',
     '@nuxt/scripts',
+    '@vueuse/nuxt',
     '@nuxtjs/seo',
     '@nuxt/image',
     '@nuxthub/core',

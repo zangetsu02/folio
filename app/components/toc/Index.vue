@@ -12,16 +12,17 @@ const target = ref(null)
 const { activeHeadings, updateHeadings } = useScrollspy()
 const nuxtApp = useNuxtApp()
 
-const checkMobile = () => {
+function checkMobile() {
   isMobile.value = window.innerWidth < 640
 }
 
-const handleInteraction = (event: 'enter' | 'leave' | 'click') => {
+function handleInteraction(event: 'enter' | 'leave' | 'click') {
   if (isMobile.value) {
     if (event === 'click') {
       isOpen.value = !isOpen.value
     }
-  } else {
+  }
+  else {
     isOpen.value = event === 'enter'
   }
 }
@@ -38,12 +39,13 @@ onUnmounted(() => {
 nuxtApp.hooks.hookOnce('page:finish', () => {
   updateHeadings([
     ...document.querySelectorAll('h2'),
-    ...document.querySelectorAll('h3')
+    ...document.querySelectorAll('h3'),
   ])
 })
 
-onClickOutside(target, event => {
-  if (isOpen.value) isOpen.value = false
+onClickOutside(target, (event) => {
+  if (isOpen.value)
+    isOpen.value = false
 })
 </script>
 
@@ -51,7 +53,7 @@ onClickOutside(target, event => {
   <div
     class="fixed z-50 scale-[0.9] sm:scale-[0.6] transition-all duration-300 ease-in-out right-2 top-1/2 -translate-y-1/2 origin-right"
     :class="[
-      !isMobile && 'hover:scale-120'
+      !isMobile && 'hover:scale-120',
     ]"
   >
     <div
@@ -59,7 +61,7 @@ onClickOutside(target, event => {
       class="rounded-md mx-auto transition-all duration-300 ease-in-out"
       :class="[
         isOpen ? 'bg-default/80 backdrop-blur-lg shadow-md border-[0.5px] border-default p-4' : 'p-0',
-        isMobile && !isOpen ? 'bg-default/80 backdrop-blur-lg shadow-md border-[0.5px] border-default p-2 py-4 scale-50 origin-right' : ''
+        isMobile && !isOpen ? 'bg-default/80 backdrop-blur-lg shadow-md border-[0.5px] border-default p-2 py-4 scale-50 origin-right' : '',
       ]"
       @mouseenter="handleInteraction('enter')"
       @mouseleave="handleInteraction('leave')"

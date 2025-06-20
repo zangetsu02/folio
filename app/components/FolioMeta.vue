@@ -29,14 +29,14 @@ const pageSEO = getPageSEO()
 if (page.image) {
   defineOgImage({ url: page.image })
 }
-else {
-  defineOgImageComponent(isWriting ? 'WritingPost' : 'Main', {
-    ...pageSEO,
-    avatar: profile.pictureDark,
-  }, {
-    fonts: ['Geist:400', 'Geist:600'],
-  })
-}
+// else {
+//   defineOgImageComponent(isWriting ? 'WritingPost' : 'Main', {
+//     ...pageSEO,
+//     avatar: profile.pictureDark,
+//   }, {
+//     fonts: ['Geist:400', 'Geist:600'],
+//   })
+// }
 
 useSeoMeta({
   ogSiteName: seo.title,
