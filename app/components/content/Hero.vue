@@ -40,10 +40,6 @@ const { profile, global } = useAppConfig()
       >
         Make a call
       </NuxtLink>
-
-      <DiamondDiv>
-        <p>Lorem ipsum dolor sit amet</p>
-      </DiamondDiv>
     </div>
   </div>
 </template>

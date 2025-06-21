@@ -11,12 +11,6 @@ const items = ref<TabsItem[]>([
     slot: 'about',
     to: '/about',
   },
-  {
-    label: 'Timeline',
-    value: 'timeline',
-    slot: 'timeline',
-    to: '/timeline',
-  },
 ])
 
 const active = computed({
@@ -45,20 +39,11 @@ const active = computed({
       <span v-if="item.label === 'About me'" class="absolute -bottom-0.5 -right-3 font-serif text-5xl font-normal italic opacity-[9%] sm:text-6xl">
         1
       </span>
-      <span v-if="item.label === 'Timeline'" class="absolute -bottom-0.5 -right-3 font-serif text-5xl font-normal italic opacity-[9%] sm:text-6xl">
-        2
-      </span>
     </template>
 
     <template #about>
       <div data-animate style="--stagger: 2;">
         <slot name="about" />
-      </div>
-    </template>
-
-    <template #timeline>
-      <div data-animate style="--stagger: 2;">
-        <slot name="timeline" />
       </div>
     </template>
   </UTabs>

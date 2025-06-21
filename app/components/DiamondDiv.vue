@@ -11,7 +11,7 @@ const {
 </script>
 
 <template>
-  <component :is="as" class="relative -mb-px -ml-px border border-default p-4">
+  <component :is="as" class="relative -mb-px -ml-px border border-default p-4" v-bind="$attrs">
     <template v-if="top">
       <span class="diamond right-[-4.5px] bottom-[-4.5px]" />
       <span class="diamond left-[-4.5px] bottom-[-4.5px]" />
