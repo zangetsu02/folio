@@ -1,75 +1,24 @@
-# Nuxt Minimal Starter
+# Zangetsu Folio
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is the code for my personal portfolio built with [Nuxt](https://nuxt.com/) and [Tailwind CSS](https://tailwindcss.com/).
 
-## Setup
+## Live website
 
-Make sure to install dependencies:
+You can see it live at [christianpalladini.me](https://christianpalladini.me/).
 
-```bash
-# npm
-npm install
 
-# pnpm
-pnpm install
+<details>
+  <summary>Local development</summary>
 
-# yarn
-yarn install
+- Clone this repository
+- Install latest LTS version of [Node.js](https://nodejs.org/en/)
+- Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
+- Install dependencies using `pnpm install`
+- Start development server using `pnpm dev`
+- Open [http://localhost:3000](http://localhost:3000) in your browser
 
-# bun
-bun install
-```
+</details>
 
-## Development Server
+Inspired by [@HugoRCD](https://github.com/HugoRCD/hr-folio.git).
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+</a>
