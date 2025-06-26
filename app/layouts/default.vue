@@ -7,10 +7,8 @@ const router = useRouter()
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
-    <div class="pointer-events-none absolute -top-56 z-40 size-44 rounded-full opacity-50 blur-[200px] dark:bg-white dark:blur-[200px] sm:size-72" />
-    <div class="pointer-events-none fixed inset-0 z-40 size-full overflow-hidden">
-      <div class="noise pointer-events-none absolute inset-[-200%] z-50 size-[400%] bg-[url('/noise.png')] opacity-[4%]" />
-    </div>
+    <!-- <div class="pointer-events-none absolute -top-56 z-40 size-44 rounded-full opacity-50 blur-[200px] dark:bg-white dark:blur-[200px] sm:size-72" /> -->
+    <Spotlight />
     <main class="flex min-h-screen flex-col p-3 sm:p-12">
       <LayoutGroup id="main-layout">
         <Motion
@@ -20,31 +18,30 @@ const router = useRouter()
             ease: 'easeInOut',
             duration: 0.2,
           }"
-          class="flex size-full mx-auto max-w-7xl flex-1 flex-col gap-3 border-1 sm:border-2 border-default p-4 sm:p-6"
+          class="flex size-full mx-auto max-w-7xl bg-grid-white flex-1 flex-col gap-3 "
         >
-          <div class="flex w-full min-h-3" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
-            <NuxtLink v-if="route.path !== '/'" aria-label="Go back to home page" class="group cursor-pointer" to="/">
-              <span class="font-serif italic hover:text-primary hover:underline">
-                go back<span class="text-primary">.</span>
-              </span>
-            </NuxtLink>
-            <ThemeSelector />
-          </div>
+          <CrossedDiv class="p-4 sm:p-6">
+            <div class="flex w-full min-h-3" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
+              <NuxtLink v-if="route.path !== '/'" aria-label="Go back to home page" class="group cursor-pointer" to="/">
+                <span class="hover:text-primary hover:underline">
+                  go back<span class="text-primary">.</span>
+                </span>
+              </NuxtLink>
+              <ThemeSelector />
+            </div>
+            <Motion layout class="flex-1">
+              <slot />
+            </Motion>
 
-          <Motion layout class="flex-1">
-            <slot />
-          </Motion>
+            <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
 
-          <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
-
-          <Motion
-            layout
-            class="flex items-end justify-end"
-            :class="route.path !== '/' ? 'cursor-pointer' : 'cursor-default'"
-            @click="router.push('/')"
-          >
-            <!-- <Signature class="mt-4 flex h-16 fill-black dark:fill-white sm:mt-0 sm:h-20" /> -->
-          </Motion>
+            <Motion
+              layout
+              class="flex items-end justify-end"
+              :class="route.path !== '/' ? 'cursor-pointer' : 'cursor-default'"
+              @click="router.push('/')"
+            />
+          </CrossedDiv>
         </Motion>
       </LayoutGroup>
 

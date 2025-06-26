@@ -4,44 +4,55 @@
 @import "./animations.css";
 
 @theme static {
-  --font-serif: "PP Neue Montreal", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Geist Sans", sans-serif;
   --font-mono: "Geist Mono", sans-serif;
 }
 
 :root {
+  --ui-primary: rgb(24, 24, 27) !important;
+  --ui-bg: rgb(251 251 251) !important;
+  --ui-border: rgb(219, 218, 215) !important;
+  --ui-text-muted: rgb(135, 135, 135) !important;
+  --ui-text: rgb(24, 24, 27) !important;
+  --ui-radius: 0;
+
   scrollbar-color: var(--ui-border) transparent;
   scrollbar-width: thin;
 
-  --ui-primary: #084ccf !important;
-  --ui-bg: #f7f7f2f5;
-  --ui-radius: 0;
+  .bg-grid-white {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='color-mix(in oklab%2c black 2%25%2c transparent)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
 }
 
 .dark {
-  --ui-primary: rgb(21 93 252) !important;
-  --ui-bg: rgb(2, 2, 2);
+  --ui-primary: rgb(250, 250, 250) !important;
+  --ui-bg: rgb(12 12 12) !important;
+  --ui-border: rgb(43, 43, 43) !important;
+  --ui-text: rgb(250, 250, 250) !important;
+
+  .bg-grid-white {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='color-mix(in oklab%2c white 2%25%2c transparent)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
 }
 
 @layer base {
   :root {
-    @apply selection:bg-primary selection:text-highlighted;
+    @apply selection:bg-[#1D1D1D] selection:text-[#FAFAFA] dark:selection:bg-[#F2F1EF] dark:selection:text-[#121212];
   }
-
   .blurred {
     @apply blur-xs hover:blur-none focus-within:blur-none focus:blur-none transition-all duration-300;
   }
 
   .no-link {
-    @apply text-muted border-none cursor-default font-normal not-italic;
+    @apply text-muted border-none cursor-default font-normal;
   }
 
   .link {
-    @apply hover:border-primary focus-visible:outline-primary [&>code]:border-dashed hover:[&>code]:border-primary hover:[&>code]:text-primary transition-colors [&>code]:transition-colors italic border-b border-(--color-primary) text-highlighted font-medium;
+    @apply hover:border-primary focus-visible:outline-primary [&>code]:border-dashed hover:[&>code]:border-primary hover:[&>code]:text-primary transition-colors [&>code]:transition-colors border-b border-(--color-primary) text-highlighted font-medium;
   }
 
   .h1 {
-    @apply text-highlighted mb-8 scroll-mt-[calc(45px+var(--ui-header-height))] lg:scroll-mt-(--ui-header-height) text-2xl sm:text-3xl font-serif italic font-[500];
+    @apply text-highlighted mb-8 scroll-mt-[calc(45px+var(--ui-header-height))] lg:scroll-mt-(--ui-header-height) text-2xl sm:text-3xl font-[500];
   }
 
   p {

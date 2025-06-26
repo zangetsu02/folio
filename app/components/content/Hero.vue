@@ -16,7 +16,7 @@ const { profile, global } = useAppConfig()
         class="mb-2 size-18 rounded-full object-cover"
       />
       <div class="flex flex-col">
-        <h3 class="font-serif text-xl italic">
+        <h3 class="text-xl">
           <slot name="title" mdc-unwrap="p" />
         </h3>
         <div class="*:mb-0 *:text-primary">
@@ -28,18 +28,19 @@ const { profile, global } = useAppConfig()
       <slot mdc-unwrap="p" />
     </p>
     <div class="mt-2 flex gap-8">
-      <NuxtLink
+      <UButton
         to="/contact"
-        class="italic font-serif text-lg hover:underline decoration-primary"
+        size="lg"
       >
         Send me a message
-      </NuxtLink>
-      <NuxtLink
+      </UButton>
+      <UButton
         :to="global.meetingLink"
-        class="italic font-serif text-lg hover:underline decoration-primary cursor-pointer"
+        color="secondary"
+        size="lg"
       >
         Make a call
-      </NuxtLink>
+      </UButton>
     </div>
   </div>
 </template>

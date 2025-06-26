@@ -52,10 +52,28 @@ export default defineAppConfig({
       loading: 'lucide:loader',
     },
     input: {
-      base: 'bg-primary rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-primary',
+      slots: {
+        base: 'bg-primary rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-primary',
+      },
     },
     textarea: {
-      base: 'bg-primary rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-primary',
+      slots: {
+        base: 'bg-primary rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-primary',
+      },
+    },
+    button: {
+      compoundVariants: [
+        {
+          color: 'primary',
+          variant: 'solid',
+          class: 'dark:bg-[#1D1D1D] dark:text-[#FAFAFA] bg-[#F2F1EF] text-[#121212] hover:bg-[#F2F1EF] dark:hover:bg-[#1D1D1D]',
+        },
+        {
+          color: 'secondary',
+          variant: 'solid',
+          class: 'dark:bg-[#FAFAFA] dark:text-[#18181B] bg-[#18181B] text-[#FAFAFA] hover:bg-[#18181B] dark:hover:bg-[#FAFAFA]',
+        },
+      ],
     },
   },
 })

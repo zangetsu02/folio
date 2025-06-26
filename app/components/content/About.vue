@@ -32,11 +32,11 @@ const active = computed({
     class="w-full"
     :ui="{
       trigger: 'data-[state=active]:text-highlighted',
-      label: 'relative w-fit font-serif text-2xl sm:text-2xl italic font-normal',
+      label: 'relative w-fit text-2xl sm:text-2xl font-normal',
     }"
   >
     <template #trailing="{ item }">
-      <span v-if="item.label === 'About me'" class="absolute -bottom-0.5 -right-3 font-serif text-5xl font-normal italic opacity-[9%] sm:text-6xl">
+      <span v-if="item.label === 'About me'" class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
         1
       </span>
     </template>

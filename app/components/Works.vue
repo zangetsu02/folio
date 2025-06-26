@@ -38,10 +38,10 @@ if (error.value) {
           src="/assets/works/dark-discord-theme-logo.png"
         />
         <div class="flex flex-col">
-          <div class="absolute right-0 top-0 font-serif text-5xl italic opacity-15 sm:text-3xl">
+          <div class="absolute font-mono right-0 top-0 text-5xl opacity-15 sm:text-3xl">
             {{ work.release }}
           </div>
-          <h3 class="font-serif italic text-2xl decoration-primary group-hover:underline">
+          <h3 class="text-2xl decoration-primary group-hover:underline">
             {{ work.name }}<span class="text-primary">.</span>
           </h3>
           <span class="text-[--ui-text-muted] font-extralight sm:text-base">
