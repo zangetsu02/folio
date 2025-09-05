@@ -28,6 +28,13 @@ export default defineNuxtSchema({
           icon: 'lucide:user',
           default: 'Christian Palladini',
         }),
+        workTitle: field({
+          type: 'string',
+          title: 'Work Title',
+          description: 'Your work title.',
+          icon: 'lucide:work',
+          default: 'Software Engineer',
+        }),
         email: field({
           type: 'string',
           title: 'Email',
@@ -46,6 +53,13 @@ export default defineNuxtSchema({
           type: 'string',
           title: 'Dark Picture',
           description: 'Your picture in dark mode.',
+          icon: 'lucide:image',
+          default: 'https://avatars.githubusercontent.com/u/71938701?v=4',
+        }),
+        linkedinPicture: field({
+          type: 'string',
+          title: 'Linkedin Picture',
+          description: 'Your picture for the cv.',
           icon: 'lucide:image',
           default: 'https://avatars.githubusercontent.com/u/71938701?v=4',
         }),

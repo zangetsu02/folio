@@ -4,7 +4,10 @@ export default defineAppConfig({
   },
   profile: {
     email: 'hello@christianpalladini.me',
+    name: 'Christian Palladini',
+    workTitle: 'Software Engineer',
     phone: '(+33) 6 21 56 22 18',
+    linkedinPicture: 'https://media.licdn.com/dms/image/v2/C4D03AQFtSgjLZrGXVQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1662145465629?e=1759968000&v=beta&t=I9rW-iwZMo6q2KGrb2c-QPs_fKLhQdL4gLLSlDVga7k',
     pictureDark: 'https://avatars.githubusercontent.com/zangetsu02',
     pictureLight: 'https://avatars.githubusercontent.com/zangetsu02',
   },

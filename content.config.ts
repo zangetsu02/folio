@@ -60,5 +60,39 @@ export default defineContentConfig({
         }),
       }),
     }),
+    worksExperience: defineCollection({
+      type: 'data',
+      source: '2.works-experience/*.json',
+      schema: z.object({
+        company: z.string().nonempty(),
+        role: z.string().nonempty(),
+        name: z.string().nonempty(),
+        employmentType: z.string().nonempty(),
+        location: z.string().nonempty(),
+        start: z.object({
+          month: z.string().optional(),
+          year: z.string().nonempty(),
+        }),
+        end: z
+          .object({
+            month: z.string().optional(),
+            year: z.string().nonempty(),
+          })
+          .optional(),
+        isCurrent: z.boolean(),
+        summary: z.array(z.string().nonempty()),
+        tech: z.array(z.string().nonempty()),
+      }),
+    }),
+    certificates: defineCollection({
+      type: 'data',
+      source: '3.certificates/*.json',
+      schema: z.object({
+        name: z.string().nonempty(),
+        date: z.string().nonempty(),
+        issuer: z.string().nonempty(),
+        url: z.string().nonempty(),
+      }),
+    }),
   },
 })

@@ -1,0 +1,18 @@
+{
+  "company": "linksmt",
+  "role": "Software Engineer",
+  "name": "Links Management & Technology S.p.A.",
+  "employmentType": "Full-time",
+  "location": "Rome, IT",
+  "start": { "month": "Sep", "year": "2022" },
+  "isCurrent": true,
+  "summary": [
+    "Modernized legacy platform to microservices (Spring Boot 3, Java 21)",
+    "Applied DDD/Clean Architecture; improved maintainability and test coverage",
+    "Built Nuxt 3 frontends integrated with secure REST APIs",
+    "Developed an internal Vue component library adopted across projects",
+    "Led and coordinated a development team to deliver features on schedule",
+    "Authored and maintained detailed technical documentation for developers and stakeholders"
+  ],
+  "tech": ["Java 21", "Spring Boot", "Vue/Nuxt", "Docker", "Angular", "Kafka"]
+}
