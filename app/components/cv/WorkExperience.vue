@@ -45,15 +45,17 @@ function periodLabel(work: WorksExperienceCollectionItem) {
           </li>
         </ul>
 
-        <div v-if="work.tech?.length" class="mt-4 flex flex-wrap gap-2">
-          <span
+        <h3 class="font-bold mt-3 ">
+          Used Technologies:
+        </h3>
+        <ul v-if="work.tech?.length" class="mt-3 list-disc space-y-1 pl-5">
+          <li
             v-for="(t, idx) in work.tech"
             :key="idx"
-            class="rounded-full bg-primary/10 dark:bg-muted/30 px-2.5 py-1 text-sm"
           >
             {{ t }}
-          </span>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

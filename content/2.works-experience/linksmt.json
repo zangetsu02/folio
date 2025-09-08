@@ -14,5 +14,5 @@
     "Led and coordinated a development team to deliver features on schedule",
     "Authored and maintained detailed technical documentation for developers and stakeholders"
   ],
-  "tech": ["Java 21", "Spring Boot", "Vue/Nuxt", "Docker", "Angular", "Kafka"]
+  "tech": ["Java/Spring Boot", "Vue/Nuxt", "Docker", "Angular", "Kafka"]
 }

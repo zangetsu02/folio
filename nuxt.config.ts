@@ -47,6 +47,7 @@ export default defineNuxtConfig({
 
   hub: {
     workers: true,
+    browser: true,
   },
 
   css: ['~/assets/css/main.css'],

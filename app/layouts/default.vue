@@ -23,7 +23,12 @@ const router = useRouter()
             <div class="flex w-full min-h-3" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
               <NuxtLink v-if="route.path !== '/'" aria-label="Go back to home page" class="group cursor-pointer" to="/">
                 <span class="hover:text-primary hover:underline">
-                  go back<span class="text-primary">.</span>
+                  go back.
+                </span>
+              </NuxtLink>
+              <NuxtLink v-if="route.path === '/cv'" aria-label="Go back to home page" class="group cursor-pointer" external to="/resume.pdf">
+                <span class="hover:text-primary hover:underline">
+                  Download PDF
                 </span>
               </NuxtLink>
               <ThemeSelector />

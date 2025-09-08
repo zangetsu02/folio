@@ -17,10 +17,10 @@ const { profile, socials } = useAppConfig()
   </div>
 
   <div class="flex flex-col items-center">
-    <h3 class="text-[1.8rem]">
+    <h3 class="text-2xl">
       {{ profile.name }}
     </h3>
-    <div class="text-pretty text-muted text-[1.2rem]">
+    <div class="text-pretty text-muted text-lg">
       {{ profile.workTitle }}
     </div>
 

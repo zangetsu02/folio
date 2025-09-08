@@ -3,16 +3,22 @@ interface SectionItemProps {
   title: string
   number: number
   size?: string
+  sizeTitle?: string
+  numberSize?: string
 }
 
-const { size = 'max-w-[600px]' } = defineProps<SectionItemProps>()
+const {
+  size = 'max-w-[600px]',
+  sizeTitle = 'text-2xl sm:text-3xl',
+  numberSize = 'text-5xl sm:text-6xl',
+} = defineProps<SectionItemProps>()
 </script>
 
 <template>
   <Motion layout class="flex flex-col gap-2" data-animate :style="{ '--stagger': number, '--delay': `${number * 0.05}s` }">
-    <h2 class="relative w-fit text-2xl sm:text-3xl">
+    <h2 class="relative w-fit" :class="sizeTitle">
       {{ title }}<span class="text-primary">.</span>
-      <span class="absolute font-mono -bottom-0.5 -right-10 text-5xl opacity-[9%] sm:text-6xl">
+      <span :class="numberSize" class="absolute font-mono -bottom-0.5 -right-10 opacity-[9%] ">
         {{ number }}
       </span>
     </h2>
