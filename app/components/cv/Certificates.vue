@@ -13,27 +13,27 @@ if (error.value) {
 </script>
 
 <template>
-  <ul class="flex flex-col gap-3">
+  <ul class="flex flex-col divide-y divide-(--ui-border) border-t border-b border-(--ui-border)">
     <li
-      v-for="(item, index) in certificates"
+      v-for="item in certificates"
       :key="item.name"
-      data-animate
-      :style="{ '--stagger': index }"
-      class="flex flex-col gap-1 sm:flex-row sm:gap-6 sm:items-baseline"
     >
-      <span class="font-mono text-xs text-muted sm:w-36 sm:shrink-0">
-        {{ item.date }}
-      </span>
-      <div class="flex flex-1 flex-col">
-        <NuxtLink
-          :to="item.url"
-          target="_blank"
-          class="text-sm decoration-primary hover:underline"
-        >
-          {{ item.name }}
-        </NuxtLink>
-        <span class="text-xs font-extralight text-muted">{{ item.issuer }}</span>
-      </div>
+      <NuxtLink
+        :to="item.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex items-center gap-3 py-3 text-muted hover:text-primary transition-colors"
+      >
+        <div class="flex flex-1 flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span class="text-sm text-highlighted group-hover:underline">
+            {{ item.name }}
+          </span>
+          <span class="text-xs">·</span>
+          <span class="text-xs">{{ item.issuer }}</span>
+        </div>
+        <span class="text-xs font-mono whitespace-nowrap">{{ item.date }}</span>
+        <Icon name="lucide:arrow-up-right" class="size-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+      </NuxtLink>
     </li>
   </ul>
 </template>

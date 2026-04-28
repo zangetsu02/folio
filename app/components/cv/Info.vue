@@ -3,35 +3,57 @@ const { profile, socials } = useAppConfig()
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-4">
-    <NuxtImg
-      v-if="profile.linkedinPicture"
-      :src="profile.linkedinPicture"
-      alt="Christian Palladini"
-      width="208"
-      height="208"
-      sizes="416"
-      format="webp"
-      class="size-44 saturate-0 object-cover"
-    />
-
-    <div class="flex flex-col items-center text-center">
-      <h3 class="font-display text-3xl tracking-tight">
-        {{ profile.name }}<span class="text-primary">.</span>
-      </h3>
-      <div class="text-muted">
-        {{ profile.workTitle }}
-      </div>
+  <aside class="flex flex-col gap-6 md:sticky md:top-8">
+    <div class="relative self-center">
+      <NuxtImg
+        v-if="profile.linkedinPicture"
+        :src="profile.linkedinPicture"
+        alt="Christian Palladini"
+        width="240"
+        height="240"
+        sizes="240"
+        format="webp"
+        class="size-44 sm:size-52 object-cover border border-(--ui-border) grayscale hover:grayscale-0 transition-all duration-500"
+      />
+      <span class="absolute -bottom-2 -right-2 px-2 py-0.5 bg-(--ui-bg) border border-(--ui-border) text-xs font-mono text-muted">
+        CV / 2026
+      </span>
     </div>
 
-    <div class="flex flex-col items-center gap-1 text-sm">
-      <span class="font-extralight text-muted">Rome, Latium, Italy</span>
-      <NuxtLink external :to="`mailto:${profile.email}`" class="link text-primary">
-        {{ profile.email }}
+    <div class="flex flex-col gap-1">
+      <h3 class="text-2xl font-medium leading-tight">
+        {{ profile.name }}
+      </h3>
+      <p class="text-muted text-base">
+        {{ profile.workTitle }}
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2 text-sm">
+      <div class="flex items-center gap-2 text-muted">
+        <Icon name="lucide:map-pin" class="size-4 shrink-0" />
+        <span>Rome, Latium, Italy</span>
+      </div>
+      <NuxtLink
+        :to="`mailto:${profile.email}`"
+        external
+        class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
+      >
+        <Icon name="lucide:mail" class="size-4 shrink-0" />
+        <span class="truncate">{{ profile.email }}</span>
+      </NuxtLink>
+      <NuxtLink
+        to="/resume.pdf"
+        external
+        target="_blank"
+        class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
+      >
+        <Icon name="lucide:file-down" class="size-4 shrink-0" />
+        <span>Download PDF</span>
       </NuxtLink>
     </div>
 
-    <div class="flex items-center gap-4 text-muted">
+    <div class="flex items-center gap-3 pt-2 border-t border-(--ui-border) text-muted">
       <NuxtLink
         :to="socials.twitter"
         external
@@ -40,7 +62,7 @@ const { profile, socials } = useAppConfig()
         aria-label="X / Twitter"
         class="hover:text-primary transition-colors"
       >
-        <Icon name="simple-icons:x" class="size-5" />
+        <Icon name="simple-icons:x" class="size-4" />
       </NuxtLink>
 
       <NuxtLink
@@ -51,7 +73,7 @@ const { profile, socials } = useAppConfig()
         aria-label="LinkedIn"
         class="hover:text-primary transition-colors"
       >
-        <Icon name="simple-icons:linkedin" class="size-5" />
+        <Icon name="simple-icons:linkedin" class="size-4" />
       </NuxtLink>
 
       <NuxtLink
@@ -62,8 +84,8 @@ const { profile, socials } = useAppConfig()
         aria-label="GitHub"
         class="hover:text-primary transition-colors"
       >
-        <Icon name="simple-icons:github" class="size-5" />
+        <Icon name="simple-icons:github" class="size-4" />
       </NuxtLink>
     </div>
-  </div>
+  </aside>
 </template>
