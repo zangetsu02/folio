@@ -48,6 +48,7 @@ export default defineNuxtConfig({
   hub: {
     workers: true,
     browser: true,
+    db: 'sqlite'
   },
 
   css: ['~/assets/css/main.css'],
