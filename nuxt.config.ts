@@ -42,13 +42,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/seo",
     "@nuxt/image",
-    "@nuxthub/core",
   ],
-
-  hub: {
-    workers: true,
-    browser: true,
-  },
 
   css: ["~/assets/css/main.css"],
 
