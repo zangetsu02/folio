@@ -56,7 +56,8 @@ if (!posts.value || !error.value)
             />
             <UButton
               type="submit"
-              class="rounded-none text-white"
+              color="secondary"
+              class="rounded-none"
               loading-auto
               label="Subscribe"
             />

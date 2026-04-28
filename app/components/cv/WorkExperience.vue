@@ -25,34 +25,32 @@ function periodLabel(work: WorksExperienceCollectionItem) {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col gap-8">
     <div
-      v-for="work in works"
+      v-for="(work, index) in works"
       :key="work.name"
-      class="group relative flex items-center gap-2"
+      data-animate
+      :style="{ '--stagger': index }"
+      class="flex flex-col gap-3 sm:flex-row sm:gap-6"
     >
-      <div class="flex flex-col">
-        <h3>
-          {{ work.name }} - <span class="text-muted">{{ work.role }}</span>
-        </h3>
-        <span class="text-muted  sm:text-base">
-          {{ periodLabel(work) }}
-        </span>
+      <div class="font-mono text-xs text-muted sm:w-36 sm:shrink-0 sm:pt-1">
+        {{ periodLabel(work) }}
+      </div>
 
-        <ul v-if="work.summary?.length" class="mt-3 list-disc space-y-1 pl-5">
+      <div class="flex flex-col gap-2 flex-1">
+        <h3 class="text-base font-medium">
+          {{ work.role }}
+          <span class="text-muted font-extralight">— {{ work.name }}</span>
+        </h3>
+
+        <ul v-if="work.summary?.length" class="list-disc space-y-1 pl-5 text-sm font-extralight text-muted">
           <li v-for="(item, idx) in work.summary" :key="idx">
             {{ item }}
           </li>
         </ul>
 
-        <h3 class="font-bold mt-3 ">
-          Used Technologies:
-        </h3>
-        <ul v-if="work.tech?.length" class="mt-3 list-disc space-y-1 pl-5">
-          <li
-            v-for="(t, idx) in work.tech"
-            :key="idx"
-          >
+        <ul v-if="work.tech?.length" class="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs font-mono text-muted">
+          <li v-for="(t, idx) in work.tech" :key="idx">
             {{ t }}
           </li>
         </ul>

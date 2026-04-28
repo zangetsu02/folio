@@ -69,12 +69,12 @@ export default defineAppConfig({
         {
           color: 'primary',
           variant: 'solid',
-          class: 'dark:bg-[#1D1D1D] dark:text-[#FAFAFA] bg-[#F2F1EF] text-[#121212] hover:bg-[#F2F1EF] dark:hover:bg-[#1D1D1D]',
+          class: 'dark:bg-[#26251F] dark:text-[#F0EEE8] bg-[#ECEAE3] text-[#1A1A18] hover:bg-[#E2DFD6] dark:hover:bg-[#31302A] transition-colors',
         },
         {
           color: 'secondary',
           variant: 'solid',
-          class: 'dark:bg-[#FAFAFA] dark:text-[#18181B] bg-[#18181B] text-[#FAFAFA] hover:bg-[#18181B] dark:hover:bg-[#FAFAFA]',
+          class: 'dark:bg-[#F0EEE8] dark:text-[#1A1A18] bg-[#1A1A18] text-[#F7F6F3] hover:bg-[#0E0E0C] dark:hover:bg-[#FAF8F2] transition-colors',
         },
       ],
     },

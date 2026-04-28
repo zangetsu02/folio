@@ -49,6 +49,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UFormField name="message">
       <UTextarea v-model="state.message" autoresize placeholder="Message" :rows="4" class="w-full rounded-none" />
     </UFormField>
-    <UButton type="submit" label="Send" class="rounded-none text-white" loading-auto block />
+    <UButton type="submit" color="secondary" label="Send" class="rounded-none" loading-auto block />
   </UForm>
 </template>

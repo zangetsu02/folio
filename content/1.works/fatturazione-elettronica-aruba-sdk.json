@@ -1,0 +1,9 @@
+{
+  "name": "Fatturazione elettronica Aruba SDK",
+  "category": "API",
+  "description": "TypeScript SDK for integrating with Aruba Electronic Invoicing API v2.",
+  "logo": "/assets/works/dark-discord-theme-logo.png",
+  "url": "https://fatturazione-elettronica-aruba-docs.vercel.app/",
+  "release": "2026",
+  "date": "2025-01-15"
+}

@@ -32,7 +32,7 @@ const active = computed({
     class="w-full"
     :ui="{
       trigger: 'data-[state=active]:text-highlighted',
-      label: 'relative w-fit text-2xl sm:text-2xl font-normal',
+      label: 'relative w-fit font-display text-3xl sm:text-4xl font-normal tracking-tight',
     }"
   >
     <template #trailing="{ item }">

@@ -9,7 +9,7 @@ interface SectionItemProps {
 
 const {
   size = 'max-w-[600px]',
-  sizeTitle = 'text-2xl sm:text-3xl',
+  sizeTitle = 'font-display text-3xl sm:text-4xl',
   numberSize = 'text-5xl sm:text-6xl',
 } = defineProps<SectionItemProps>()
 </script>

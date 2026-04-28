@@ -3,8 +3,8 @@ const { profile, global } = useAppConfig()
 </script>
 
 <template>
-  <div class="flex flex-col" data-animate style="--stagger: 1">
-    <div class="flex items-center gap-2 mb-2">
+  <div class="flex flex-col gap-4" data-animate style="--stagger: 1">
+    <div class="flex items-center gap-3">
       <NuxtImg
         v-if="profile.pictureDark && profile.pictureLight"
         :src="profile.pictureLight"
@@ -13,10 +13,10 @@ const { profile, global } = useAppConfig()
         height="80"
         sizes="160"
         format="webp"
-        class="mb-2 size-18 rounded-full object-cover"
+        class="size-16 rounded-full object-cover"
       />
       <div class="flex flex-col">
-        <h3 class="text-xl">
+        <h3 class="font-display text-2xl tracking-tight">
           <slot name="title" mdc-unwrap="p" />
         </h3>
         <div class="*:mb-0 *:text-primary">
@@ -27,7 +27,7 @@ const { profile, global } = useAppConfig()
     <p class="max-w-[600px] text-pretty text-muted text-sm font-extralight sm:text-base">
       <slot mdc-unwrap="p" />
     </p>
-    <div class="mt-2 flex gap-8">
+    <div class="mt-2 flex flex-wrap gap-3">
       <UButton
         to="/contact"
         size="lg"

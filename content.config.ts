@@ -54,10 +54,13 @@ export default defineContentConfig({
         release: z.string().optional(),
         date: z.string().nonempty(),
         url: z.string(),
+        logo: z.string().nonempty(),
         screenshotUrl: z.string().optional(),
-        screenshotOptions: z.object({
-          delay: z.number(),
-        }),
+        screenshotOptions: z
+          .object({
+            delay: z.number(),
+          })
+          .optional(),
       }),
     }),
     worksExperience: defineCollection({

@@ -26,7 +26,7 @@ if (error.value) {
         :key="work.name"
         :to="work.url"
         target="_blank"
-        class="group relative flex items-center gap-2 cursor-pointer"
+        class="group relative flex items-start gap-4 cursor-pointer"
         data-animate
         :aria-label="`Open ${work.name}`"
         :style="{ '--stagger': index }"
@@ -34,17 +34,25 @@ if (error.value) {
         <NuxtImg
           width="80"
           height="80"
-          class="saturate-0"
-          src="/assets/works/dark-discord-theme-logo.png"
+          class="size-20 shrink-0 object-contain saturate-0 transition duration-300 group-hover:saturate-100"
+          :src="work.logo"
         />
-        <div class="flex flex-col">
-          <div class="absolute font-mono right-0 top-0 text-5xl opacity-15 sm:text-3xl">
-            {{ work.release }}
+        <div class="flex flex-1 flex-col min-w-0">
+          <div class="flex items-baseline justify-between gap-2">
+            <h3 class="font-display text-3xl decoration-primary truncate group-hover:underline">
+              {{ work.name }}<span class="text-primary">.</span>
+            </h3>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span v-if="work.release" class="font-mono text-xs text-muted">
+                {{ work.release }}
+              </span>
+              <UIcon
+                name="lucide:arrow-up-right"
+                class="size-4 text-muted opacity-0 transition-opacity group-hover:opacity-100"
+              />
+            </div>
           </div>
-          <h3 class="text-2xl decoration-primary group-hover:underline">
-            {{ work.name }}<span class="text-primary">.</span>
-          </h3>
-          <span class="text-[--ui-text-muted] font-extralight sm:text-base">
+          <span class="text-[--ui-text-muted] font-extralight text-sm sm:text-base line-clamp-2">
             {{ work.description }}
           </span>
         </div>
