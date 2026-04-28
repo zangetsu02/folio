@@ -4,21 +4,16 @@ const { profile, socials } = useAppConfig()
 
 <template>
   <aside class="flex flex-col gap-6 md:sticky md:top-8">
-    <div class="relative self-center">
-      <NuxtImg
-        v-if="profile.linkedinPicture"
-        :src="profile.linkedinPicture"
-        alt="Christian Palladini"
-        width="240"
-        height="240"
-        sizes="240"
-        format="webp"
-        class="size-44 sm:size-52 object-cover border border-(--ui-border) grayscale hover:grayscale-0 transition-all duration-500"
-      />
-      <span class="absolute -bottom-2 -right-2 px-2 py-0.5 bg-(--ui-bg) border border-(--ui-border) text-xs font-mono text-muted">
-        CV / 2026
-      </span>
-    </div>
+    <NuxtImg
+      v-if="profile.linkedinPicture"
+      :src="profile.linkedinPicture"
+      alt="Christian Palladini"
+      width="240"
+      height="240"
+      sizes="240"
+      format="webp"
+      class="self-center size-44 sm:size-52 object-cover border border-(--ui-border) grayscale hover:grayscale-0 transition-all duration-500"
+    />
 
     <div class="flex flex-col gap-1">
       <h3 class="text-2xl font-medium leading-tight">

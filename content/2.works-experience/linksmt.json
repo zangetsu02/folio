@@ -7,12 +7,20 @@
   "start": { "month": "Sep", "year": "2022" },
   "isCurrent": true,
   "summary": [
-    "Modernized legacy platform to microservices (Spring Boot 3, Java 21)",
-    "Applied DDD/Clean Architecture; improved maintainability and test coverage",
-    "Built Nuxt 3 frontends integrated with secure REST APIs",
-    "Developed an internal Vue component library adopted across projects",
-    "Led and coordinated a development team to deliver features on schedule",
+    "Tech Lead within the company's competence center, providing technical direction and coordinating development teams across multiple client engagements",
+    "Mentored engineers and drove code reuse, engineering best practices and quality standards across teams",
     "Authored and maintained detailed technical documentation for developers and stakeholders"
   ],
-  "tech": ["Java/Spring Boot", "Vue/Nuxt", "Docker", "Angular", "Kafka"]
+  "projects": [
+    {
+      "name": "Sintesi — Regione Puglia",
+      "description": "As part of a 4-engineer team, drove the modernization of a regional employment-services platform, decomposing the legacy monolith into 15+ microservices. Championed DDD and Clean Architecture practices to elevate maintainability and test coverage.",
+      "tech": ["Spring Boot 3", "Java 21", "Kafka", "SQL Server", "Kubernetes"]
+    },
+    {
+      "name": "Sifer — Regione Emilia-Romagna",
+      "description": "Tech Lead on the full rewrite of Sifer, leading a 4-engineer team and setting the technical direction and delivery cadence. Architected a reusable component library of 25+ components, later adopted by other teams across the competence center.",
+      "tech": ["Symfony", "Nuxt", "PostgreSQL"]
+    }
+  ]
 }

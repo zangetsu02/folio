@@ -33,6 +33,16 @@
 
         <SectionItem
           :number="3"
+          title="Side Projects"
+          size="max-w-full"
+          size-title="text-xl md:text-2xl"
+          number-size="text-2xl sm:text-3xl md:text-4xl"
+        >
+          <CvSideProjects />
+        </SectionItem>
+
+        <SectionItem
+          :number="4"
           title="Certificates"
           size="max-w-full"
           size-title="text-xl md:text-2xl"
@@ -42,7 +52,7 @@
         </SectionItem>
 
         <SectionItem
-          :number="4"
+          :number="5"
           title="Languages"
           size="max-w-full"
           size-title="text-xl md:text-2xl"

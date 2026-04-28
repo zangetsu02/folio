@@ -63,17 +63,27 @@ function periodLabel(work: WorksExperienceCollectionItem) {
         </li>
       </ul>
 
-      <div v-if="work.tech?.length" class="mt-4">
+      <div v-if="work.projects?.length" class="mt-4">
         <p class="mb-2 text-xs font-mono uppercase tracking-wider text-muted">
-          Stack
+          Projects
         </p>
-        <ul class="flex flex-wrap gap-1.5">
-          <li
-            v-for="(t, idx) in work.tech"
-            :key="idx"
-            class="px-2 py-0.5 border border-(--ui-border) text-xs font-mono text-muted"
-          >
-            {{ t }}
+        <ul class="flex flex-col divide-y divide-(--ui-border) border-t border-b border-(--ui-border)">
+          <li v-for="(project, idx) in work.projects" :key="idx" class="py-2.5 flex flex-col gap-1.5">
+            <h4 class="text-sm font-medium text-highlighted">
+              {{ project.name }}
+            </h4>
+            <p class="text-sm text-muted leading-relaxed">
+              {{ project.description }}
+            </p>
+            <ul v-if="project.tech?.length" class="flex flex-wrap gap-1">
+              <li
+                v-for="(t, tIdx) in project.tech"
+                :key="tIdx"
+                class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono text-muted"
+              >
+                {{ t }}
+              </li>
+            </ul>
           </li>
         </ul>
       </div>

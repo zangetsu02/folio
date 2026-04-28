@@ -58,4 +58,17 @@ definePageMeta({
   width: 8rem !important;
   height: 8rem !important;
 }
+
+.resume-page [data-animate],
+.resume-page article,
+.resume-page header,
+.resume-page li {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.resume-page h2 {
+  break-after: avoid;
+  page-break-after: avoid;
+}
 </style>

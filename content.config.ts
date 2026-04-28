@@ -84,7 +84,15 @@ export default defineContentConfig({
           .optional(),
         isCurrent: z.boolean(),
         summary: z.array(z.string().nonempty()),
-        tech: z.array(z.string().nonempty()),
+        projects: z
+          .array(
+            z.object({
+              name: z.string().nonempty(),
+              description: z.string().nonempty(),
+              tech: z.array(z.string().nonempty()),
+            }),
+          )
+          .optional(),
       }),
     }),
     certificates: defineCollection({
