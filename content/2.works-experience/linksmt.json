@@ -14,7 +14,7 @@
   "projects": [
     {
       "name": "Sintesi — Regione Puglia",
-      "description": "As part of a 4-engineer team, drove the modernization of a regional employment-services platform, decomposing the legacy monolith into 15+ microservices. Championed DDD and Clean Architecture practices to elevate maintainability and test coverage.",
+      "description": "Led and coordinated a team of 4 engineers in modernizing a regional employment-services platform, guiding the transition from a legacy monolith to 15+ microservices. Established DDD and Clean Architecture standards to improve maintainability and test coverage, while remaining hands-on in development.",
       "tech": ["Spring Boot 3", "Java 21", "Kafka", "SQL Server", "Kubernetes"]
     },
     {
