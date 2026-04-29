@@ -38,7 +38,6 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxt/fonts",
     "motion-v/nuxt",
-    "@nuxt/scripts",
     "@vueuse/nuxt",
     "@nuxtjs/seo",
     "@nuxt/image",
@@ -88,8 +87,13 @@ export default defineNuxtConfig({
         "/about",
         "/timeline",
         "/writing",
+        "/_resume",
       ],
-      ignore: ["/notes", "/notes/**"],
+      ignore: ["/notes", "/notes/**", "/__og-image__/**"],
     },
+  },
+
+  ogImage: {
+    enabled: false,
   },
 });

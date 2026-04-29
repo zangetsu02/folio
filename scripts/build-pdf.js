@@ -4,8 +4,8 @@ import { extname, join, normalize, resolve } from 'node:path'
 import process from 'node:process'
 import puppeteer from 'puppeteer'
 
-const ROOT = resolve('./dist/public')
-const PAGE_PATH = '/_resume.html'
+const ROOT = resolve('./.output/public')
+const PAGE_PATH = '/_resume/index.html'
 const OUTPUT = './public/resume.pdf'
 
 if (!existsSync(join(ROOT, PAGE_PATH))) {
@@ -56,10 +56,15 @@ const browser = await puppeteer.launch({ headless: true })
 try {
   const page = await browser.newPage()
   await page.goto(url, { waitUntil: 'networkidle0' })
+  await page.waitForFunction(
+    () => Array.from(document.querySelectorAll('.iconify, [class*="i-lucide"], [class*="i-simple-icons"]'))
+      .every(el => el.querySelector('svg') || el.tagName === 'SVG'),
+    { timeout: 10000 },
+  ).catch(() => {})
   const pdfBuffer = await page.pdf({
     format: 'A4',
     printBackground: true,
-    margin: { top: '10mm', right: '8mm', bottom: '10mm', left: '8mm' },
+    margin: { top: '0', right: '0', bottom: '0', left: '0' },
   })
   writeFileSync(OUTPUT, pdfBuffer)
   console.log(`✔ PDF saved to ${OUTPUT}`)

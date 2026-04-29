@@ -19,7 +19,7 @@ Want to know what drives me? [**Read more about me**](/about){.link}.
 I develop web applications that pair a clear, user-focused frontend with a robust, well-structured backend,
 delivering solutions that stay usable, scalable, and maintainable over time, even in complex settings.
 
-If you want more information about my work, you can che out my [**resume**](/cv){.link}.
+If you want more information about my work, you can che out my [**resume**](/resume){.link}.
 
 If you’re curious about what I build, the tools, the patterns, the decisions, check out [**my projects**](/works){.link}.
 

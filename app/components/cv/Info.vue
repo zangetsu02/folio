@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { profile, socials } = useAppConfig()
+const { profile, socials, seo } = useAppConfig()
 </script>
 
 <template>
@@ -15,13 +15,13 @@ const { profile, socials } = useAppConfig()
       class="self-center size-44 sm:size-52 object-cover border border-(--ui-border) grayscale hover:grayscale-0 transition-all duration-500"
     />
 
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-0.5">
       <h3 class="text-2xl font-medium leading-tight">
         {{ profile.name }}
       </h3>
-      <p class="text-muted text-base">
+      <span class="text-muted text-base leading-tight">
         {{ profile.workTitle }}
-      </p>
+      </span>
     </div>
 
     <div class="flex flex-col gap-2 text-sm">
@@ -41,10 +41,19 @@ const { profile, socials } = useAppConfig()
         to="/resume.pdf"
         external
         target="_blank"
-        class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
+        class="web-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
       >
         <Icon name="lucide:file-down" class="size-4 shrink-0" />
         <span>Download PDF</span>
+      </NuxtLink>
+      <NuxtLink
+        :to="seo.url"
+        external
+        target="_blank"
+        class="pdf-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
+      >
+        <Icon name="lucide:globe" class="size-4 shrink-0" />
+        <span class="truncate">{{ seo.url.replace(/^https?:\/\//, '') }}</span>
       </NuxtLink>
     </div>
 

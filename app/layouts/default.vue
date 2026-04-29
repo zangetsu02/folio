@@ -26,7 +26,7 @@ const router = useRouter()
                   go back.
                 </span>
               </NuxtLink>
-              <NuxtLink v-if="route.path === '/cv'" aria-label="Go back to home page" class="group cursor-pointer" external to="/resume.pdf">
+              <NuxtLink v-if="route.path === '/resume'" aria-label="Go back to home page" class="group cursor-pointer" external to="/resume.pdf">
                 <span class="hover:text-primary hover:underline">
                   Download PDF
                 </span>
