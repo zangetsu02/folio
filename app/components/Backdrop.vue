@@ -1,22 +1,75 @@
 <script setup lang="ts">
-// Sfondo ambientale: tre luci molto larghe e molto tenui che derivano su
-// percorsi indipendenti, piu' una grana sottile che da' materia alla
-// superficie. Sostituisce la griglia statica e lo Spotlight, che aveva una
-// classe `animate-spotlight` non definita in questo progetto e opacity-0.
-// Tutto in CSS: nessun requestAnimationFrame, nessun lavoro sul thread principale.
+// Sfondo reattivo invece che animato.
+//
+// La versione precedente derivava da sola e aveva una grana con animazione a
+// `steps()`: un'animazione a scatti e' flicker, su tutta la pagina, sotto al
+// testo che stai leggendo — la causa tipica di affaticamento e mal di testa.
+//
+// Qui non c'e' nessuna animazione autonoma. La luce segue il puntatore con un
+// ritardo morbido: se non muovi il mouse, non si muove niente. Il movimento e'
+// atteso perche' sei tu a produrlo, e si ferma da solo.
+
+const root = useTemplateRef<HTMLElement>('root')
+
+let frame = 0
+let tx = 0.5
+let ty = 0.35
+let cx = 0.5
+let cy = 0.35
+
+function tick() {
+  // interpolazione: la luce insegue, non incolla
+  cx += (tx - cx) * 0.045
+  cy += (ty - cy) * 0.045
+
+  root.value?.style.setProperty('--mx', `${(cx - 0.5) * 100}%`)
+  root.value?.style.setProperty('--my', `${(cy - 0.5) * 100}%`)
+
+  // il loop si spegne quando e' arrivata: nessun rAF perenne
+  if (Math.abs(tx - cx) > 0.0004 || Math.abs(ty - cy) > 0.0004)
+    frame = requestAnimationFrame(tick)
+  else
+    frame = 0
+}
+
+function onPointerMove(event: PointerEvent) {
+  tx = event.clientX / window.innerWidth
+  ty = event.clientY / window.innerHeight
+  if (!frame)
+    frame = requestAnimationFrame(tick)
+}
+
+onMounted(() => {
+  // Solo chi ha chiesto meno movimento resta fuori. Niente guardia su
+  // `pointer: fine`: alcuni browser la riportano sbagliata e l'effetto non
+  // partirebbe mai, in silenzio. Su touch il pointermove arriva solo durante
+  // un trascinamento, quindi il comportamento e' gia' quello giusto.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    return
+
+  window.addEventListener('pointermove', onPointerMove, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('pointermove', onPointerMove)
+  if (frame)
+    cancelAnimationFrame(frame)
+})
 </script>
 
 <template>
-  <div class="backdrop" aria-hidden="true">
-    <div class="glow glow-a" />
-    <div class="glow glow-b" />
-    <div class="glow glow-c" />
+  <div ref="root" class="backdrop" aria-hidden="true">
+    <div class="glow glow-follow" />
+    <div class="glow glow-anchor" />
     <div class="grain" />
   </div>
 </template>
 
 <style scoped>
 .backdrop {
+  --mx: 0%;
+  --my: 0%;
+
   position: fixed;
   inset: 0;
   z-index: 0;
@@ -27,75 +80,39 @@
 .glow {
   position: absolute;
   border-radius: 50%;
-  /* Niente filter: blur — a questa dimensione costa caro. La morbidezza
-     viene dalle fermate del gradiente, che la GPU compone gratis. */
-  background: radial-gradient(circle closest-side, var(--glow) 0%, transparent 72%);
+  /* Niente filter: blur — a questa dimensione costa caro. La morbidezza viene
+     dalle fermate del gradiente, che la GPU compone gratis. */
+  background: radial-gradient(circle closest-side, var(--glow) 0%, transparent 70%);
+}
+
+/* Quella che segue il puntatore. */
+.glow-follow {
+  width: 86vw;
+  height: 86vw;
+  left: 50%;
+  top: 50%;
+  margin-left: -43vw;
+  margin-top: -43vw;
+  transform: translate3d(var(--mx), var(--my), 0);
   will-change: transform;
 }
 
-.glow-a {
-  width: 78vw;
-  height: 78vw;
-  top: -30vw;
-  left: -16vw;
-  animation: drift-a 58s ease-in-out infinite alternate;
+/* Una seconda luce ferma, ancorata alla pagina: da' profondita' senza muoversi,
+   ed e' l'unica cosa che si vede su touch, dove non c'e' un puntatore. */
+.glow-anchor {
+  width: 58vw;
+  height: 58vw;
+  top: -22vw;
+  left: -14vw;
+  opacity: 0.8;
 }
 
-.glow-b {
-  width: 62vw;
-  height: 62vw;
-  top: 24vh;
-  right: -24vw;
-  animation: drift-b 74s ease-in-out infinite alternate;
-}
-
-.glow-c {
-  width: 54vw;
-  height: 54vw;
-  bottom: -26vw;
-  left: 28vw;
-  animation: drift-c 92s ease-in-out infinite alternate;
-}
-
-/* Spostamenti ampi e lentissimi: deve leggersi come atmosfera, non come
-   un'animazione che chiede attenzione mentre si legge. */
-@keyframes drift-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(14vw, 9vh, 0) scale(1.14); }
-}
-
-@keyframes drift-b {
-  from { transform: translate3d(0, 0, 0) scale(1.08); }
-  to   { transform: translate3d(-12vw, -14vh, 0) scale(0.92); }
-}
-
-@keyframes drift-c {
-  from { transform: translate3d(0, 0, 0) scale(0.95); }
-  to   { transform: translate3d(-9vw, -11vh, 0) scale(1.2); }
-}
-
+/* Grana ferma. Stessa materia di prima, zero sfarfallio. */
 .grain {
   position: absolute;
-  /* deborda, cosi' lo spostamento della grana non scopre mai i bordi */
-  inset: -120px;
+  inset: 0;
   background-image: url("/noise.png");
   opacity: var(--grain-opacity);
-  animation: grain-shift 1.8s steps(8) infinite;
-}
-
-@keyframes grain-shift {
-  0%, 100% { transform: translate(0, 0); }
-  20%      { transform: translate(-3%, -4%); }
-  40%      { transform: translate(4%, 3%); }
-  60%      { transform: translate(-5%, 2%); }
-  80%      { transform: translate(3%, -3%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glow,
-  .grain {
-    animation: none;
-  }
 }
 
 @media print {
