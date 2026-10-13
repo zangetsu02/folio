@@ -1,0 +1,10 @@
+{
+  "name": "Omarchy FortiVPN",
+  "category": "tools",
+  "description": "FortiClient VPN status in the Omarchy bar: state, IP, uptime and traffic, with one-click disconnect and a shortcut into the SAML login.",
+  "url": "https://github.com/zangetsu02/omarchy-fortivpn",
+  "repo": "https://github.com/zangetsu02/omarchy-fortivpn",
+  "tech": ["QML", "Shell", "Hyprland"],
+  "release": "2026",
+  "date": "2026-09-14"
+}

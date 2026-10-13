@@ -27,33 +27,22 @@ export default defineContentConfig({
         draft: z.boolean().default(false),
       }),
     }),
-    playground: defineCollection({
-      type: 'page',
-      source: '3.playground/*.md',
-      schema: z.object({
-        title: z.string().nonempty(),
-        description: z.string().nonempty(),
-        date: z.string().nonempty(),
-        draft: z.boolean().default(false),
-      }),
-    }),
     works: defineCollection({
       type: 'data',
       source: '1.works/*.json',
       schema: z.object({
         name: z.string().nonempty(),
         description: z.string().nonempty(),
-        category: z.string().nonempty(),
+        // enum e non string: una categoria scritta male fa fallire la build
+        // invece di produrre in silenzio una sezione vuota su /works
+        category: z.enum(['libraries', 'tools', 'themes']),
         release: z.string().optional(),
         date: z.string().nonempty(),
         url: z.string(),
-        logo: z.string().nonempty(),
-        screenshotUrl: z.string().optional(),
-        screenshotOptions: z
-          .object({
-            delay: z.number(),
-          })
-          .optional(),
+        repo: z.string().optional(),
+        // opzionale: i progetti senza logo disegnano un monogramma
+        logo: z.string().optional(),
+        tech: z.array(z.string().nonempty()).optional(),
       }),
     }),
     worksExperience: defineCollection({

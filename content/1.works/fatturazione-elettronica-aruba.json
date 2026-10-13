@@ -1,0 +1,10 @@
+{
+  "name": "Fatturazione Elettronica Aruba",
+  "category": "libraries",
+  "description": "TypeScript SDK for Aruba's Electronic Invoicing API v2. Send, receive and manage Italian electronic invoices through the Sistema di Interscambio.",
+  "url": "https://fatturazione-elettronica-aruba-docs.vercel.app/",
+  "repo": "https://github.com/zangetsu02/fatturazione-elettronica-aruba",
+  "tech": ["TypeScript", "SDI"],
+  "release": "2026",
+  "date": "2026-06-22"
+}

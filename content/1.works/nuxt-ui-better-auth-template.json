@@ -1,0 +1,10 @@
+{
+  "name": "Nuxt UI Better Auth Template",
+  "category": "libraries",
+  "description": "A starter template for Nuxt 4 applications, wiring up Nuxt UI, Drizzle ORM, Better Auth and Resend so authentication works from the first commit.",
+  "url": "https://github.com/zangetsu02/nuxt-ui-better-auth-template",
+  "repo": "https://github.com/zangetsu02/nuxt-ui-better-auth-template",
+  "tech": ["Nuxt 4", "Better Auth", "Drizzle", "PostgreSQL"],
+  "release": "2025",
+  "date": "2025-11-05"
+}

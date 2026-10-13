@@ -27,7 +27,7 @@ if (error.value) {
             {{ item.name }}
           </span>
           <span class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono uppercase tracking-wider">
-            {{ item.category }}
+            {{ categoryLabel(item.category) }}
           </span>
           <span class="ml-auto text-xs font-mono whitespace-nowrap">
             {{ item.release }}
