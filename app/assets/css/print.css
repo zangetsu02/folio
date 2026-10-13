@@ -75,27 +75,27 @@
     gap: 0.75rem;
   }
 
-  /* Tre colonne, non due: foto | nome e social | contatti.
-     Con due colonne il testo dell'intestazione e' naturalmente stretto e
-     lasciava vuota meta' della larghezza. La terza colonna e' `auto`, quindi i
-     contatti si appoggiano al margine destro mentre il nome resta a sinistra:
-     la fascia si legge come l'intestazione di un CV, non come una colonna. */
+  /* Due colonne: una foto alta a sinistra, tutto il resto impilato a destra.
+     La foto non ha un'altezza fissa — si estende su tutte le righe e prende
+     height: 100%, cosi' il suo bordo inferiore combacia sempre con l'ultima
+     riga della colonna accanto, qualunque sia il numero di contatti. */
   .cv > :first-child aside {
     display: grid;
-    grid-template-columns: 9rem 1fr auto;
-    grid-template-rows: auto auto;
-    column-gap: 1.25rem;
-    row-gap: 0.5rem;
+    grid-template-columns: 8rem 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 1.5rem;
+    row-gap: 0.6rem;
     position: static;
     align-items: start;
   }
 
   .cv > :first-child aside > img {
     grid-column: 1;
-    grid-row: 1 / span 2;
-    width: 9rem !important;
-    height: 9rem !important;
-    align-self: start;
+    grid-row: 1 / -1;
+    align-self: stretch;
+    width: 8rem !important;
+    height: 100% !important;
+    object-fit: cover;
     /* A schermo la foto e' `grayscale hover:grayscale-0`: torna a colori col
        mouse sopra. In un PDF quel passaggio non avviene mai, quindi resterebbe
        grigia per sempre. */
@@ -108,20 +108,23 @@
     grid-row: 1;
   }
 
-  /* Contatti: colonna destra, ma allineati a sinistra al loro interno, cosi'
-     le icone formano una colonna verticale pulita invece di un bordo frastagliato. */
-  .cv > :first-child aside > div:nth-of-type(2) {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    align-self: start;
+  /* Il nome e' la prima informazione della pagina: a schermo e' text-2xl,
+     in stampa compete con una foto alta 10rem e perde. */
+  .cv > :first-child aside > div:nth-of-type(1) h3 {
+    font-size: 1.9rem;
+    line-height: 1.15;
   }
 
-  /* Icone social, subito sotto al nome. Ancorarle in fondo alla riga le
-     lasciava sospese a meta' foto, staccate dal blocco identita'. */
-  .cv > :first-child aside > div:nth-of-type(3) {
+  /* Contatti */
+  .cv > :first-child aside > div:nth-of-type(2) {
     grid-column: 2;
     grid-row: 2;
-    align-self: start;
+  }
+
+  /* Icone social, in fondo alla colonna */
+  .cv > :first-child aside > div:nth-of-type(3) {
+    grid-column: 2;
+    grid-row: 3;
   }
 
   /* L'ultimo blocco dell'aside sono le icone social, che a schermo hanno un
