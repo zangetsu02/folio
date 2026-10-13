@@ -96,22 +96,66 @@
     grid-column: 2;
   }
 
-  .cv > :first-child aside > div:nth-of-type(2) {
+  /* L'ultimo blocco dell'aside sono le icone social, che a schermo hanno un
+     border-t per staccarsi dai contatti. In stampa e' l'unica riga orizzontale
+     che non appartiene a un titolo di sezione, e cade a ridosso di quella di
+     "About.": due fili ravvicinati che non separano niente. */
+  .cv > :first-child aside > div:last-child {
     border-top: none !important;
     padding-top: 0 !important;
   }
 
-  /* --- Densita' -------------------------------------------------------- */
-  /* A schermo le sezioni hanno gap-12 (3rem): su carta e' spreco. */
+  /* --- Gerarchia delle sezioni ----------------------------------------- */
 
-  .cv > :last-child > .flex.flex-col {
-    gap: 1.1rem !important;
+  /* Il numero sbiadito dietro al titolo e' decorazione da schermo: in stampa
+     e' solo rumore, e con w-fit sul titolo complica il filo del bordo. */
+  .cv h2 span.absolute {
+    display: none !important;
   }
 
+  /* A schermo l'h2 e' w-fit. In stampa deve occupare la riga intera, cosi' il
+     filo sotto il titolo marca l'inizio della sezione per tutta la larghezza.
+     Prima le uniche righe orizzontali erano i bordi delle liste, che cadevano
+     FRA i blocchi e facevano sembrare i titoli sospesi nel vuoto. */
+  .cv h2 {
+    width: 100%;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--ui-border);
+  }
+
+  /* Respiro sopra il titolo, poco sotto: la sezione si legge come un blocco
+     unico invece che come titolo e contenuto che galleggiano separati. */
+  .cv > :last-child > .flex.flex-col {
+    gap: 1.4rem !important;
+  }
+
+  /* --- Work Experience -------------------------------------------------- */
+
+  /* La riga verticale col quadratino e' un'affordance da schermo
+     (group-hover:border-primary). In piu' il quadratino e' absolute -left-1.5,
+     quindi sporge oltre il margine di stampa e viene tagliato. */
   .cv article {
+    padding-left: 0 !important;
     padding-top: 0;
     padding-bottom: 0;
+    border-left: none !important;
   }
+
+  .cv article > span.absolute {
+    display: none !important;
+  }
+
+  /* --- Liste ------------------------------------------------------------ */
+
+  /* I bordi sopra e sotto le liste raddoppiavano il filo del titolo e
+     chiudevano ogni blocco con una riga orfana. Restano i divisori fra righe. */
+  .cv ul.border-t,
+  .cv ul.border-b {
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  /* --- Densita' --------------------------------------------------------- */
 
   .cv .py-3 {
     padding-top: 0.35rem !important;
@@ -119,12 +163,12 @@
   }
 
   .cv .py-2\.5 {
-    padding-top: 0.3rem !important;
-    padding-bottom: 0.3rem !important;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
   }
 
   .cv article .mt-4 {
-    margin-top: 0.5rem !important;
+    margin-top: 0.55rem !important;
   }
 
   .cv article > ul.mt-4 {
