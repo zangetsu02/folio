@@ -13,12 +13,12 @@ const { profile, global } = useAppConfig()
         height="80"
         sizes="160"
         format="webp"
-        class="size-16 rounded-full object-cover"
+        class="size-20 rounded-full object-cover sm:size-24"
       />
       <div class="flex flex-col">
-        <h3 class="font-display text-2xl tracking-tight">
+        <h1 class="font-display text-4xl tracking-tight sm:text-5xl">
           <slot name="title" mdc-unwrap="p" />
-        </h3>
+        </h1>
         <div class="*:mb-0 *:text-primary">
           <slot name="job" mdc-unwrap="p" />
         </div>
@@ -26,6 +26,14 @@ const { profile, global } = useAppConfig()
     </div>
     <p class="max-w-[600px] text-pretty text-muted text-sm font-extralight sm:text-base">
       <slot mdc-unwrap="p" />
+    </p>
+    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted">
+      <span class="inline-block size-1.5 shrink-0 bg-primary" aria-hidden="true" />
+      <span>Java &amp; Spring and Angular at work</span>
+      <span class="text-(--ui-border)">/</span>
+      <span>Vue and Nuxt by choice</span>
+      <span class="text-(--ui-border)">/</span>
+      <span>learning Rust</span>
     </p>
     <div class="mt-2 flex flex-wrap gap-3">
       <UButton
