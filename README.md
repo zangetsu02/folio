@@ -20,5 +20,3 @@ You can see it live at [christianpalladini.me](https://christianpalladini.me/).
 </details>
 
 Inspired by [@HugoRCD](https://github.com/HugoRCD/hr-folio.git).
-
-</a>
