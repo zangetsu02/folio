@@ -128,4 +128,3 @@ body:has(.resume-page) {
   page-break-after: avoid;
 }
 </style>
-

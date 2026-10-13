@@ -632,6 +632,7 @@ In `app/components/Works.vue`, sostituire il blocco `<NuxtImg>` con una coppia c
           :src="work.logo"
           :alt="`${work.name} logo`"
         />
+
         <div
           v-else
           class="flex size-20 shrink-0 items-center justify-center border border-(--ui-border) font-display text-4xl text-muted transition-colors group-hover:border-primary group-hover:text-primary"
@@ -727,14 +728,14 @@ image: "/og/index.png"
 ---
 
 ::hero
-#title
+# title
 christian / zangetsu
 
-#job
+# job
 
 # [Software engineer]{.h1 .border-0 .text-primary }
 
-#default
+# default
 I build web applications that pair a clear, user-focused frontend with a backend that holds up under change.
 Tech Lead at Links Management & Technology, in Rome.<br>
 [**More about me**](/about){.link}.
@@ -773,7 +774,7 @@ Due correzioni nello stesso punto, `app/components/content/Hero.vue`:
 Da `<h3>` a `<h1>`: è il titolo della pagina, e oggi la home non ha nessun `h1` oltre a quello dentro lo slot `#job`. Verificare dopo la modifica che la pagina non finisca con due `h1` — se lo slot `#job` ne produce già uno (`content/index.md` usa `# [Software engineer]`), abbassare quello a testo semplice togliendo il `#` e lasciando le classi:
 
 ```markdown
-#job
+# job
 
 [Software engineer]{.h1 .border-0 .text-primary}
 ```
@@ -889,11 +890,11 @@ Il computed `active` (righe 17-24) gestisce già entrambi i valori: non va tocca
 Dopo il blocco `<template #about>`, aggiungere:
 
 ```vue
-    <template #timeline>
-      <div data-animate style="--stagger: 2;">
-        <slot name="timeline" />
-      </div>
-    </template>
+<template #timeline>
+  <div data-animate style="--stagger: 2;">
+    <slot name="timeline" />
+  </div>
+</template>
 ```
 
 - [ ] **Step 3: Correggere il numero decorativo**
@@ -901,11 +902,11 @@ Dopo il blocco `<template #about>`, aggiungere:
 Il template `#trailing` (righe 36-40) stampa `1` quando `item.label === 'About me'`. Con due tab serve il numero giusto per ciascuna:
 
 ```vue
-    <template #trailing="{ item, index }">
-      <span class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
-        {{ index + 1 }}
-      </span>
-    </template>
+<template #trailing="{ item, index }">
+  <span class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
+    {{ index + 1 }}
+  </span>
+</template>
 ```
 
 Verificare che `UTabs` passi `index` allo slot `#trailing` per la major in uso:
@@ -917,11 +918,11 @@ mcp__nuxt-ui__get-component con name "Tabs"
 Se non lo passa, tornare al confronto su `item.value`:
 
 ```vue
-    <template #trailing="{ item }">
-      <span class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
-        {{ item.value === 'about' ? 1 : 2 }}
-      </span>
-    </template>
+<template #trailing="{ item }">
+  <span class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
+    {{ item.value === 'about' ? 1 : 2 }}
+  </span>
+</template>
 ```
 
 - [ ] **Step 4: Creare il componente Timeline**
@@ -966,7 +967,7 @@ description: How I got from writing my first components to leading a team throug
 
 ::about
 
-#timeline
+# timeline
 :::timeline{year="2022" title="Joined Links Management & Technology"}
 Started in Rome as a software engineer, in the company's competence centre.
 :::

@@ -1,14 +1,15 @@
 <script setup lang="ts">
 const route = useRoute()
+const toast = useToast()
 
 async function copyArticleLinkToClipboard() {
   const link = `${window.location.origin}${route.path}`
   try {
     await navigator.clipboard.writeText(link)
-    toast.success('Article link copied to clipboard !')
+    toast.add({ title: 'Article link copied to clipboard', color: 'success' })
   }
   catch (error) {
-    toast.error('Failed to copy link to clipboard')
+    toast.add({ title: 'Failed to copy link to clipboard', color: 'error' })
   }
 }
 </script>

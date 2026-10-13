@@ -3,14 +3,14 @@ image: "/og/index.png"
 ---
 
 ::hero
-#title
+# title
 christian / zangetsu
 
-#job
+# job
 
 # [Software engineer]{.h1 .border-0 .text-primary }
 
-#default
+# default
 An idiot admires complexity, a genius admires simplicity.<br>
 Want to know what drives me? [**Read more about me**](/about){.link}.
 ::

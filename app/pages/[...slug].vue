@@ -23,6 +23,5 @@ const contentClasses = {
     <FolioMeta :page :is-writing />
     <Toc v-if="isWriting" :links="page.body.toc?.links!" />
     <ContentRenderer :value="page" :class="isWriting ? contentClasses.writing : contentClasses.default" :data="mdcVars" />
-    <!-- <Toaster position="top-center" close-button /> -->
   </div>
 </template>
