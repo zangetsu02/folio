@@ -1,6 +1,15 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.NUXT_PRIVATE_RESEND_API_KEY)
+// Costruito su richiesta, non al caricamento del modulo: il costruttore di Resend
+// lancia se la chiave manca, e Nitro importa i route server in modo eager — una
+// chiave assente in locale faceva cadere l'intero sito, non solo l'invio mail.
+function getResend() {
+  const apiKey = process.env.NUXT_PRIVATE_RESEND_API_KEY
+  if (!apiKey)
+    throw createError({ statusCode: 503, statusMessage: 'Email service is not configured' })
+
+  return new Resend(apiKey)
+}
 
 // find your audience id here: https://resend.com/audiences
 const nuxtLogAudienceId = '0874ddcb-4a9d-404d-bb43-a48c7f90c861'
@@ -13,7 +22,7 @@ interface SendMailDto {
 
 export async function sendSubscribeEmail(email: string) {
   try {
-    await resend.emails.send({
+    await getResend().emails.send({
       from: 'Zangetsu <hello@christianpalladini.me>',
       to: [email],
       subject: 'Welcome to Zangetsu newsletter!',
@@ -38,7 +47,7 @@ export async function sendSubscribeEmail(email: string) {
 
 export async function sendContactEmail({ email, message, name }: SendMailDto) {
   try {
-    await resend.emails.send({
+    await getResend().emails.send({
       from: 'Zangetsu <hello@christianpalladini.me>',
       to: ['christian.palladini2@gmail.com'],
       subject: 'New message from christianpalladini.me',
@@ -64,7 +73,7 @@ export async function sendContactEmail({ email, message, name }: SendMailDto) {
 }
 
 export async function addContactToList(email: string) {
-  return await resend.contacts.create({
+  return await getResend().contacts.create({
     email,
     audienceId: nuxtLogAudienceId,
   })
