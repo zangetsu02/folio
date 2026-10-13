@@ -13,8 +13,9 @@ export default defineContentConfig({
       schema: z.object({
         title: z.string().nonempty(),
         description: z.string().nonempty(),
-        date: z.string().nonempty(),
-        image: z.string().nonempty(),
+        // opzionali davvero: nessuna pagina ha `date`, solo index.md ha `image`
+        date: z.string().optional(),
+        image: z.string().optional(),
       }),
     }),
     writing: defineCollection({

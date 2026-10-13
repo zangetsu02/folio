@@ -46,8 +46,11 @@ export async function sendSubscribeEmail(email: string) {
 }
 
 export async function sendContactEmail({ email, message, name }: SendMailDto) {
+  // fuori dal try: altrimenti il 503 di getResend() finirebbe nel catch e
+  // uscirebbe come 500 generico
+  const resend = getResend()
   try {
-    await getResend().emails.send({
+    await resend.emails.send({
       from: 'Zangetsu <hello@christianpalladini.me>',
       to: ['christian.palladini2@gmail.com'],
       subject: 'New message from christianpalladini.me',

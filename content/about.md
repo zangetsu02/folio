@@ -5,7 +5,7 @@ description: I'm a developer, designer, and OSS maintainer based in Rome (Italy)
 
 ::about
 
-# about
+#about
 Move slow and break everything.
 
 **Software engineer** based in Rome, Italy, with **4+ years of crafting digital experiences**. Curiosity powered back in the day, and it still drives

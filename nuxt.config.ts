@@ -12,6 +12,10 @@ export default defineNuxtConfig({
     indexable: true,
   },
 
+  sitemap: {
+    exclude: ['/writing', '/_resume'],
+  },
+
   $development: {
     site: {
       url: 'http://localhost:3000',
@@ -86,10 +90,12 @@ export default defineNuxtConfig({
         '/works',
         '/about',
         '/timeline',
-        '/writing',
         '/_resume',
       ],
-      ignore: ['/notes', '/notes/**', '/__og-image__/**'],
+      // /writing resta raggiungibile ma non si prerenderizza: la collection e'
+      // vuota finche' non ci sono articoli, e una pagina vuota indicizzata vale
+      // meno di nessuna pagina.
+      ignore: ['/notes', '/notes/**', '/writing', '/__og-image__/**'],
     },
   },
 

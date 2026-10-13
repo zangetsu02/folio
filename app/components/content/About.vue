@@ -42,7 +42,7 @@ const active = computed({
     }"
   >
     <template #trailing="{ item }">
-      <span class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
+      <span aria-hidden="true" class="absolute -bottom-0.5 -right-3 text-5xl font-normal opacity-[9%] sm:text-6xl">
         {{ item.value === 'about' ? 1 : 2 }}
       </span>
     </template>
