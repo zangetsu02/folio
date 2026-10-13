@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { profile, socials } = useAppConfig()
 const route = useRoute()
+const colorMode = useColorMode()
+
+const picture = computed(() =>
+  colorMode.value === 'dark' ? profile.pictureDark : profile.pictureLight,
+)
 
 const nav = [
   { label: 'Works', to: '/works' },
@@ -16,13 +21,27 @@ function isActive(to: string) {
 
 <template>
   <aside class="flex flex-col gap-4 lg:gap-7 lg:sticky lg:top-6 lg:self-start print:hidden">
-    <div>
-      <NuxtLink to="/" class="font-display text-2xl leading-[1.08] tracking-tight hover:text-primary transition-colors">
-        christian&thinsp;/&thinsp;zangetsu
-      </NuxtLink>
-      <p class="mt-0.5 text-xs text-muted">
-        {{ profile.workTitle }} · Rome
-      </p>
+    <!-- Su schermo largo la foto prende tutta la colonna e il nome le sta
+         sotto: accanto al nome, dentro 14rem, resterebbe un francobollo. -->
+    <div class="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-3">
+      <NuxtImg
+        v-if="picture"
+        :src="picture"
+        :alt="profile.name"
+        width="448"
+        height="560"
+        sizes="112px lg:224px"
+        format="webp"
+        class="aspect-[4/5] w-24 shrink-0 border border-(--ui-border) object-cover sm:w-28 lg:w-full"
+      />
+      <div class="min-w-0">
+        <NuxtLink to="/" class="font-display text-xl leading-[1.08] tracking-tight hover:text-primary transition-colors lg:text-2xl">
+          christian&thinsp;/&thinsp;zangetsu
+        </NuxtLink>
+        <p class="mt-0.5 text-xs text-muted">
+          {{ profile.workTitle }} · Rome
+        </p>
+      </div>
     </div>
 
     <p class="hidden font-mono text-[10.5px] leading-[1.85] text-muted lg:block">
@@ -70,5 +89,7 @@ function isActive(to: string) {
         Download PDF
       </NuxtLink>
     </div>
+
+    <Sigil class="hidden text-muted lg:block" :size="56" />
   </aside>
 </template>

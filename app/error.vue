@@ -1,6 +1,5 @@
 <template>
   <UApp class="relative flex h-screen flex-col items-center justify-center">
-    <Backdrop />
     <div class="size-full flex flex-col items-center justify-center">
       <h1 class="text-center text-7xl">
         404

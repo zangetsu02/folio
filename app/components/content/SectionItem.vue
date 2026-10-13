@@ -16,6 +16,7 @@ const {
 
 <template>
   <Motion layout class="flex flex-col gap-2" data-animate :style="{ '--stagger': number, '--delay': `${number * 0.05}s` }">
+    <ThornRule class="mb-3 text-(--ui-border)" />
     <h2 class="relative w-fit" :class="sizeTitle">
       {{ title }}<span class="text-primary">.</span>
       <span :class="numberSize" class="absolute font-mono -bottom-0.5 -right-10 opacity-[9%] ">

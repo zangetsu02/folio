@@ -3,6 +3,7 @@
 
 @import "./animations.css";
 @import "./print.css";
+@import "lenis/dist/lenis.css";
 
 @theme static {
   --font-sans: "Geist Sans", sans-serif;
@@ -23,18 +24,12 @@
   --ui-text: rgb(26, 26, 24) !important;
   --ui-radius: 0;
 
-  --glow: rgb(26 26 24 / 7%);
-  --grain-opacity: 0.025;
-
   scrollbar-color: var(--ui-border) transparent;
   scrollbar-width: thin;
 
 }
 
 .dark {
-  --glow: rgb(240 238 232 / 10%);
-  --grain-opacity: 0.04;
-
   --ui-primary: rgb(240, 238, 232) !important;
   --ui-bg: rgb(16, 16, 14) !important;
   --ui-border: rgb(42, 41, 38) !important;

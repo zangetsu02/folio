@@ -6,8 +6,6 @@ const route = useRoute()
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
-    <Backdrop />
-
     <!-- Niente cornice: la scatola stringeva il contenuto due volte, col proprio
          padding sopra a quello della pagina, e con il binario a sinistra la
          colonna di testo restava troppo stretta. -->
@@ -31,14 +29,17 @@ const route = useRoute()
               </Motion>
 
               <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
+
+              <footer class="mt-20 border-t border-(--ui-border) pt-6 text-xs text-muted print:hidden">
+                This website is fully open-source, you can find the source code on
+                <NuxtLink to="https://github.com/zangetsu02/folio" class="underline hover:text-primary transition-colors">
+                  GitHub
+                </NuxtLink>
+              </footer>
             </div>
           </div>
         </Motion>
       </LayoutGroup>
-
-      <span class="mt-12 text-xs text-muted print:hidden">
-        This website is fully open-source, you can find the source code on <NuxtLink to="https://github.com/zangetsu02/folio" class="underline">GitHub</NuxtLink>
-      </span>
     </main>
   </UApp>
 </template>

@@ -29,6 +29,3 @@ now used by other teams. Domain modelling, clean architecture, and staying hands
 The full history is in my [**resume**](/resume){.link}.
 ::
 
-::creed
-An idiot admires complexity, a genius admires simplicity.
-::
