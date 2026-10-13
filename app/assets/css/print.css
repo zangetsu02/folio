@@ -10,7 +10,8 @@
 @media print {
   @page {
     size: A4;
-    margin: 12mm 14mm;
+    /* 18mm ~ 0.7in: i template minimali convergono su 0.7-0.75in. */
+    margin: 18mm;
   }
 
   /* La palette chiara vince anche se la pagina e' in dark mode a schermo. */
@@ -65,44 +66,77 @@
     display: flex !important;
   }
 
-  /* --- Impaginazione del CV ------------------------------------------- */
+  /* --- Intestazione ------------------------------------------------------ */
 
-  /* A schermo e' una griglia a 6 colonne con sidebar sticky; in stampa
-     l'intestazione va in orizzontale e il contenuto sotto a tutta larghezza. */
+  /* Una colonna sola: la griglia a 6 colonne del sito lascerebbe
+     l'intestazione in una colonna stretta con il vuoto accanto. */
   .cv {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    display: block;
   }
 
-  .cv > :first-child aside {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    grid-auto-rows: auto;
-    column-gap: 1.25rem;
-    row-gap: 0.35rem;
-    position: static;
-    align-items: start;
-  }
-
+  /* I riferimenti tipografici minimali non hanno foto: il CV si apre col nome.
+     Per rimetterla basta togliere questa regola. */
   .cv > :first-child aside > img {
-    grid-row: 1 / span 3;
-    width: 6rem !important;
-    height: 6rem !important;
-    align-self: center;
+    display: none !important;
   }
 
-  .cv > :first-child aside > :not(img) {
-    grid-column: 2;
+  .cv > :first-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid var(--ui-border);
   }
 
-  /* L'ultimo blocco dell'aside sono le icone social, che a schermo hanno un
-     border-t per staccarsi dai contatti. In stampa e' l'unica riga orizzontale
-     che non appartiene a un titolo di sezione, e cade a ridosso di quella di
-     "About.": due fili ravvicinati che non separano niente. */
+  /* Flex con wrap: il nome prende la riga intera, contatti e icone social si
+     appoggiano alla stessa riga sotto invece di impilarsi su due. */
+  .cv > :first-child aside {
+    display: flex;
+    /* esplicita: l'aside ha `flex-col` da Tailwind, che altrimenti sopravvive
+       all'override e con align-items centra tutto orizzontalmente */
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 0.4rem 1.1rem;
+    position: static;
+  }
+
+  .cv > :first-child aside > div:nth-of-type(1) {
+    flex: 0 0 100%;
+  }
+
+  /* Il nome e' la prima informazione della pagina e deve pesare: i riferimenti
+     stanno fra 20 e 28pt, a schermo qui e' text-2xl. */
+  .cv > :first-child aside h3 {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+
+  .cv > :first-child aside h3 + span {
+    font-size: 1rem;
+  }
+
+  /* Contatti su UNA riga invece che impilati: e' questo che fa dell'intestazione
+     una fascia a tutta larghezza e toglie il vuoto a destra. */
+  .cv > :first-child aside > div:nth-of-type(2) {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 1.1rem;
+    margin-top: 0;
+    font-size: 0.8rem;
+  }
+
+  .cv > :first-child aside > div:nth-of-type(2) .truncate {
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  /* Le icone social si appoggiano alla stessa riga. */
   .cv > :first-child aside > div:last-child {
     border-top: none !important;
     padding-top: 0 !important;
+    margin-top: 0;
   }
 
   /* --- Gerarchia delle sezioni ----------------------------------------- */

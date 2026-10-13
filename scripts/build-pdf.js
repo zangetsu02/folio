@@ -89,7 +89,7 @@ try {
     footerTemplate,
     // I margini li impone qui Puppeteer e non il @page del CSS, perche' servono
     // a riservare lo spazio al footer. Il @page resta per la stampa da browser.
-    margin: { top: '12mm', right: '0', bottom: '14mm', left: '0' },
+    margin: { top: '18mm', right: '0', bottom: '18mm', left: '0' },
   })
   writeFileSync(OUTPUT, pdfBuffer)
   console.log(`✔ PDF saved to ${OUTPUT}`)
