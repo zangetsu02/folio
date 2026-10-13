@@ -1,12 +1,7 @@
 <script setup lang="ts">
-const {
-  as = 'div',
-  top = true,
-  bottom = true,
-} = defineProps<{
+// top/bottom erano dichiarate ma mai usate nel template: props morte, rimosse.
+const { as = 'div' } = defineProps<{
   as?: string
-  top?: boolean
-  bottom?: boolean
 }>()
 </script>
 

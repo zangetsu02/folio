@@ -36,10 +36,5 @@
     "@antfu/eslint-config": "^9.5.1",
     "@iconify-json/lucide": "^1.2.143",
     "eslint": "^10.12.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "better-sqlite3": "^12.0.0"
-    }
   }
 }

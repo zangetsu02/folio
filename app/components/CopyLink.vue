@@ -8,7 +8,7 @@ async function copyArticleLinkToClipboard() {
     await navigator.clipboard.writeText(link)
     toast.add({ title: 'Article link copied to clipboard', color: 'success' })
   }
-  catch (error) {
+  catch {
     toast.add({ title: 'Failed to copy link to clipboard', color: 'error' })
   }
 }

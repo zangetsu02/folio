@@ -2,6 +2,11 @@ minimumReleaseAgeExcludePrune: true
 trustPolicy: no-downgrade
 shellEmulator: true
 
+overrides:
+  # db0 carica better-sqlite3 in dev e in build; la 11 non ha prebuild per
+  # Node 26 e compilarla da sorgente fallisce.
+  better-sqlite3: ^12.0.0
+
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
