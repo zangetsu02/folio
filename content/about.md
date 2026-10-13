@@ -8,7 +8,7 @@ description: I'm a developer, designer, and OSS maintainer based in Rome (Italy)
 # about
 Move slow and break everything.
 
-**Software engineer** based in Rome, Italy, with **3+ years of crafting digital experiences**. Curiosity powered back in the day, and it still drives
+**Software engineer** based in Rome, Italy, with **4+ years of crafting digital experiences**. Curiosity powered back in the day, and it still drives
 me to craft solutions that push boundaries while staying _clean and intuitive_.
 
 Currently using at work :icon{align name="simple-icons:spring" .size-4 size="20px"} **Java/Spring** and :icon{align name="simple-icons:angular" .size-4 size="20px"} **Angular**,

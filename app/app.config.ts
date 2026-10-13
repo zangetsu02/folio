@@ -6,7 +6,6 @@ export default defineAppConfig({
     email: 'hello@christianpalladini.me',
     name: 'Christian Palladini',
     workTitle: 'Software Engineer',
-    phone: '(+33) 6 21 56 22 18',
     linkedinPicture: '/me.jpeg',
     pictureDark: 'https://avatars.githubusercontent.com/zangetsu02',
     pictureLight: 'https://avatars.githubusercontent.com/zangetsu02',
