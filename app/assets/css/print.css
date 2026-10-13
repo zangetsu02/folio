@@ -82,7 +82,7 @@
      la fascia si legge come l'intestazione di un CV, non come una colonna. */
   .cv > :first-child aside {
     display: grid;
-    grid-template-columns: 6rem 1fr auto;
+    grid-template-columns: 9rem 1fr auto;
     grid-template-rows: auto auto;
     column-gap: 1.25rem;
     row-gap: 0.5rem;
@@ -93,9 +93,13 @@
   .cv > :first-child aside > img {
     grid-column: 1;
     grid-row: 1 / span 2;
-    width: 6rem !important;
-    height: 6rem !important;
+    width: 9rem !important;
+    height: 9rem !important;
     align-self: start;
+    /* A schermo la foto e' `grayscale hover:grayscale-0`: torna a colori col
+       mouse sopra. In un PDF quel passaggio non avviene mai, quindi resterebbe
+       grigia per sempre. */
+    filter: none !important;
   }
 
   /* Nome e ruolo */
@@ -112,11 +116,12 @@
     align-self: start;
   }
 
-  /* Icone social, sotto al nome */
+  /* Icone social, subito sotto al nome. Ancorarle in fondo alla riga le
+     lasciava sospese a meta' foto, staccate dal blocco identita'. */
   .cv > :first-child aside > div:nth-of-type(3) {
     grid-column: 2;
     grid-row: 2;
-    align-self: end;
+    align-self: start;
   }
 
   /* L'ultimo blocco dell'aside sono le icone social, che a schermo hanno un
