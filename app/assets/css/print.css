@@ -1,0 +1,168 @@
+/*
+ * Stile di stampa, condiviso da due percorsi:
+ *  - `pnpm pdf`, che renderizza /_resume con Puppeteer (page.pdf() emula gia'
+ *    media print, quindi queste regole valgono senza bisogno di duplicarle);
+ *  - Ctrl+P dal browser su /resume.
+ * Prima esisteva solo il primo caso, agganciato alla classe .resume-page: chi
+ * stampava la pagina web si portava dietro navigazione, tema scuro e sidebar.
+ */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 14mm;
+  }
+
+  /* La palette chiara vince anche se la pagina e' in dark mode a schermo. */
+  :root,
+  :root.dark,
+  .dark {
+    --ui-primary: rgb(26, 26, 24) !important;
+    --ui-bg: rgb(255, 255, 255) !important;
+    --ui-border: rgb(160, 160, 160) !important;
+    --ui-text-muted: rgb(60, 60, 60) !important;
+    --ui-text: rgb(26, 26, 24) !important;
+  }
+
+  :root {
+    font-size: 11pt;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Le animazioni d'ingresso lascerebbero elementi a opacita' 0 nel PDF. */
+  [data-animate] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* I margini li da' @page: il padding del layout raddoppierebbe. */
+  main {
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* La cornice e le crocette agli angoli sono decorazione da schermo. */
+  .cross {
+    display: none !important;
+  }
+
+  .bg-grid-white {
+    background-image: none !important;
+  }
+
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: flex !important;
+  }
+
+  /* --- Impaginazione del CV ------------------------------------------- */
+
+  /* A schermo e' una griglia a 6 colonne con sidebar sticky; in stampa
+     l'intestazione va in orizzontale e il contenuto sotto a tutta larghezza. */
+  .cv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cv > :first-child aside {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    grid-auto-rows: auto;
+    column-gap: 1.25rem;
+    row-gap: 0.35rem;
+    position: static;
+    align-items: start;
+  }
+
+  .cv > :first-child aside > img {
+    grid-row: 1 / span 3;
+    width: 6rem !important;
+    height: 6rem !important;
+    align-self: center;
+  }
+
+  .cv > :first-child aside > :not(img) {
+    grid-column: 2;
+  }
+
+  .cv > :first-child aside > div:nth-of-type(2) {
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+
+  /* --- Densita' -------------------------------------------------------- */
+  /* A schermo le sezioni hanno gap-12 (3rem): su carta e' spreco. */
+
+  .cv > :last-child > .flex.flex-col {
+    gap: 1.1rem !important;
+  }
+
+  .cv article {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .cv .py-3 {
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  .cv .py-2\.5 {
+    padding-top: 0.3rem !important;
+    padding-bottom: 0.3rem !important;
+  }
+
+  .cv article .mt-4 {
+    margin-top: 0.5rem !important;
+  }
+
+  .cv article > ul.mt-4 {
+    margin-top: 0.35rem !important;
+  }
+
+  /* I paragrafi globali hanno my-5 (1.25rem sopra e sotto): dentro il CV
+     diventano un muro d'aria fra titolo, descrizione e chip. */
+  .cv p {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.45;
+  }
+
+  .cv .mt-2 {
+    margin-top: 0.3rem !important;
+  }
+
+  /* --- Interruzioni di pagina ------------------------------------------ */
+
+  .cv article,
+  .cv header,
+  .cv li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Un titolo di sezione da solo in fondo a una pagina e' orfano. */
+  .cv h2,
+  .cv h3,
+  .cv h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* L'intestazione con foto e contatti non si spezza mai. */
+  .cv > :first-child {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

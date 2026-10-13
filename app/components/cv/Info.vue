@@ -41,7 +41,7 @@ const { profile, socials, seo } = useAppConfig()
         to="/resume.pdf"
         external
         target="_blank"
-        class="web-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
+        class="screen-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
       >
         <Icon name="lucide:file-down" class="size-4 shrink-0" />
         <span>Download PDF</span>
@@ -50,7 +50,7 @@ const { profile, socials, seo } = useAppConfig()
         :to="seo.url"
         external
         target="_blank"
-        class="pdf-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
+        class="print-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
       >
         <Icon name="lucide:globe" class="size-4 shrink-0" />
         <span class="truncate">{{ seo.url.replace(/^https?:\/\//, '') }}</span>

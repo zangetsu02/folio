@@ -7,8 +7,8 @@ const router = useRouter()
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
-    <Spotlight />
-    <main class="flex min-h-screen flex-col p-3 sm:p-12">
+    <Spotlight class="print:hidden" />
+    <main class="flex min-h-screen flex-col p-3 sm:p-12 print:block print:p-0">
       <LayoutGroup id="main-layout">
         <Motion
           layout
@@ -19,8 +19,8 @@ const router = useRouter()
           }"
           class="flex size-full mx-auto max-w-7xl bg-grid-white flex-1 flex-col gap-3 "
         >
-          <CrossedDiv class="p-4 sm:p-6">
-            <div class="flex w-full min-h-3" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
+          <CrossedDiv class="p-4 sm:p-6 print:border-0 print:p-0">
+            <div class="flex w-full min-h-3 print:hidden" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
               <NuxtLink v-if="route.path !== '/'" aria-label="Go back to home page" class="group cursor-pointer" to="/">
                 <span class="hover:text-primary hover:underline">
                   go back.
@@ -49,7 +49,7 @@ const router = useRouter()
         </Motion>
       </LayoutGroup>
 
-      <span class="mt-2 text-xs text-center text-muted">
+      <span class="mt-2 text-xs text-center text-muted print:hidden">
         This website is fully open-source, you can find the source code on <NuxtLink to="https://github.com/zangetsu02/folio" class="underline">GitHub</NuxtLink>
       </span>
     </main>

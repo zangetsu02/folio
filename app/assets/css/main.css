@@ -2,6 +2,7 @@
 @import "@nuxt/ui";
 
 @import "./animations.css";
+@import "./print.css";
 
 @theme static {
   --font-sans: "Geist Sans", sans-serif;
@@ -70,7 +71,7 @@
     vertical-align: sub;
   }
 
-  .pdf-only {
+  .print-only {
     display: none;
   }
 }
