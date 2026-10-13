@@ -32,11 +32,21 @@ if (error.value) {
         :style="{ '--stagger': index }"
       >
         <NuxtImg
+          v-if="work.logo"
           width="80"
           height="80"
           class="size-20 shrink-0 object-contain saturate-0 transition duration-300 group-hover:saturate-100"
           :src="work.logo"
+          :alt="`${work.name} logo`"
         />
+        <div
+          v-else
+          class="flex size-20 shrink-0 items-center justify-center border border-(--ui-border) font-display text-4xl text-muted transition-colors group-hover:border-primary group-hover:text-primary"
+          aria-hidden="true"
+        >
+          {{ work.name.charAt(0) }}
+        </div>
+
         <div class="flex flex-1 flex-col min-w-0">
           <div class="flex items-baseline justify-between gap-2">
             <h3 class="font-display text-3xl decoration-primary truncate group-hover:underline">
@@ -55,8 +65,21 @@ if (error.value) {
           <span class="text-[--ui-text-muted] font-extralight text-sm sm:text-base line-clamp-2">
             {{ work.description }}
           </span>
+          <ul v-if="work.tech?.length" class="mt-2 flex flex-wrap gap-1">
+            <li
+              v-for="t in work.tech"
+              :key="t"
+              class="border border-(--ui-border) px-1.5 py-0.5 font-mono text-[10px] text-muted"
+            >
+              {{ t }}
+            </li>
+          </ul>
         </div>
       </NuxtLink>
     </div>
+
+    <p v-if="!works?.length" class="font-mono text-sm text-muted">
+      Nothing here yet.
+    </p>
   </div>
 </template>
