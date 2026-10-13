@@ -2,7 +2,6 @@
 import { LayoutGroup } from 'motion-v'
 
 const route = useRoute()
-const router = useRouter()
 </script>
 
 <template>
@@ -20,31 +19,20 @@ const router = useRouter()
           class="flex size-full mx-auto max-w-7xl bg-grid-white flex-1 flex-col gap-3 "
         >
           <CrossedDiv class="p-4 sm:p-6 print:border-0 print:p-0">
-            <div class="flex w-full min-h-3 print:hidden" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
-              <NuxtLink v-if="route.path !== '/'" aria-label="Go back to home page" class="group cursor-pointer" to="/">
-                <span class="hover:text-primary hover:underline">
-                  go back.
-                </span>
-              </NuxtLink>
-              <NuxtLink v-if="route.path === '/resume'" aria-label="Go back to home page" class="group cursor-pointer" external to="/resume.pdf">
-                <span class="hover:text-primary hover:underline">
-                  Download PDF
-                </span>
-              </NuxtLink>
-              <ThemeSelector />
+            <!-- Binario fisso a sinistra, contenuto a destra: a schermo largo
+                 il testo prima stava in ~600px dentro una cornice da 1280px e
+                 la meta' destra restava vuota. -->
+            <div class="flex flex-1 flex-col gap-8 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10 print:block">
+              <Rail />
+
+              <div class="flex min-w-0 flex-col">
+                <Motion layout class="flex-1">
+                  <slot />
+                </Motion>
+
+                <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
+              </div>
             </div>
-            <Motion layout class="flex-1">
-              <slot />
-            </Motion>
-
-            <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
-
-            <Motion
-              layout
-              class="flex items-end justify-end"
-              :class="route.path !== '/' ? 'cursor-pointer' : 'cursor-default'"
-              @click="router.push('/')"
-            />
           </CrossedDiv>
         </Motion>
       </LayoutGroup>
