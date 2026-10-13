@@ -6,8 +6,12 @@ const route = useRoute()
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
-    <Spotlight class="print:hidden" />
-    <main class="flex min-h-screen flex-col p-3 sm:p-12 print:block print:p-0">
+    <Backdrop />
+
+    <!-- Niente cornice: la scatola stringeva il contenuto due volte, col proprio
+         padding sopra a quello della pagina, e con il binario a sinistra la
+         colonna di testo restava troppo stretta. -->
+    <main class="relative z-10 flex min-h-screen flex-col px-5 py-8 sm:px-10 sm:py-12 print:block print:p-0">
       <LayoutGroup id="main-layout">
         <Motion
           layout
@@ -16,28 +20,23 @@ const route = useRoute()
             ease: 'easeInOut',
             duration: 0.2,
           }"
-          class="flex size-full mx-auto max-w-7xl bg-grid-white flex-1 flex-col gap-3 "
+          class="mx-auto flex w-full max-w-[100rem] flex-1 flex-col"
         >
-          <CrossedDiv class="p-4 sm:p-6 print:border-0 print:p-0">
-            <!-- Binario fisso a sinistra, contenuto a destra: a schermo largo
-                 il testo prima stava in ~600px dentro una cornice da 1280px e
-                 la meta' destra restava vuota. -->
-            <div class="flex flex-1 flex-col gap-8 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10 print:block">
-              <Rail />
+          <div class="flex flex-1 flex-col gap-8 lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-14 print:block">
+            <Rail />
 
-              <div class="flex min-w-0 flex-col">
-                <Motion layout class="flex-1">
-                  <slot />
-                </Motion>
+            <div class="flex min-w-0 flex-col lg:border-l lg:border-(--ui-border) lg:pl-14 print:border-0 print:pl-0">
+              <Motion layout class="flex-1">
+                <slot />
+              </Motion>
 
-                <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
-              </div>
+              <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
             </div>
-          </CrossedDiv>
+          </div>
         </Motion>
       </LayoutGroup>
 
-      <span class="mt-2 text-xs text-center text-muted print:hidden">
+      <span class="mt-12 text-xs text-muted print:hidden">
         This website is fully open-source, you can find the source code on <NuxtLink to="https://github.com/zangetsu02/folio" class="underline">GitHub</NuxtLink>
       </span>
     </main>
