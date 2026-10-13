@@ -65,75 +65,71 @@
     display: flex !important;
   }
 
-  /* --- Impaginazione del CV ------------------------------------------- */
+  /* --- Impaginazione del CV ---------------------------------------------- */
 
-  /* A schermo e' una griglia a 6 colonne con sidebar sticky; in stampa
-     l'intestazione va in orizzontale e il contenuto sotto a tutta larghezza. */
-  .cv {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  /* L'impianto a due colonne (sidebar 2/6, contenuto 4/6) ESISTE GIA' in
+     Resume.vue. Il CSS di stampa precedente lo appiattiva in una fascia
+     orizzontale con `display: flex`; qui si lascia vivere la griglia. */
+
+  /* La sidebar si ferma all'altezza del suo contenuto invece di allungarsi
+     quanto la colonna accanto: cosi' il fondo grigio e' un blocco netto in
+     cima alla prima pagina e non una striscia che attraversa due fogli,
+     cosa che in stampa Chrome rende in modo inaffidabile. */
+  .cv > :first-child {
+    align-self: start;
+    background: rgb(243, 242, 239);
+    padding: 1rem;
   }
 
-  /* Due colonne: una foto alta a sinistra, tutto il resto impilato a destra.
-     La foto non ha un'altezza fissa — si estende su tutte le righe e prende
-     height: 100%, cosi' il suo bordo inferiore combacia sempre con l'ultima
-     riga della colonna accanto, qualunque sia il numero di contatti. */
   .cv > :first-child aside {
-    display: grid;
-    grid-template-columns: 8rem 1fr;
-    grid-template-rows: auto auto auto;
-    column-gap: 1.5rem;
-    row-gap: 0.6rem;
     position: static;
-    align-items: start;
+    gap: 1rem !important;
   }
 
+  /* La foto occupa tutta la larghezza della sidebar. */
   .cv > :first-child aside > img {
-    grid-column: 1;
-    grid-row: 1 / -1;
-    align-self: stretch;
-    width: 8rem !important;
-    height: 100% !important;
+    align-self: stretch !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
-    /* A schermo la foto e' `grayscale hover:grayscale-0`: torna a colori col
-       mouse sopra. In un PDF quel passaggio non avviene mai, quindi resterebbe
-       grigia per sempre. */
+    /* A schermo e' `grayscale hover:grayscale-0`: torna a colori col mouse
+       sopra. In un PDF quel passaggio non avviene mai. */
     filter: none !important;
   }
 
-  /* Nome e ruolo */
-  .cv > :first-child aside > div:nth-of-type(1) {
-    grid-column: 2;
-    grid-row: 1;
+  .cv > :first-child aside h3 {
+    font-size: 1.35rem;
+    line-height: 1.1;
   }
 
-  /* Il nome e' la prima informazione della pagina: a schermo e' text-2xl,
-     in stampa compete con una foto alta 10rem e perde. */
-  .cv > :first-child aside > div:nth-of-type(1) h3 {
-    font-size: 1.9rem;
-    line-height: 1.15;
+  /* A schermo i contatti hanno `truncate` perche' la sidebar e' larga e un
+     indirizzo lungo andrebbe a capo male. In stampa la colonna e' piu' stretta
+     e `truncate` tagliava l'email a meta': su carta un contatto troncato e'
+     un contatto perso. */
+  .cv > :first-child aside .truncate {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    word-break: break-word;
   }
 
-  /* Contatti */
   .cv > :first-child aside > div:nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 2;
+    font-size: 0.78rem;
+    line-height: 1.35;
   }
 
-  /* Icone social, in fondo alla colonna */
-  .cv > :first-child aside > div:nth-of-type(3) {
-    grid-column: 2;
-    grid-row: 3;
-  }
-
-  /* L'ultimo blocco dell'aside sono le icone social, che a schermo hanno un
-     border-t per staccarsi dai contatti. In stampa e' l'unica riga orizzontale
-     che non appartiene a un titolo di sezione, e cade a ridosso di quella di
-     "About.": due fili ravvicinati che non separano niente. */
+  /* Il border-t sopra le icone social serviva a staccarle dai contatti quando
+     la sidebar era su fondo bianco; dentro un blocco grigio e' una riga di
+     troppo. */
   .cv > :first-child aside > div:last-child {
     border-top: none !important;
     padding-top: 0 !important;
+  }
+
+  /* Distanza fra le due colonne. */
+  .cv {
+    gap: 1.5rem !important;
   }
 
   /* --- Gerarchia delle sezioni ----------------------------------------- */
