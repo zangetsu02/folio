@@ -2,7 +2,9 @@ import antfu from '@antfu/eslint-config'
 
 export default antfu({
   vue: true,
-  ignores: ['docs/**'],
+  // .superpowers/ e' lo scratch degli esecutori di piano: contiene estratti
+  // del piano in markdown, che non sono codice di questo repo.
+  ignores: ['docs/**', '.superpowers/**'],
   rules: {
     'node/prefer-global/process': 'off',
   },

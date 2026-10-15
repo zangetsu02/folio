@@ -11,7 +11,7 @@ const MAX_CH = 75
 const GONE = ['/about', '/contact', '/writing', '/timeline']
 
 const failures = []
-const note = (ok, msg) => {
+function note(ok, msg) {
   console.log(`${ok ? '  ok  ' : ' FAIL '} ${msg}`)
   if (!ok)
     failures.push(msg)
@@ -23,6 +23,10 @@ const note = (ok, msg) => {
 async function measure(page) {
   return page.evaluate(() => {
     const ps = [...document.querySelectorAll('p, li')]
+      // innerText e non textContent: serve il testo come viene reso, non
+      // quello nel DOM. textContent conterebbe anche figli nascosti e
+      // farebbe sembrare lungo un paragrafo la cui parte visibile e' corta.
+      // eslint-disable-next-line unicorn/prefer-dom-node-text-content
       .filter(e => e.innerText.trim().length > 90 && e.offsetParent !== null)
     if (!ps.length)
       return null
