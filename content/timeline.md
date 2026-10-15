@@ -6,32 +6,34 @@ description: How I got from writing my first components to leading a team throug
 ::about
 
 #timeline
-:::timeline{year="2022" title="Joined Links Management & Technology"}
-Started in Rome as a software engineer, inside the company's competence centre.
-:::
-
-:::timeline{year="2023" title="Sintesi — Regione Puglia"}
-Modernising a regional employment-services platform: a legacy monolith broken into fifteen-odd
-microservices. Spring Boot 3, Java 21, Kafka, Kubernetes. Coordinated a team of four while staying
-in the code, and set the DDD and clean-architecture standards the team worked to.
-:::
-
-:::timeline{year="2024" title="Certified Vue.js Developer"}
-Certification from VueSchool — the formal version of something I had been doing for years.
+:::timeline{year="2023" title="Joined Links Management & Technology"}
+February 2023, in Rome, inside the company's competence centre.
 :::
 
 :::timeline{year="2024" title="Sifer — Regione Emilia-Romagna"}
-Tech lead on a full rewrite: Symfony, Nuxt, PostgreSQL. Built a component library of twenty-five-odd
-components that other teams in the competence centre later adopted.
+Tech lead on the full rewrite, March 2024 to May 2025. A component library of
+twenty-five-odd components, later adopted by other teams in the competence centre.
+Symfony, Nuxt, PostgreSQL.
 :::
 
-:::timeline{year="2025" title="Editor themes, in the open"}
-Dark Discord Theme shipped for VS Code and then rebuilt for Zed. Small projects, but the first ones
-other people installed.
+:::timeline{year="2024" title="Certified Vue.js Developer"}
+April 2024, from VueSchool — the formal version of something I had been doing for years.
+:::
+
+:::timeline{year="2025" title="Sintesi — Regione Puglia"}
+January 2025 to August 2026: a regional employment-services platform, a legacy monolith
+broken into fifteen-odd microservices. Coordinated a team of four while staying in the
+code, and set the DDD and clean-architecture standards the team worked to.
+Spring Boot 3, Java 21, Kafka, Kubernetes.
+:::
+
+:::timeline{year="2025" title="The first things other people installed"}
+October and November 2025: the Dark Discord theme for Zed and for VS Code, and a Nuxt 4
+starter with Better Auth and Drizzle.
 :::
 
 :::timeline{year="2026" title="Libraries and tools"}
-A TypeScript SDK for Aruba's electronic invoicing API. A Nuxt 4 starter with Better Auth and Drizzle.
-A VPN indicator for the Omarchy bar.
+June 2026, a TypeScript SDK for Aruba's electronic invoicing API. September 2026, a VPN
+indicator for the Omarchy bar.
 :::
 ::
