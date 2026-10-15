@@ -7,7 +7,7 @@ image: "/og/index.png"
 I build things that stay simple [after]{.italic .text-muted} they get complicated.
 
 #default
-Software engineer in Rome, Tech Lead at Links Management & Technology.
+Full stack developer in Rome, tech lead on the rewrites at Links Management & Technology.
 Enterprise backends during the day, small sharp tools by choice.
 ::
 

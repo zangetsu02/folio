@@ -1,13 +1,13 @@
 {
   "company": "linksmt",
-  "role": "Software Engineer",
+  "role": "Full Stack Developer",
   "name": "Links Management & Technology S.p.A.",
   "employmentType": "Full-time",
   "location": "Rome, IT",
   "start": { "month": "Feb", "year": "2023" },
   "isCurrent": true,
   "summary": [
-    "Tech Lead within the company's competence center, providing technical direction and coordinating development teams across multiple client engagements",
+    "Full stack developer in the company's competence centre, and tech lead on the Sifer and Sintesi engagements: technical direction, team coordination, and the standards those teams worked to",
     "Mentored engineers and drove code reuse, engineering best practices and quality standards across teams",
     "Authored and maintained detailed technical documentation for developers and stakeholders"
   ],
