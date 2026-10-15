@@ -13,14 +13,14 @@
   ],
   "projects": [
     {
-      "name": "Sintesi — Regione Puglia",
-      "description": "Led and coordinated a team of 4 engineers in modernizing a regional employment-services platform, guiding the transition from a legacy monolith to 15+ microservices. Established DDD and Clean Architecture standards to improve maintainability and test coverage, while remaining hands-on in development.",
-      "tech": ["Spring Boot 3", "Java 21", "Kafka", "SQL Server", "Kubernetes"]
-    },
-    {
       "name": "Sifer — Regione Emilia-Romagna",
       "description": "Tech Lead on the full rewrite of Sifer, leading a 4-engineer team and setting the technical direction and delivery cadence. Architected a reusable component library of 25+ components, later adopted by other teams across the competence center.",
       "tech": ["Symfony", "Nuxt", "PostgreSQL"]
+    },
+    {
+      "name": "Sintesi — Regione Puglia",
+      "description": "Led and coordinated a team of 4 engineers in modernizing a regional employment-services platform, guiding the transition from a legacy monolith to 15+ microservices. Established DDD and Clean Architecture standards to improve maintainability and test coverage, while remaining hands-on in development.",
+      "tech": ["Spring Boot 3", "Java 21", "Kafka", "SQL Server", "Kubernetes"]
     }
   ]
 }
