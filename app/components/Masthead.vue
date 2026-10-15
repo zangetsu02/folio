@@ -1,11 +1,6 @@
 <script setup lang="ts">
 const { profile } = useAppConfig()
 const route = useRoute()
-const colorMode = useColorMode()
-
-const picture = computed(() =>
-  colorMode.value === 'dark' ? profile.pictureDark : profile.pictureLight,
-)
 
 const nav = [
   { label: 'Works', to: '/works' },
@@ -18,47 +13,48 @@ function isActive(to: string) {
 </script>
 
 <template>
-  <!-- Il binario laterale occupava 14rem e circa un terzo dell'altezza,
-       identico su ogni pagina: su /writing conteneva piu' roba della pagina.
-       Qui diventa una fascia bassa, cosi' la pagina comincia subito.
-       La larghezza interna e' la stessa della colonna di contenuto, percio'
-       il bordo inferiore e il testo sotto risultano allineati. -->
-  <header class="sticky top-0 z-20 bg-(--ui-bg)/85 px-5 backdrop-blur-sm sm:px-10 print:hidden">
-    <div class="mx-auto flex max-w-[88ch] items-center gap-4 border-b border-(--ui-border) py-3">
-      <NuxtImg
-        v-if="picture"
-        :src="picture"
-        :alt="profile.name"
-        width="80"
-        height="80"
-        sizes="40px"
-        format="webp"
-        class="size-10 shrink-0 border border-(--ui-border) object-cover"
-      />
+  <!--
+    Testata, non barra: sta in cima alla pagina e scorre via col contenuto.
+    Un libro non ha una riga che ti insegue mentre leggi, e la metafora del
+    sito e' il documento.
 
-      <div class="min-w-0 flex-1">
-        <NuxtLink to="/" class="font-display text-lg leading-tight tracking-tight transition-colors hover:text-primary">
-          christian&thinsp;/&thinsp;zangetsu
-        </NuxtLink>
-        <!-- my-0: la regola globale `p { my-5 }` in main.css aggiungerebbe
-             40px alla fascia, che e' quasi il doppio della sua altezza utile. -->
-        <p class="my-0 truncate text-[11px] leading-tight text-muted">
-          {{ profile.workTitle }} · Rome
-        </p>
-      </div>
+    Prima era una fascia fissa con la foto a 40px: a quella dimensione il
+    ritratto diventava un quadrato scuro illeggibile, e il resto -- marchio a
+    sinistra, voci a destra, bordo e blur -- era la forma di default di
+    qualsiasi template. Qui non c'e' nessuna immagine: solo il serif del nome,
+    il mono numerato delle voci e un filetto, che sono gli stessi materiali di
+    tutto il resto del sito.
+  -->
+  <header class="mb-14 flex flex-col gap-6 print:hidden">
+    <div>
+      <NuxtLink
+        to="/"
+        class="font-display text-2xl leading-none tracking-tight transition-colors hover:text-primary sm:text-3xl"
+      >
+        christian&thinsp;/&thinsp;zangetsu
+      </NuxtLink>
+      <!-- my-0: la regola globale `p { my-5 }` in main.css staccherebbe il
+           sottotitolo dal nome di venti pixel. -->
+      <p class="my-0 mt-1.5 text-sm text-muted">
+        {{ profile.workTitle }} · Rome
+      </p>
+    </div>
 
-      <nav class="flex items-center gap-4">
+    <div class="flex items-baseline justify-between gap-6 border-t border-(--ui-border) pt-3">
+      <nav class="flex flex-wrap items-baseline gap-x-6 gap-y-2 font-mono text-xs">
         <NuxtLink
-          v-for="item in nav"
+          v-for="(item, index) in nav"
           :key="item.to"
           :to="item.to"
-          class="text-sm transition-colors hover:text-primary"
+          class="transition-colors hover:text-primary"
           :class="isActive(item.to) ? 'text-highlighted' : 'text-muted'"
         >
+          <span class="opacity-55">{{ String(index + 1).padStart(2, '0') }}</span>
           {{ item.label }}
         </NuxtLink>
-        <ThemeSelector />
       </nav>
+
+      <ThemeSelector />
     </div>
   </header>
 </template>

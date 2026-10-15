@@ -9,14 +9,9 @@ const { socials } = useAppConfig()
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
     <Backdrop />
 
-    <!-- Fuori da <main>: lo sticky si aggancia alla viewport, e il padding
-         orizzontale e la larghezza interna replicano quelli del contenuto,
-         cosi' la fascia e la colonna sono allineate. -->
-    <Masthead class="relative" />
-
     <!-- Niente cornice: la scatola stringeva il contenuto due volte, col proprio
          padding sopra a quello della pagina. -->
-    <main class="relative z-10 flex min-h-screen flex-col px-5 pb-8 pt-10 sm:px-10 sm:pb-12 print:block print:p-0">
+    <main class="relative z-10 flex min-h-screen flex-col px-5 py-8 sm:px-10 sm:py-12 print:block print:p-0">
       <LayoutGroup id="main-layout">
         <Motion
           layout
@@ -28,6 +23,10 @@ const { socials } = useAppConfig()
           class="mx-auto flex w-full max-w-[100rem] flex-1 flex-col"
         >
           <div class="mx-auto flex w-full min-w-0 max-w-[88ch] flex-1 flex-col print:max-w-none">
+            <!-- Dentro la colonna e non fissa: la testata scorre via col
+                 contenuto, come il frontespizio di un documento. -->
+            <Masthead />
+
             <Motion layout class="flex-1">
               <slot />
             </Motion>
