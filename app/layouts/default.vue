@@ -6,6 +6,8 @@ const route = useRoute()
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
+    <Backdrop />
+
     <!-- Niente cornice: la scatola stringeva il contenuto due volte, col proprio
          padding sopra a quello della pagina, e con il binario a sinistra la
          colonna di testo restava troppo stretta. -->
