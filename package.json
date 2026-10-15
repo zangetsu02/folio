@@ -10,6 +10,8 @@
     "lint:fix": "eslint . --fix",
     "check:layout": "node scripts/check-layout.mjs",
     "check:masthead": "node scripts/check-masthead.mjs",
+    "check:print": "node scripts/check-print.mjs",
+    "og": "node scripts/build-og.mjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "pdf": "pnpm build && node scripts/build-pdf.js",

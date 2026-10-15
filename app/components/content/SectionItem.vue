@@ -23,7 +23,11 @@ const slug = computed(() =>
   <Motion layout class="flex flex-col gap-2" data-animate :style="{ '--stagger': number, '--delay': `${number * 0.05}s` }">
     <!-- Il numerale sta sul divisore, non sul titolo: in absolute sopra un h2
          con w-fit finiva sopra le parole. -->
-    <div class="mb-3 flex items-center gap-4">
+    <!-- `section-mark` e' un appiglio stabile per la stampa: la regola che
+         nascondeva il numerale era attaccata a `.cv h2 span.absolute`, cioe'
+         alla posizione nel markup e alle utility, e ha smesso di combaciare
+         in silenzio appena il numerale si e' spostato. -->
+    <div class="section-mark mb-3 flex items-center gap-4">
       <ThornRule class="flex-1 text-(--ui-border)" />
       <span :class="numberSize" class="font-mono leading-none opacity-[9%]" aria-hidden="true">
         {{ number }}

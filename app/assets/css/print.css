@@ -138,9 +138,13 @@
 
   /* --- Gerarchia delle sezioni ----------------------------------------- */
 
-  /* Il numero sbiadito dietro al titolo e' decorazione da schermo: in stampa
-     e' solo rumore, e con w-fit sul titolo complica il filo del bordo. */
-  .cv h2 span.absolute {
+  /* Numerale e filetto a spine sono decorazione da schermo: in stampa sono
+     solo rumore, e il filo sotto il titolo marca gia' l'inizio della sezione.
+     Agganciato a .section-mark e non alla posizione nel markup: la regola
+     precedente puntava a `.cv h2 span.absolute` e ha smesso di combaciare
+     senza dirlo quando il numerale e' uscito dall'h2, riempiendo il PDF di
+     decorazione e spingendo una sezione alla pagina dopo. */
+  .section-mark {
     display: none !important;
   }
 
