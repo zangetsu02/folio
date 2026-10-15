@@ -8,6 +8,7 @@
     "dev": "nuxt dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "check:layout": "node scripts/check-layout.mjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "pdf": "pnpm build && node scripts/build-pdf.js",

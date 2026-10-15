@@ -167,13 +167,20 @@ Il dev server deve essere acceso (`pnpm dev` in un altro terminale).
 
 Run: `pnpm check:layout`
 
-Expected: esce `1`. In particolare:
-- `/ @1920 — 117 caratteri per riga (atteso 60-75)` → FAIL
-- `/works @1920` → FAIL
-- `/about — reindirizza a /about invece di servire la vecchia pagina` → FAIL
-- `un link interno punta ancora a /about` → FAIL
+Expected: esce `1`, 13 controlli falliti. Misurato il 2026-10-15:
+- `/ @1280..2560 — 58 caratteri per riga` → FAIL, **troppo stretta**, non troppo larga
+- `/resume @1920 e @2560 — 88 caratteri` → FAIL, troppo larga
+- `/works @tutte — nessuna prosa lunga da misurare` → ok, le descrizioni sono `span` in griglia
+- le quattro rotte eliminate e due link interni → FAIL
 
-Se passa, lo strumento è sbagliato: non sta trovando la prosa. Controllare il filtro `innerText.trim().length > 90`.
+**Nota sulla diagnosi.** I 117 caratteri citati nella spec valgono per `/about` e `/timeline`,
+non per l'intero sito: `SectionItem` applica già `max-w-[600px]` dove il contenuto non passa
+`size="w-full"`, e la home ricade in quel caso. Lo strumento è corretto così; era sbagliata la
+stima iniziale, generalizzata da una pagina sola. Dopo l'eliminazione di `/about` e `/timeline`
+l'unico sforo reale che sopravvive è `/resume` a 1920 e oltre.
+
+Se esce `0`, lo strumento è rotto: non sta trovando la prosa. Controllare il filtro
+`innerText.trim().length > 90` e il selettore `p, li`.
 
 - [ ] **Step 4: Commit**
 
