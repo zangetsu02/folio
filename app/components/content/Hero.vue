@@ -13,7 +13,7 @@ const { global } = useAppConfig()
     </p>
 
     <div class="mt-1 flex flex-wrap gap-3">
-      <UButton to="/contact" size="lg">
+      <UButton to="/#let-s-talk" size="lg">
         Send me a message
       </UButton>
       <UButton :to="global.meetingLink" color="secondary" size="lg">
