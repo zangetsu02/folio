@@ -22,10 +22,10 @@ const route = useRoute()
           }"
           class="mx-auto flex w-full max-w-[100rem] flex-1 flex-col"
         >
-          <div class="flex flex-1 flex-col gap-8 lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-14 print:block">
+          <div class="flex flex-1 flex-col gap-8 print:block">
             <Rail />
 
-            <div class="flex min-w-0 flex-col lg:border-l lg:border-(--ui-border) lg:pl-14 print:border-0 print:pl-0">
+            <div class="mx-auto flex w-full min-w-0 max-w-[88ch] flex-col print:max-w-none">
               <Motion layout class="flex-1">
                 <slot />
               </Motion>

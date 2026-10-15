@@ -12,7 +12,7 @@ Enterprise backends during the day, small sharp tools by choice.
 [More about me](/about){.link}.
 ::
 
-::section-item{:number='1' size="w-full" title="Open source"}
+::section-item{:number='1' size="bleed" title="Open source"}
 Tools I needed, finished properly, left in the open.
 
 :::works{:limit='4'}

@@ -16,6 +16,17 @@
   letter-spacing: -0.01em;
 }
 
+/* La misura di lettura. 68ch sta dentro la finestra leggibile (45-75). */
+@utility measure {
+  max-width: 68ch;
+}
+
+/* Sforo per i soli blocchi tabellari: elenchi progetti, percorso, tabelle
+   del CV. Sono dati incolonnati, non prosa, e la riga lunga li' non costa. */
+@utility bleed {
+  max-width: 88ch;
+}
+
 :root {
   --ui-primary: rgb(26, 26, 24) !important;
   --ui-bg: rgb(247, 246, 243) !important;

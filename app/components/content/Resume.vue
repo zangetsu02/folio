@@ -9,7 +9,7 @@
         <SectionItem
           :number="1"
           title="About"
-          size="max-w-full"
+          size="measure"
           size-title="text-xl md:text-2xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
@@ -24,7 +24,7 @@
         <SectionItem
           :number="2"
           title="Work Experience"
-          size="max-w-full"
+          size="bleed"
           size-title="text-xl md:text-2xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
@@ -34,7 +34,7 @@
         <SectionItem
           :number="3"
           title="Side Projects"
-          size="max-w-full"
+          size="bleed"
           size-title="text-xl md:text-2xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
@@ -44,7 +44,7 @@
         <SectionItem
           :number="4"
           title="Certificates"
-          size="max-w-full"
+          size="bleed"
           size-title="text-xl md:text-2xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
@@ -54,7 +54,7 @@
         <SectionItem
           :number="5"
           title="Languages"
-          size="max-w-full"
+          size="bleed"
           size-title="text-xl md:text-2xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
