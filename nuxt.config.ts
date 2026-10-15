@@ -30,6 +30,12 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { isr: true },
+    // Le vecchie rotte possono essere in firme email, su LinkedIn o indicizzate.
+    // 301 e non 404: il contenuto non e' sparito, si e' spostato nella home.
+    '/about': { redirect: { to: '/#how-i-got-here', statusCode: 301 } },
+    '/timeline': { redirect: { to: '/#how-i-got-here', statusCode: 301 } },
+    '/contact': { redirect: { to: '/#let-s-talk', statusCode: 301 } },
+    '/writing': { redirect: { to: '/', statusCode: 301 } },
   },
 
   future: {
@@ -88,14 +94,12 @@ export default defineNuxtConfig({
         '/',
         '/sitemap.xml',
         '/works',
-        '/about',
-        '/timeline',
         '/_resume',
       ],
       // /writing resta raggiungibile ma non si prerenderizza: la collection e'
       // vuota finche' non ci sono articoli, e una pagina vuota indicizzata vale
       // meno di nessuna pagina.
-      ignore: ['/notes', '/notes/**', '/writing', '/__og-image__/**'],
+      ignore: ['/notes', '/notes/**', '/writing', '/about', '/timeline', '/contact', '/__og-image__/**'],
     },
   },
 
