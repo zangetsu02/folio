@@ -1,0 +1,247 @@
+/*
+ * Stile di stampa, condiviso da due percorsi:
+ *  - `pnpm pdf`, che renderizza /_resume con Puppeteer (page.pdf() emula gia'
+ *    media print, quindi queste regole valgono senza bisogno di duplicarle);
+ *  - Ctrl+P dal browser su /resume.
+ * Prima esisteva solo il primo caso, agganciato alla classe .resume-page: chi
+ * stampava la pagina web si portava dietro navigazione, tema scuro e sidebar.
+ */
+
+@media print {
+  @page {
+    size: A4;
+    /* 18mm ~ 0.7in: i template minimali convergono su 0.7-0.75in. */
+    margin: 18mm;
+  }
+
+  /* La palette chiara vince anche se la pagina e' in dark mode a schermo. */
+  :root,
+  :root.dark,
+  .dark {
+    --ui-primary: rgb(26, 26, 24) !important;
+    --ui-bg: rgb(255, 255, 255) !important;
+    --ui-border: rgb(160, 160, 160) !important;
+    --ui-text-muted: rgb(60, 60, 60) !important;
+    --ui-text: rgb(26, 26, 24) !important;
+  }
+
+  :root {
+    font-size: 11pt;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Le animazioni d'ingresso lascerebbero elementi a opacita' 0 nel PDF. */
+  [data-animate] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* I margini li da' @page: il padding del layout raddoppierebbe. */
+  main {
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* La cornice e le crocette agli angoli sono decorazione da schermo. */
+  .cross {
+    display: none !important;
+  }
+
+
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: flex !important;
+  }
+
+  /* --- Intestazione ------------------------------------------------------ */
+
+  /* Una colonna sola: la griglia a 6 colonne del sito lascerebbe
+     l'intestazione in una colonna stretta con il vuoto accanto. */
+  .cv {
+    display: block;
+  }
+
+  /* I riferimenti tipografici minimali non hanno foto: il CV si apre col nome.
+     Per rimetterla basta togliere questa regola. */
+  .cv > :first-child aside > img {
+    display: none !important;
+  }
+
+  .cv > :first-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid var(--ui-border);
+  }
+
+  /* Flex con wrap: il nome prende la riga intera, contatti e icone social si
+     appoggiano alla stessa riga sotto invece di impilarsi su due. */
+  .cv > :first-child aside {
+    display: flex;
+    /* esplicita: l'aside ha `flex-col` da Tailwind, che altrimenti sopravvive
+       all'override e con align-items centra tutto orizzontalmente */
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 0.4rem 1.1rem;
+    position: static;
+  }
+
+  .cv > :first-child aside > div:nth-of-type(1) {
+    flex: 0 0 100%;
+  }
+
+  /* Il nome e' la prima informazione della pagina e deve pesare: i riferimenti
+     stanno fra 20 e 28pt, a schermo qui e' text-2xl. */
+  .cv > :first-child aside h3 {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+
+  .cv > :first-child aside h3 + span {
+    font-size: 1rem;
+  }
+
+  /* Contatti su UNA riga invece che impilati: e' questo che fa dell'intestazione
+     una fascia a tutta larghezza e toglie il vuoto a destra. */
+  .cv > :first-child aside > div:nth-of-type(2) {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 1.1rem;
+    margin-top: 0;
+    font-size: 0.8rem;
+  }
+
+  .cv > :first-child aside > div:nth-of-type(2) .truncate {
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  /* Le icone social si appoggiano alla stessa riga. */
+  .cv > :first-child aside > div:last-child {
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: 0;
+  }
+
+  /* --- Gerarchia delle sezioni ----------------------------------------- */
+
+  /* Numerale e filetto a spine sono decorazione da schermo: in stampa sono
+     solo rumore, e il filo sotto il titolo marca gia' l'inizio della sezione.
+     Agganciato a .section-mark e non alla posizione nel markup: la regola
+     precedente puntava a `.cv h2 span.absolute` e ha smesso di combaciare
+     senza dirlo quando il numerale e' uscito dall'h2, riempiendo il PDF di
+     decorazione e spingendo una sezione alla pagina dopo. */
+  .section-mark {
+    display: none !important;
+  }
+
+  /* A schermo l'h2 e' w-fit. In stampa deve occupare la riga intera, cosi' il
+     filo sotto il titolo marca l'inizio della sezione per tutta la larghezza.
+     Prima le uniche righe orizzontali erano i bordi delle liste, che cadevano
+     FRA i blocchi e facevano sembrare i titoli sospesi nel vuoto. */
+  .cv h2 {
+    width: 100%;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--ui-border);
+  }
+
+  /* Respiro sopra il titolo, poco sotto: la sezione si legge come un blocco
+     unico invece che come titolo e contenuto che galleggiano separati. */
+  .cv > :last-child > .flex.flex-col {
+    gap: 1.4rem !important;
+  }
+
+  /* --- Work Experience -------------------------------------------------- */
+
+  /* La riga verticale col quadratino e' un'affordance da schermo
+     (group-hover:border-primary). In piu' il quadratino e' absolute -left-1.5,
+     quindi sporge oltre il margine di stampa e viene tagliato. */
+  .cv article {
+    padding-left: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-left: none !important;
+  }
+
+  .cv article > span.absolute {
+    display: none !important;
+  }
+
+  /* --- Liste ------------------------------------------------------------ */
+
+  /* I bordi sopra e sotto le liste raddoppiavano il filo del titolo e
+     chiudevano ogni blocco con una riga orfana. Restano i divisori fra righe. */
+  .cv ul.border-t,
+  .cv ul.border-b {
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  /* --- Densita' --------------------------------------------------------- */
+
+  .cv .py-3 {
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  .cv .py-2\.5 {
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  .cv article .mt-4 {
+    margin-top: 0.55rem !important;
+  }
+
+  .cv article > ul.mt-4 {
+    margin-top: 0.35rem !important;
+  }
+
+  /* I paragrafi globali hanno my-5 (1.25rem sopra e sotto): dentro il CV
+     diventano un muro d'aria fra titolo, descrizione e chip. */
+  .cv p {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.45;
+  }
+
+  .cv .mt-2 {
+    margin-top: 0.3rem !important;
+  }
+
+  /* --- Interruzioni di pagina ------------------------------------------ */
+
+  .cv article,
+  .cv header,
+  .cv li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Un titolo di sezione da solo in fondo a una pagina e' orfano. */
+  .cv h2,
+  .cv h3,
+  .cv h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* L'intestazione con foto e contatti non si spezza mai. */
+  .cv > :first-child {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

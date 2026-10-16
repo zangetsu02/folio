@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2025-05-15",
+  compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
 
   experimental: {
@@ -8,24 +8,34 @@ export default defineNuxtConfig({
   },
 
   site: {
-    defaultLocale: "en",
+    defaultLocale: 'en',
     indexable: true,
+  },
+
+  sitemap: {
+    exclude: ['/writing', '/_resume'],
   },
 
   $development: {
     site: {
-      url: "http://localhost:3000",
+      url: 'http://localhost:3000',
     },
   },
 
   $production: {
     site: {
-      url: "https://christianpalladini.me",
+      url: 'https://christianpalladini.me',
     },
   },
 
   routeRules: {
-    "/": { isr: true },
+    '/': { isr: true },
+    // Le vecchie rotte possono essere in firme email, su LinkedIn o indicizzate.
+    // 301 e non 404: il contenuto non e' sparito, si e' spostato nella home.
+    '/about': { redirect: { to: '/#how-i-got-here', statusCode: 301 } },
+    '/timeline': { redirect: { to: '/#how-i-got-here', statusCode: 301 } },
+    '/contact': { redirect: { to: '/#let-s-talk', statusCode: 301 } },
+    '/writing': { redirect: { to: '/', statusCode: 301 } },
   },
 
   future: {
@@ -33,21 +43,21 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    "@nuxt/eslint",
-    "@nuxt/content",
-    "@nuxt/ui",
-    "@nuxt/fonts",
-    "motion-v/nuxt",
-    "@vueuse/nuxt",
-    "@nuxtjs/seo",
-    "@nuxt/image",
+    '@nuxt/eslint',
+    '@nuxt/content',
+    '@nuxt/ui',
+    '@nuxt/fonts',
+    'motion-v/nuxt',
+    '@vueuse/nuxt',
+    '@nuxtjs/seo',
+    '@nuxt/image',
   ],
 
-  css: ["~/assets/css/main.css"],
+  css: ['~/assets/css/main.css'],
 
   colorMode: {
-    preference: "dark",
-    fallback: "dark",
+    preference: 'dark',
+    fallback: 'dark',
   },
 
   content: {
@@ -55,25 +65,25 @@ export default defineNuxtConfig({
       markdown: {
         highlight: {
           langs: [
-            "ts",
-            "js",
-            "json",
-            "vue",
-            "dockerfile",
-            "docker",
-            "yaml",
-            "css",
+            'ts',
+            'js',
+            'json',
+            'vue',
+            'dockerfile',
+            'docker',
+            'yaml',
+            'css',
           ],
           theme: {
-            light: "github-light",
-            dark: "github-dark",
-            default: "github-dark",
+            light: 'github-light',
+            dark: 'github-dark',
+            default: 'github-dark',
           },
         },
       },
     },
     preview: {
-      api: "https://api.nuxt.studio",
+      api: 'https://api.nuxt.studio',
     },
   },
 
@@ -81,19 +91,18 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: [
-        "/",
-        "/sitemap.xml",
-        "/works",
-        "/about",
-        "/timeline",
-        "/writing",
-        "/_resume",
+        '/',
+        '/sitemap.xml',
+        '/works',
+        '/_resume',
       ],
-      ignore: ["/notes", "/notes/**", "/__og-image__/**"],
+      // Rotte assorbite dalla home: reindirizzano (vedi routeRules), quindi non
+      // vanno ne' prerenderizzate ne' pubblicate nel sitemap.
+      ignore: ['/notes', '/notes/**', '/writing', '/about', '/timeline', '/contact', '/__og-image__/**'],
     },
   },
 
   ogImage: {
     enabled: false,
   },
-});
+})

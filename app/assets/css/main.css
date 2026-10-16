@@ -2,6 +2,8 @@
 @import "@nuxt/ui";
 
 @import "./animations.css";
+@import "./print.css";
+@import "lenis/dist/lenis.css";
 
 @theme static {
   --font-sans: "Geist Sans", sans-serif;
@@ -12,6 +14,17 @@
 @utility font-display {
   font-family: var(--font-serif);
   letter-spacing: -0.01em;
+}
+
+/* La misura di lettura. 68ch sta dentro la finestra leggibile (45-75). */
+@utility measure {
+  max-width: 68ch;
+}
+
+/* Sforo per i soli blocchi tabellari: elenchi progetti, percorso, tabelle
+   del CV. Sono dati incolonnati, non prosa, e la riga lunga li' non costa. */
+@utility bleed {
+  max-width: 88ch;
 }
 
 :root {
@@ -25,9 +38,6 @@
   scrollbar-color: var(--ui-border) transparent;
   scrollbar-width: thin;
 
-  .bg-grid-white {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='color-mix(in oklab%2c black 2%25%2c transparent)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
-  }
 }
 
 .dark {
@@ -37,9 +47,6 @@
   --ui-text-muted: rgb(140, 138, 132) !important;
   --ui-text: rgb(240, 238, 232) !important;
 
-  .bg-grid-white {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='color-mix(in oklab%2c white 2%25%2c transparent)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
-  }
 }
 
 @layer base {
@@ -70,7 +77,7 @@
     vertical-align: sub;
   }
 
-  .pdf-only {
+  .print-only {
     display: none;
   }
 }

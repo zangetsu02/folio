@@ -8,20 +8,33 @@ interface SectionItemProps {
 }
 
 const {
-  size = 'max-w-[600px]',
+  title,
+  size = 'measure',
   sizeTitle = 'font-display text-3xl sm:text-4xl',
   numberSize = 'text-5xl sm:text-6xl',
 } = defineProps<SectionItemProps>()
+
+// Ancora per i redirect dalle rotte assorbite nella home.
+const slug = computed(() =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''))
 </script>
 
 <template>
   <Motion layout class="flex flex-col gap-2" data-animate :style="{ '--stagger': number, '--delay': `${number * 0.05}s` }">
-    <h2 class="relative w-fit" :class="sizeTitle">
-      {{ title }}<span class="text-primary">.</span>
-      <span :class="numberSize" class="absolute font-mono -bottom-0.5 -right-10 opacity-[9%] ">
+    <!-- `section-mark` e' l'appiglio con cui print.css toglie la decorazione:
+         agganciarla alle utility l'ha gia' fatta smettere di combaciare una volta. -->
+    <div class="section-mark mb-3 flex items-center gap-4">
+      <ThornRule class="flex-1 text-(--ui-border)" />
+      <!-- Il fondo stampa a 24/255, cioe' il 9.4%: sotto quella soglia il numerale sparisce dentro il retino. -->
+      <span :class="numberSize" class="font-mono leading-none opacity-[22%]" aria-hidden="true">
         {{ number }}
       </span>
+    </div>
+
+    <h2 :id="slug" class="w-fit" :class="sizeTitle">
+      {{ title }}<span class="text-primary">.</span>
     </h2>
+
     <div :class="size" class="text-pretty font-light">
       <slot />
     </div>

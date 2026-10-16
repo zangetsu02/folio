@@ -18,25 +18,19 @@ function getPageSEO() {
 
 function getTitleTemplate(title: string | undefined) {
   if (route.path === '/')
-    return title || `${seo.title} | Software engineer`
+    return title || `${seo.title} | Full stack developer`
   if (isWriting)
     return title
-  return `${title} | ${seo.title} - Software engineer`
+  return `${title} | ${seo.title} - Full stack developer`
 }
 
 const pageSEO = getPageSEO()
 
-if (page.image) {
-  defineOgImage({ url: page.image })
-}
-// else {
-//   defineOgImageComponent(isWriting ? 'WritingPost' : 'Main', {
-//     ...pageSEO,
-//     avatar: profile.pictureDark,
-//   }, {
-//     fonts: ['Geist:400', 'Geist:600'],
-//   })
-// }
+// nuxt-og-image e' disabilitato (nuxt.config.ts): generare le anteprime per
+// pagina rompe il prerender della home. L'immagine va quindi dichiarata a mano,
+// altrimenti ogni condivisione esce senza anteprima e twitterCard
+// 'summary_large_image' mostra un riquadro vuoto.
+const ogImageUrl = new URL(page.image ?? '/og/index.png', seo.url).href
 
 useSeoMeta({
   ogSiteName: seo.title,
@@ -47,6 +41,8 @@ useSeoMeta({
   twitterTitle: pageSEO.title,
   twitterDescription: pageSEO.description,
   twitterCard: 'summary_large_image',
+  ogImage: ogImageUrl,
+  twitterImage: ogImageUrl,
 })
 
 useHead({

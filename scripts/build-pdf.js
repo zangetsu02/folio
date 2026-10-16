@@ -55,16 +55,41 @@ console.log('Generating PDF…')
 const browser = await puppeteer.launch({ headless: true })
 try {
   const page = await browser.newPage()
+  // Esplicito: lo stile del CV vive in @media print (app/assets/css/print.css),
+  // condiviso con la stampa da browser. page.pdf() lo farebbe comunque, ma
+  // dipendere da un default implicito su cui si regge tutto il layout no.
+  await page.emulateMediaType('print')
   await page.goto(url, { waitUntil: 'networkidle0' })
   await page.waitForFunction(
     () => Array.from(document.querySelectorAll('.iconify, [class*="i-lucide"], [class*="i-simple-icons"]'))
       .every(el => el.querySelector('svg') || el.tagName === 'SVG'),
     { timeout: 10000 },
   ).catch(() => {})
+  // Nome e numero di pagina in fondo a ogni foglio: un CV stampato su due
+  // pagine che si separano, senza questo, ha una seconda pagina anonima.
+  const footerTemplate = `
+    <div style="
+      width: 100%;
+      padding: 0 14mm;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 7pt;
+      color: #6b6b66;
+      display: flex;
+      justify-content: space-between;
+    ">
+      <span>Christian Palladini · christianpalladini.me</span>
+      <span><span class="pageNumber"></span> / <span class="totalPages"></span></span>
+    </div>`
+
   const pdfBuffer = await page.pdf({
     format: 'A4',
     printBackground: true,
-    margin: { top: '0', right: '0', bottom: '0', left: '0' },
+    displayHeaderFooter: true,
+    headerTemplate: '<span></span>',
+    footerTemplate,
+    // I margini li impone qui Puppeteer e non il @page del CSS, perche' servono
+    // a riservare lo spazio al footer. Il @page resta per la stampa da browser.
+    margin: { top: '18mm', right: '0', bottom: '18mm', left: '0' },
   })
   writeFileSync(OUTPUT, pdfBuffer)
   console.log(`✔ PDF saved to ${OUTPUT}`)

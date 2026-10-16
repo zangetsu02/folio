@@ -44,20 +44,20 @@ function startViewTransition(event: MouseEvent) {
 </script>
 
 <template>
+  <!-- La parola e non il pallino: un cerchio nero non dice cosa fa, e il
+       resto della fascia e' tipografia. L'etichetta dice l'azione, non lo
+       stato, cosi' combacia con l'aria-label. -->
   <ClientOnly>
-    <div class="size-3 flex items-center justify-center">
-      <UTooltip text="Switch theme">
-        <UButton
-          class="bg-inverted size-3 rounded-full"
-          size="xs"
-          variant="link"
-          :aria-label="`Switch to ${nextTheme} mode`"
-          @click="startViewTransition"
-        />
-      </UTooltip>
-    </div>
+    <UButton
+      class="p-0 font-mono text-xs text-muted hover:text-primary transition-colors"
+      variant="link"
+      :aria-label="`Switch to ${nextTheme} mode`"
+      @click="startViewTransition"
+    >
+      {{ nextTheme }}
+    </UButton>
     <template #fallback>
-      <div class="size-3 rounded-full bg-inverted" />
+      <span class="font-mono text-xs text-muted">theme</span>
     </template>
   </ClientOnly>
 </template>

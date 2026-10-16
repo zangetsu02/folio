@@ -1,0 +1,11 @@
+{
+  "name": "Dark Discord Theme for VS Code",
+  "category": "themes",
+  "description": "A theme for VS Code inspired by Discord's dark palette.",
+  "logo": "/assets/works/dark-discord-theme-logo.png",
+  "url": "https://marketplace.visualstudio.com/items?itemName=zangetsu002.dark-discord-theme",
+  "repo": "https://github.com/zangetsu02/dark-discord-theme",
+  "tech": ["TextMate grammar"],
+  "release": "2025",
+  "date": "2025-11-04"
+}

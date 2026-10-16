@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '#ui/types'
+import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
 const schema = z.object({
@@ -10,6 +10,8 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 
+const toast = useToast()
+
 const state = reactive<Partial<Schema>>({
   email: undefined,
   message: undefined,
@@ -18,7 +20,7 @@ const state = reactive<Partial<Schema>>({
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (!event.data.email || !event.data.message) {
-    toast.error('Please fill in all required fields.')
+    toast.add({ title: 'Please fill in all required fields.', color: 'error' })
     return
   }
   try {
@@ -30,10 +32,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         name: event.data.name,
       },
     })
-    toast.success('Your message has been sent!')
+    toast.add({ title: 'Your message has been sent!', color: 'success' })
   }
-  catch (_) {
-    toast.error('An error occurred while sending your message.')
+  catch {
+    toast.add({ title: 'An error occurred while sending your message.', color: 'error' })
   }
 }
 </script>

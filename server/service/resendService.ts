@@ -1,9 +1,26 @@
 import { Resend } from 'resend'
+import { escapeHtml } from '~~/server/utils/validation'
 
-const resend = new Resend(process.env.NUXT_PRIVATE_RESEND_API_KEY)
+// Costruito su richiesta, non al caricamento del modulo: il costruttore di Resend
+// lancia se la chiave manca, e Nitro importa i route server in modo eager — una
+// chiave assente in locale faceva cadere l'intero sito, non solo l'invio mail.
+function getResend() {
+  const apiKey = process.env.NUXT_PRIVATE_RESEND_API_KEY
+  if (!apiKey)
+    throw createError({ statusCode: 503, statusMessage: 'Email service is not configured' })
 
-// find your audience id here: https://resend.com/audiences
-const nuxtLogAudienceId = '0874ddcb-4a9d-404d-bb43-a48c7f90c861'
+  return new Resend(apiKey)
+}
+
+// Da env e non cablato: l'id precedente veniva dal progetto da cui questo e'
+// stato forkato, quindi ogni fork scriveva nell'audience di un estraneo.
+// Lo trovi su https://resend.com/audiences
+function getAudienceId() {
+  const id = process.env.NUXT_PRIVATE_RESEND_AUDIENCE_ID
+  if (!id)
+    throw createError({ statusCode: 503, statusMessage: 'Newsletter audience is not configured' })
+  return id
+}
 
 interface SendMailDto {
   email: string
@@ -13,14 +30,14 @@ interface SendMailDto {
 
 export async function sendSubscribeEmail(email: string) {
   try {
-    await resend.emails.send({
+    await getResend().emails.send({
       from: 'Zangetsu <hello@christianpalladini.me>',
       to: [email],
       subject: 'Welcome to Zangetsu newsletter!',
       html: `
             <h1>Welcome to Zangetsu newsletter!</h1>
             <p>
-                You've just subscribed to Zangetsu newsletter with this email: <strong>${email}</strong>.
+                You've just subscribed to Zangetsu newsletter with this email: <strong>${escapeHtml(email)}</strong>.
             </p>
             <p>
                 You can unsubscribe at any time by clicking on the link below the future emails you'll receive.
@@ -37,6 +54,9 @@ export async function sendSubscribeEmail(email: string) {
 }
 
 export async function sendContactEmail({ email, message, name }: SendMailDto) {
+  // fuori dal try: altrimenti il 503 di getResend() finirebbe nel catch e
+  // uscirebbe come 500 generico
+  const resend = getResend()
   try {
     await resend.emails.send({
       from: 'Zangetsu <hello@christianpalladini.me>',
@@ -45,11 +65,11 @@ export async function sendContactEmail({ email, message, name }: SendMailDto) {
       html: `
             <h3>New message from christianpalladini.me</h3>
             <p>
-                You've just received a new message from ${name && name.length ? name : 'a visitor'} with this email: <strong>${email}</strong>.
+                You've just received a new message from ${name ? escapeHtml(name) : 'a visitor'} with this email: <strong>${escapeHtml(email)}</strong>.
             </p>
             <p>
                 <strong>Message:</strong>
-                <p>${message}</p>
+                <p>${escapeHtml(message)}</p>
             </p>
       `,
     })
@@ -64,8 +84,8 @@ export async function sendContactEmail({ email, message, name }: SendMailDto) {
 }
 
 export async function addContactToList(email: string) {
-  return await resend.contacts.create({
+  return await getResend().contacts.create({
     email,
-    audienceId: nuxtLogAudienceId,
+    audienceId: getAudienceId(),
   })
 }

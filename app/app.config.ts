@@ -5,8 +5,7 @@ export default defineAppConfig({
   profile: {
     email: 'hello@christianpalladini.me',
     name: 'Christian Palladini',
-    workTitle: 'Software Engineer',
-    phone: '(+33) 6 21 56 22 18',
+    workTitle: 'Full stack developer',
     linkedinPicture: '/me.jpeg',
     pictureDark: 'https://avatars.githubusercontent.com/zangetsu02',
     pictureLight: 'https://avatars.githubusercontent.com/zangetsu02',
@@ -14,7 +13,7 @@ export default defineAppConfig({
   seo: {
     title: 'zangetsu',
     description:
-      'Software engineer, designer & OSS Contributor based in Rome.',
+      'Full stack developer in Rome. Enterprise backends by day, open-source tools by choice.',
     url: 'https://christianpalladini.me',
     lang: 'en',
   },

@@ -1,66 +1,49 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
-import { asSeoCollection } from '@nuxtjs/seo/content'
+import { WORK_CATEGORY_KEYS } from './app/utils/works'
 
 export default defineContentConfig({
   collections: {
-    content: defineCollection(
-      asSeoCollection({
-        type: 'page',
-        source: [
-          {
-            include: '**/*.md',
-            prefix: '/',
-          },
-        ],
-        schema: z.object({
-          title: z.string().nonempty(),
-          description: z.string().nonempty(),
-          date: z.string().nonempty(),
-          image: z.string().nonempty(),
-        }),
+    content: defineCollection({
+      type: 'page',
+      source: [
+        {
+          include: '**/*.md',
+          prefix: '/',
+        },
+      ],
+      schema: z.object({
+        title: z.string().nonempty(),
+        description: z.string().nonempty(),
+        // opzionali davvero: nessuna pagina ha `date`, solo index.md ha `image`
+        date: z.string().optional(),
+        image: z.string().optional(),
       }),
-    ),
-    writing: defineCollection(
-      asSeoCollection({
-        type: 'page',
-        source: '2.writing/*.md',
-        schema: z.object({
-          title: z.string().nonempty(),
-          description: z.string().nonempty(),
-          date: z.string().nonempty(),
-          draft: z.boolean().default(false),
-        }),
+    }),
+    writing: defineCollection({
+      type: 'page',
+      source: '2.writing/*.md',
+      schema: z.object({
+        title: z.string().nonempty(),
+        description: z.string().nonempty(),
+        date: z.string().nonempty(),
+        draft: z.boolean().default(false),
       }),
-    ),
-    playground: defineCollection(
-      asSeoCollection({
-        type: 'page',
-        source: '3.playground/*.md',
-        schema: z.object({
-          title: z.string().nonempty(),
-          description: z.string().nonempty(),
-          date: z.string().nonempty(),
-          draft: z.boolean().default(false),
-        }),
-      }),
-    ),
+    }),
     works: defineCollection({
       type: 'data',
       source: '1.works/*.json',
       schema: z.object({
         name: z.string().nonempty(),
         description: z.string().nonempty(),
-        category: z.string().nonempty(),
+        // enum e non string: una categoria scritta male fa fallire la build
+        // invece di produrre in silenzio una sezione vuota su /works
+        category: z.enum(WORK_CATEGORY_KEYS),
         release: z.string().optional(),
         date: z.string().nonempty(),
         url: z.string(),
-        logo: z.string().nonempty(),
-        screenshotUrl: z.string().optional(),
-        screenshotOptions: z
-          .object({
-            delay: z.number(),
-          })
-          .optional(),
+        repo: z.string().optional(),
+        logo: z.string().optional(),
+        tech: z.array(z.string().nonempty()).optional(),
       }),
     }),
     worksExperience: defineCollection({

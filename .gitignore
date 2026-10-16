@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# spec e piani di lavoro: restano in locale, non nel repo
+docs/superpowers/

@@ -4,8 +4,13 @@ const { data, error } = await useAsyncData('feed', () =>
     .order('date', 'DESC')
     .limit(4)
     .all())
-if (!data.value || !error.value)
-  createError({ statusCode: 404 })
+if (error.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Writing list not found',
+    fatal: true,
+  })
+}
 </script>
 
 <template>

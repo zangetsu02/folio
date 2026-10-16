@@ -1,9 +1,11 @@
 {
-  "name": "Dark discord theme",
-  "category": "zed",
-  "description": "A theme for Zed inspired by Discord's new dark theme.",
-  "logo": "/assets/works/dark-discord-theme-logo.png",
+  "name": "Dark Discord Theme for Zed",
+  "category": "themes",
+  "description": "The same palette, rebuilt for Zed's theme format.",
+  "logo": "/assets/works/dark-discord-theme-zed.png",
   "url": "https://zed.dev/extensions/dark-discord",
+  "repo": "https://github.com/zangetsu02/zed-discord-theme",
+  "tech": ["JSON"],
   "release": "2025",
-  "date": "2025-03-31"
+  "date": "2025-10-29"
 }

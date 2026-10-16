@@ -2,13 +2,14 @@
 import { LayoutGroup } from 'motion-v'
 
 const route = useRoute()
-const router = useRouter()
+const { socials } = useAppConfig()
 </script>
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
-    <Spotlight />
-    <main class="flex min-h-screen flex-col p-3 sm:p-12">
+    <Backdrop />
+
+    <main class="relative z-10 flex min-h-screen flex-col px-5 py-8 sm:px-10 sm:py-12 print:block print:p-0">
       <LayoutGroup id="main-layout">
         <Motion
           layout
@@ -17,41 +18,46 @@ const router = useRouter()
             ease: 'easeInOut',
             duration: 0.2,
           }"
-          class="flex size-full mx-auto max-w-7xl bg-grid-white flex-1 flex-col gap-3 "
+          class="mx-auto flex w-full max-w-[100rem] flex-1 flex-col"
         >
-          <CrossedDiv class="p-4 sm:p-6">
-            <div class="flex w-full min-h-3" :class="route.path !== '/' ? 'justify-between' : 'justify-end'">
-              <NuxtLink v-if="route.path !== '/'" aria-label="Go back to home page" class="group cursor-pointer" to="/">
-                <span class="hover:text-primary hover:underline">
-                  go back.
-                </span>
-              </NuxtLink>
-              <NuxtLink v-if="route.path === '/resume'" aria-label="Go back to home page" class="group cursor-pointer" external to="/resume.pdf">
-                <span class="hover:text-primary hover:underline">
-                  Download PDF
-                </span>
-              </NuxtLink>
-              <ThemeSelector />
-            </div>
+          <div class="mx-auto flex w-full min-w-0 max-w-[88ch] flex-1 flex-col print:max-w-none">
+            <Masthead />
+
             <Motion layout class="flex-1">
               <slot />
             </Motion>
 
             <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
 
-            <Motion
-              layout
-              class="flex items-end justify-end"
-              :class="route.path !== '/' ? 'cursor-pointer' : 'cursor-default'"
-              @click="router.push('/')"
-            />
-          </CrossedDiv>
+            <footer class="mt-20 flex flex-col gap-5 border-t border-(--ui-border) pt-6 text-xs text-muted print:hidden">
+              <div class="flex items-center gap-4 font-mono text-[10.5px]">
+                <NuxtLink :to="socials.twitter" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
+                  X
+                </NuxtLink>
+                <NuxtLink :to="socials.github" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
+                  GitHub
+                </NuxtLink>
+                <NuxtLink :to="socials.linkedin" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
+                  LinkedIn
+                </NuxtLink>
+                <NuxtLink v-if="route.path === '/resume'" to="/resume.pdf" external target="_blank" class="hover:text-primary transition-colors">
+                  Download PDF
+                </NuxtLink>
+              </div>
+
+              <div class="flex items-end justify-between gap-6">
+                <p class="max-w-prose">
+                  This website is fully open-source, you can find the source code on
+                  <NuxtLink to="https://github.com/zangetsu02/folio" class="underline hover:text-primary transition-colors">
+                    GitHub
+                  </NuxtLink>
+                </p>
+                <Sigil class="shrink-0 text-muted" :size="40" />
+              </div>
+            </footer>
+          </div>
         </Motion>
       </LayoutGroup>
-
-      <span class="mt-2 text-xs text-center text-muted">
-        This website is fully open-source, you can find the source code on <NuxtLink to="https://github.com/zangetsu02/folio" class="underline">GitHub</NuxtLink>
-      </span>
     </main>
   </UApp>
 </template>
