@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { profile, socials, seo } = useAppConfig()
 </script>
 
@@ -39,7 +39,7 @@ const { profile, socials, seo } = useAppConfig()
         <span class="truncate">{{ profile.email }}</span>
       </NuxtLink>
       <NuxtLink
-        to="/resume.pdf"
+        :to="locale === 'en' ? '/resume-en.pdf' : '/resume.pdf'"
         external
         target="_blank"
         class="screen-only flex items-center gap-2 text-muted hover:text-primary transition-colors"

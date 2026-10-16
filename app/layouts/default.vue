@@ -3,7 +3,7 @@ import { LayoutGroup } from 'motion-v'
 
 const route = useRoute()
 const { socials } = useAppConfig()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 </script>
 
 <template>
@@ -41,7 +41,7 @@ const { t } = useI18n()
                 <NuxtLink :to="socials.linkedin" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   LinkedIn
                 </NuxtLink>
-                <NuxtLink v-if="route.path === '/resume'" to="/resume.pdf" external target="_blank" class="hover:text-primary transition-colors">
+                <NuxtLink v-if="route.path === '/resume'" :to="locale === 'en' ? '/resume-en.pdf' : '/resume.pdf'" external target="_blank" class="hover:text-primary transition-colors">
                   Download PDF
                 </NuxtLink>
               </div>

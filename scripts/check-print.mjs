@@ -1,7 +1,13 @@
 // Il CV stampato. Esiste perche' print.css nascondeva la decorazione con un
 // selettore legato alla posizione nel markup: spostarla l'ha fatto smettere di
 // combaciare in silenzio, e nessun controllo guardava la stampa.
+import { execFileSync } from 'node:child_process'
+import { existsSync } from 'node:fs'
 import { createReport, openPage, settle, withBrowser } from './lib/check.mjs'
+
+/** Un CV di due pagine viene letto, uno di tre spesso no. */
+const MAX_PAGES = 2
+const PDFS = ['public/resume.pdf', 'public/resume-en.pdf']
 
 const { note, finish } = createReport()
 
@@ -39,5 +45,18 @@ await withBrowser(async (browser) => {
 
   await page.close()
 })
+
+console.log('\n— pagine dei PDF —')
+for (const file of PDFS) {
+  if (!existsSync(file)) {
+    note(false, `${file} non esiste: lancia pnpm pdf`)
+    continue
+  }
+  // Il separatore di pagina di pdftotext e' il form feed.
+  const pages = execFileSync('pdftotext', ['-layout', file, '-'], { encoding: 'utf8' })
+    .split('\f')
+    .length - 1
+  note(pages <= MAX_PAGES, `${file} — ${pages} pagine (max ${MAX_PAGES})`)
+}
 
 finish()
