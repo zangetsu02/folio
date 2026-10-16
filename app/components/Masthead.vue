@@ -1,10 +1,6 @@
 <script setup lang="ts">
 const { profile } = useAppConfig()
 const route = useRoute()
-const colorMode = useColorMode()
-
-const picture = computed(() =>
-  colorMode.value === 'dark' ? profile.pictureDark : profile.pictureLight)
 
 const nav = [
   { label: 'Works', to: '/works' },
@@ -30,10 +26,6 @@ function isActive(to: string) {
     tutto il resto del sito.
   -->
   <header class="mb-14 flex flex-col gap-6 print:hidden">
-    <!-- La tavola prima del frontespizio. Sta solo in home: sulle altre pagine
-         sarebbe un'intestazione ripetuta, non un'apertura. -->
-    <Portrait v-if="route.path === '/'" :src="picture" :width="240" />
-
     <div>
       <NuxtLink
         to="/"
