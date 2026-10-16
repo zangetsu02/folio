@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { global, profile } = useAppConfig()
+const { t } = useI18n()
 const colorMode = useColorMode()
 
 const picture = computed(() =>
@@ -21,10 +22,10 @@ const picture = computed(() =>
 
       <div class="mt-1 flex flex-wrap gap-3">
         <UButton to="/#let-s-talk" size="lg">
-          Send me a message
+          {{ t('hero.message') }}
         </UButton>
         <UButton :to="global.meetingLink" color="secondary" size="lg">
-          Make a call
+          {{ t('hero.call') }}
         </UButton>
       </div>
     </div>

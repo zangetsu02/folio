@@ -27,7 +27,7 @@ const { profile, socials, seo } = useAppConfig()
     <div class="flex flex-col gap-2 text-sm">
       <div class="flex items-center gap-2 text-muted">
         <Icon name="lucide:map-pin" class="size-4 shrink-0" />
-        <span>Rome, Latium, Italy</span>
+        <span>{{ t('cv.location') }}</span>
       </div>
       <NuxtLink
         :to="`mailto:${profile.email}`"
@@ -44,7 +44,7 @@ const { profile, socials, seo } = useAppConfig()
         class="screen-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
       >
         <Icon name="lucide:file-down" class="size-4 shrink-0" />
-        <span>Download PDF</span>
+        <span>{{ t('cv.download') }}</span>
       </NuxtLink>
       <NuxtLink
         :to="seo.url"

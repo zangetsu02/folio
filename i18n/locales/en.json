@@ -1,1 +1,20 @@
-{ "nav": { "works": "Works" } }
+{
+  "nav": { "works": "Works", "resume": "Resume" },
+  "hero": { "message": "Send me a message", "call": "Make a call" },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "sent": "Your message has been sent!",
+    "failed": "An error occurred while sending your message."
+  },
+  "cv": {
+    "location": "Rome, Latium, Italy",
+    "download": "Download PDF",
+    "present": "Present",
+    "current": "Current",
+    "projects": "Projects"
+  },
+  "footer": { "openSource": "This website is fully open-source, you can find the source code on" },
+  "locale": { "switch": "Italiano" }
+}

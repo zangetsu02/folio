@@ -16,7 +16,7 @@ if (error.value) {
 function periodLabel(work: WorksExperienceCollectionItem) {
   const start = `${work.start.month} ${work.start.year}`
   const end = work.isCurrent
-    ? 'Present'
+    ? t('cv.present')
     : work.end
       ? `${work.end.month} ${work.end.year}`
       : ''
@@ -52,7 +52,7 @@ function periodLabel(work: WorksExperienceCollectionItem) {
             v-if="work.isCurrent"
             class="px-1.5 py-0.5 bg-primary text-(--ui-bg) text-[10px] uppercase tracking-wider"
           >
-            Current
+            {{ t('cv.current') }}
           </span>
         </div>
       </header>
@@ -65,7 +65,7 @@ function periodLabel(work: WorksExperienceCollectionItem) {
 
       <div v-if="work.projects?.length" class="mt-4">
         <p class="mb-2 text-xs font-mono uppercase tracking-wider text-muted">
-          Projects
+          {{ t('cv.projects') }}
         </p>
         <ul class="flex flex-col divide-y divide-(--ui-border) border-t border-b border-(--ui-border)">
           <li v-for="(project, idx) in work.projects" :key="idx" class="py-2.5 flex flex-col gap-1.5">

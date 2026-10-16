@@ -3,6 +3,7 @@ import { LayoutGroup } from 'motion-v'
 
 const route = useRoute()
 const { socials } = useAppConfig()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -47,7 +48,7 @@ const { socials } = useAppConfig()
 
               <div class="flex items-end justify-between gap-6">
                 <p class="max-w-prose">
-                  This website is fully open-source, you can find the source code on
+                  {{ t('footer.openSource') }}
                   <NuxtLink to="https://github.com/zangetsu02/folio" class="underline hover:text-primary transition-colors">
                     GitHub
                   </NuxtLink>

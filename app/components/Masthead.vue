@@ -2,10 +2,14 @@
 const { profile } = useAppConfig()
 const route = useRoute()
 
-const nav = [
-  { label: 'Works', to: '/works' },
-  { label: 'Resume', to: '/resume' },
-]
+const { t, locale } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+const other = computed(() => (locale.value === 'it' ? 'en' : 'it'))
+
+const nav = computed(() => [
+  { label: t('nav.works'), to: '/works' },
+  { label: t('nav.resume'), to: '/resume' },
+])
 
 function isActive(to: string) {
   return route.path === to || route.path.startsWith(`${to}/`)
@@ -43,6 +47,14 @@ function isActive(to: string) {
         </NuxtLink>
       </nav>
 
+      <!-- Un link vero e non un bottone: il crawler lo segue, e la pagina
+           nell'altra lingua resta condivisibile. -->
+      <NuxtLink
+        :to="switchLocalePath(other)"
+        class="font-mono text-xs text-muted transition-colors hover:text-primary"
+      >
+        {{ t('locale.switch') }}
+      </NuxtLink>
       <ThemeSelector />
     </div>
   </header>

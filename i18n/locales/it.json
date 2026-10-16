@@ -1,1 +1,20 @@
-{ "nav": { "works": "Lavori" } }
+{
+  "nav": { "works": "Lavori", "resume": "CV" },
+  "hero": { "message": "Scrivimi", "call": "Sentiamoci" },
+  "contact": {
+    "name": "Nome",
+    "email": "Email",
+    "message": "Messaggio",
+    "sent": "Messaggio inviato.",
+    "failed": "Qualcosa è andato storto nell'invio."
+  },
+  "cv": {
+    "location": "Roma, IT",
+    "download": "Scarica il PDF",
+    "present": "Oggi",
+    "current": "In corso",
+    "projects": "Progetti"
+  },
+  "footer": { "openSource": "Questo sito è open source, il codice sta su" },
+  "locale": { "switch": "English" }
+}
