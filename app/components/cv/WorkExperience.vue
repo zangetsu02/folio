@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { WorksExperienceCollectionItem } from '@nuxt/content'
 
+const { t } = useI18n()
+
 const { data: works, error } = await useAsyncData(`works-experience`, () => {
   return queryCollection('worksExperience')
     .all()
@@ -77,11 +79,11 @@ function periodLabel(work: WorksExperienceCollectionItem) {
             </p>
             <ul v-if="project.tech?.length" class="flex flex-wrap gap-1">
               <li
-                v-for="(t, tIdx) in project.tech"
-                :key="tIdx"
+                v-for="(tech, techIdx) in project.tech"
+                :key="techIdx"
                 class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono text-muted"
               >
-                {{ t }}
+                {{ tech }}
               </li>
             </ul>
           </li>

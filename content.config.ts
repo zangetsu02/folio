@@ -3,14 +3,24 @@ import { WORK_CATEGORY_KEYS } from './app/utils/works'
 
 export default defineContentConfig({
   collections: {
-    content: defineCollection({
+    // Una collection per lingua, come da documentazione Nuxt Content: i nomi
+    // dei file devono combaciare fra le due cartelle, e' cosi' che Content sa
+    // che sono traduzioni l'una dell'altra.
+    content_it: defineCollection({
       type: 'page',
-      source: [
-        {
-          include: '**/*.md',
-          prefix: '/',
-        },
-      ],
+      source: { include: 'it/**', prefix: '/' },
+      schema: z.object({
+        title: z.string().nonempty(),
+        description: z.string().nonempty(),
+        // opzionali davvero: nessuna pagina ha `date`, solo index.md ha `image`
+        date: z.string().optional(),
+        image: z.string().optional(),
+      }),
+    }),
+
+    content_en: defineCollection({
+      type: 'page',
+      source: { include: 'en/**', prefix: '/' },
       schema: z.object({
         title: z.string().nonempty(),
         description: z.string().nonempty(),
