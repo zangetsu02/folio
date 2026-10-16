@@ -17,12 +17,14 @@
  * sfarfalla nella visione periferica, che era esattamente il problema di prima.
  */
 
+import { dotRadius, forEachScreenDot, readInk, SCREEN, stampDot } from '~/utils/halftone'
+
+// Il motore del reticolo sta in utils/halftone:
+// li condivide con Portrait.vue, e due retini sulla stessa pagina con passi o
+// inclinazioni diverse si vedrebbero al primo sguardo.
 const CELL = 24 // passo della griglia di rumore, in px CSS
-const SCREEN = 10 // passo del retino, in px di canvas
-const ANGLE = 22 * (Math.PI / 180) // inclinazione della lastra
 const SCREEN_VU = 5.5 // deriva della lastra, px/s lungo il suo asse u
 const SCREEN_VV = 3.2 // idem lungo v: insieme fanno ~6.4 px/s in diagonale
-const DOT_MAX = 1.1 // diametro del punto pieno, in multipli del passo
 const INK = 24 // su 255: sotto il testo deve restare un fondo, non un disegno
 const CONTRAST = 0.72 // ampiezza della gamma tonale del campo
 const TARGET = 0.11 // livello medio a cui riportare il campo, vedi `norm`
@@ -91,13 +93,9 @@ let elapsed = 0
 let last = 0
 
 // L'inchiostro segue il tema: il canvas eredita `color` dalle variabili di Nuxt UI.
-function readInk() {
-  const el = canvas.value
-  if (!el)
-    return
-  const parsed = getComputedStyle(el).color.match(/\d+/g)
-  if (parsed && parsed.length >= 3)
-    ink = [Number(parsed[0]), Number(parsed[1]), Number(parsed[2])]
+function refreshInk() {
+  if (canvas.value)
+    ink = readInk(canvas.value)
 }
 
 function draw(t: number) {
@@ -139,26 +137,6 @@ function draw(t: number) {
 
   const data = img.data
   data.fill(0)
-  const [ir, ig, ib] = ink
-  const ca = Math.cos(ANGLE)
-  const sa = Math.sin(ANGLE)
-  const mx = cw / 2
-  const my = ch / 2
-
-  // Il reticolo e' ruotato, quindi scorro nel suo riferimento e torno indietro.
-  // Gli estremi sono i quattro angoli del canvas visti da li'.
-  let u0 = Infinity
-  let u1 = -Infinity
-  let v0 = Infinity
-  let v1 = -Infinity
-  for (const [qx, qy] of [[0, 0], [cw, 0], [0, ch], [cw, ch]] as const) {
-    const dx = qx - mx
-    const dy = qy - my
-    u0 = Math.min(u0, dx * ca + dy * sa)
-    u1 = Math.max(u1, dx * ca + dy * sa)
-    v0 = Math.min(v0, -dx * sa + dy * ca)
-    v1 = Math.max(v1, -dx * sa + dy * ca)
-  }
 
   // La lastra deriva. Serve perche' con un reticolo fermo i punti non si
   // spostano mai: cambia solo il loro diametro, e la variazione finisce tutta
@@ -166,63 +144,26 @@ function draw(t: number) {
   // come movimento, e il fondo sembra fermo anche mentre cambia.
   // Il modulo non si vede: spostare di un passo esatto rimappa ogni punto sulla
   // posizione del vicino, quindi l'immagine al wrap e' identica.
-  const offU = (t * SCREEN_VU) % SCREEN
-  const offV = (t * SCREEN_VV) % SCREEN
+  forEachScreenDot(cw, ch, (t * SCREEN_VU) % SCREEN, (t * SCREEN_VV) % SCREEN, ({ px, py, u, v }) => {
+    const gx = px / scale / CELL
+    const gy = py / scale / CELL
+    const rx = Math.floor(gx)
+    const ry = Math.floor(gy)
+    const i = ry * cols + rx
+    if (i < 0 || i + cols + 1 >= grid.length)
+      return
 
-  for (let v = Math.floor(v0 / SCREEN - 1) * SCREEN; v <= v1; v += SCREEN) {
-    for (let u = Math.floor(u0 / SCREEN - 1) * SCREEN; u <= u1; u += SCREEN) {
-      const uu = u + offU
-      const vv = v + offV
-      const px = mx + uu * ca - vv * sa
-      const py = my + uu * sa + vv * ca
-      if (px < -SCREEN || py < -SCREEN || px > cw + SCREEN || py > ch + SCREEN)
-        continue
+    // Dither per punto: rompe le fasce dove il campo cambia piano.
+    const d = lerp(
+      lerp(grid[i]!, grid[i + 1]!, gx - rx),
+      lerp(grid[i + cols]!, grid[i + cols + 1]!, gx - rx),
+      gy - ry,
+    ) * norm * (0.88 + hash(Math.round(u), Math.round(v)) * 0.12)
+    if (d <= 0.004)
+      return
 
-      const gx = px / scale / CELL
-      const gy = py / scale / CELL
-      const rx = Math.floor(gx)
-      const ry = Math.floor(gy)
-      const i = ry * cols + rx
-      if (i < 0 || i + cols + 1 >= grid.length)
-        continue
-
-      // Dither per punto: rompe le fasce dove il campo cambia piano.
-      const d = lerp(
-        lerp(grid[i]!, grid[i + 1]!, gx - rx),
-        lerp(grid[i + cols]!, grid[i + cols + 1]!, gx - rx),
-        gy - ry,
-      ) * norm * (0.88 + hash(Math.round(u), Math.round(v)) * 0.12)
-      if (d <= 0.004)
-        continue
-
-      // Area proporzionale alla densita', quindi il raggio va con la radice:
-      // e' la regola del retino, ed e' cio' che rende il grigio lineare.
-      const rad = Math.sqrt(Math.min(1, d)) * SCREEN * 0.5 * DOT_MAX
-      if (rad < 0.35)
-        continue
-
-      const x0 = Math.max(0, Math.floor(px - rad - 1))
-      const x1 = Math.min(cw - 1, Math.ceil(px + rad + 1))
-      const y0 = Math.max(0, Math.floor(py - rad - 1))
-      const y1 = Math.min(ch - 1, Math.ceil(py + rad + 1))
-      for (let yy = y0; yy <= y1; yy++) {
-        for (let xx = x0; xx <= x1; xx++) {
-          const cov = rad + 0.5 - Math.hypot(xx + 0.5 - px, yy + 0.5 - py)
-          if (cov <= 0)
-            continue
-          const alpha = Math.round(INK * Math.min(1, cov))
-          const p = (yy * cw + xx) * 4
-          // max e non somma: i punti vicini si toccano, sommare farebbe cuciture.
-          if (alpha <= data[p + 3]!)
-            continue
-          data[p] = ir
-          data[p + 1] = ig
-          data[p + 2] = ib
-          data[p + 3] = alpha
-        }
-      }
-    }
-  }
+    stampDot(data, cw, ch, px, py, dotRadius(d), ink, INK)
+  })
 
   ctx.putImageData(img, 0, 0)
 }
@@ -247,7 +188,7 @@ onMounted(() => {
   ctx = canvas.value?.getContext('2d') ?? null
   if (!ctx)
     return
-  readInk()
+  refreshInk()
   start()
 })
 
@@ -255,7 +196,7 @@ onBeforeUnmount(() => clearTimeout(timer))
 
 // Un frame subito al cambio tema o al ritorno sulla scheda, poi riparte il ciclo.
 watch(() => colorMode.value, () => {
-  readInk()
+  refreshInk()
   start()
 })
 watch([visibility, motion], () => start())
