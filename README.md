@@ -67,8 +67,3 @@ own, which is the only way a fork makes sense anyway.
 If you do fork it, two things to change first: `NUXT_PRIVATE_RESEND_AUDIENCE_ID`
 in `.env`, or you write into an audience that isn't yours, and the destination
 address in `server/service/resendService.ts`.
-
----
-
-Forked from [@HugoRCD/hr-folio](https://github.com/HugoRCD/hr-folio), MIT —
-most of it has been rewritten since, but the skeleton started there.
