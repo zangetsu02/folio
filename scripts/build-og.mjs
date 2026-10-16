@@ -9,7 +9,8 @@ import { openPage, settle, withBrowser } from './lib/check.mjs'
 /** Misura che Open Graph e Twitter ritagliano senza intervenire. */
 const WIDTH = 1200
 const HEIGHT = 630
-const OUT = process.env.OUT ?? 'public/og/index.png'
+const LOCALE = process.env.LOCALE ?? 'it'
+const OUT = process.env.OUT ?? `public/og/index-${LOCALE}.png`
 
 /** Lascia la testata senza navigazione e la hero, toglie tutto il resto. */
 function trimToHero() {
@@ -49,7 +50,7 @@ function trimToHero() {
 }
 
 await withBrowser(async (browser) => {
-  const page = await openPage(browser, { width: WIDTH, height: HEIGHT, scale: 2, theme: 'light' })
+  const page = await openPage(browser, { route: LOCALE === 'it' ? '/' : `/${LOCALE}`, width: WIDTH, height: HEIGHT, scale: 2, theme: 'light' })
   await page.evaluate(trimToHero)
   await settle(1800) // il fondo disegna a ~10fps
   await page.screenshot({ path: OUT })

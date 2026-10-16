@@ -8,17 +8,22 @@ export default defineNuxtConfig({
   },
 
   site: {
-    defaultLocale: 'en',
+    defaultLocale: 'it',
     indexable: true,
   },
 
   sitemap: {
-    exclude: ['/writing', '/_resume'],
+    exclude: ['/writing', '/_resume', '/en/writing', '/en/_resume'],
   },
 
   $development: {
     site: {
       url: 'http://localhost:3000',
+    },
+    // Gli hreflang vogliono URL assolute: senza baseUrl il modulo le emette
+    // relative, e Google non le accetta.
+    i18n: {
+      baseUrl: 'http://localhost:3000',
     },
   },
 
@@ -26,16 +31,23 @@ export default defineNuxtConfig({
     site: {
       url: 'https://christianpalladini.me',
     },
+    i18n: {
+      baseUrl: 'https://christianpalladini.me',
+    },
   },
 
   routeRules: {
     '/': { isr: true },
     // Le vecchie rotte possono essere in firme email, su LinkedIn o indicizzate.
     // 301 e non 404: il contenuto non e' sparito, si e' spostato nella home.
-    '/about': { redirect: { to: '/#how-i-got-here', statusCode: 301 } },
-    '/timeline': { redirect: { to: '/#how-i-got-here', statusCode: 301 } },
-    '/contact': { redirect: { to: '/#let-s-talk', statusCode: 301 } },
+    '/about': { redirect: { to: '/#come-ci-sono-arrivato', statusCode: 301 } },
+    '/timeline': { redirect: { to: '/#come-ci-sono-arrivato', statusCode: 301 } },
+    '/contact': { redirect: { to: '/#parliamone', statusCode: 301 } },
     '/writing': { redirect: { to: '/', statusCode: 301 } },
+    '/en/about': { redirect: { to: '/en#how-i-got-here', statusCode: 301 } },
+    '/en/timeline': { redirect: { to: '/en#how-i-got-here', statusCode: 301 } },
+    '/en/contact': { redirect: { to: '/en#let-s-talk', statusCode: 301 } },
+    '/en/writing': { redirect: { to: '/en', statusCode: 301 } },
   },
 
   future: {
@@ -108,10 +120,13 @@ export default defineNuxtConfig({
         '/sitemap.xml',
         '/works',
         '/_resume',
+        '/en',
+        '/en/works',
+        '/en/_resume',
       ],
       // Rotte assorbite dalla home: reindirizzano (vedi routeRules), quindi non
       // vanno ne' prerenderizzate ne' pubblicate nel sitemap.
-      ignore: ['/notes', '/notes/**', '/writing', '/about', '/timeline', '/contact', '/__og-image__/**'],
+      ignore: ['/notes', '/notes/**', '/writing', '/about', '/timeline', '/contact', '/en/writing', '/en/about', '/en/timeline', '/en/contact', '/__og-image__/**'],
     },
   },
 
