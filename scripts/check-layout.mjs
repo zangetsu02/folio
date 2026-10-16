@@ -1,13 +1,22 @@
 // Misura della colonna di lettura, altezza delle pagine, rotte assorbite.
 import { BASE, createReport, openPage, withBrowser } from './lib/check.mjs'
 
-const PAGES = ['/', '/works', '/resume']
+const PAGES = ['/', '/works', '/resume', '/en', '/en/works', '/en/resume']
 const WIDTHS = [1280, 1440, 1920, 2560]
 const MIN_CH = 60
 const MAX_CH = 75
 const MIN_HEIGHT = 900
 /** Rotte confluite nella home: devono reindirizzare, non servire la vecchia pagina. */
-const GONE = ['/about', '/contact', '/writing', '/timeline']
+const GONE = [
+  '/about',
+  '/contact',
+  '/writing',
+  '/timeline',
+  '/en/about',
+  '/en/contact',
+  '/en/writing',
+  '/en/timeline',
+]
 
 const { note, finish } = createReport()
 

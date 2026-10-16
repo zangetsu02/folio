@@ -12,41 +12,43 @@ const SCROLL_SETTLE = 1200
 const { note, finish } = createReport()
 
 await withBrowser(async (browser) => {
-  for (const [width, height] of VIEWPORTS) {
-    const page = await openPage(browser, { width, height })
+  for (const route of ['/', '/en']) {
+    for (const [width, height] of VIEWPORTS) {
+      const page = await openPage(browser, { route, width, height })
 
-    const head = await page.evaluate(() => {
-      const el = document.querySelector('header')
-      return { height: Math.round(el.getBoundingClientRect().height), position: getComputedStyle(el).position }
-    })
-    note(head.position === 'static', `${width}x${height} — la testata non e' fissa (position: ${head.position})`)
-    note(
-      head.height <= height * MAX_HEIGHT_RATIO,
-      `${width}x${height} — testata alta ${head.height}px (max ${Math.round(height * MAX_HEIGHT_RATIO)}px)`,
-    )
+      const head = await page.evaluate(() => {
+        const el = document.querySelector('header')
+        return { height: Math.round(el.getBoundingClientRect().height), position: getComputedStyle(el).position }
+      })
+      note(head.position === 'static', `${width}x${height} — la testata non e' fissa (position: ${head.position})`)
+      note(
+        head.height <= height * MAX_HEIGHT_RATIO,
+        `${width}x${height} — testata alta ${head.height}px (max ${Math.round(height * MAX_HEIGHT_RATIO)}px)`,
+      )
 
-    await page.evaluate(y => window.scrollTo(0, y), SCROLL_TO)
-    await settle(SCROLL_SETTLE)
-    const top = await page.evaluate(() => Math.round(document.querySelector('header').getBoundingClientRect().top))
-    note(top < -100, `${width}x${height} — dopo lo scroll la testata e' uscita (top=${top})`)
+      await page.evaluate(y => window.scrollTo(0, y), SCROLL_TO)
+      await settle(SCROLL_SETTLE)
+      const top = await page.evaluate(() => Math.round(document.querySelector('header').getBoundingClientRect().top))
+      note(top < -100, `${width}x${height} — dopo lo scroll la testata e' uscita (top=${top})`)
 
-    // Solo dentro <main>: fuori ci sono i devtools e i toast, fissi legittimamente.
-    const pinned = await page.evaluate(() =>
-      [...document.querySelectorAll('main, main *')]
-        .filter((el) => {
-          const { position } = getComputedStyle(el)
-          return position === 'fixed' || position === 'sticky'
-        })
-        .map(el => el.tagName))
-    note(!pinned.length, `${width}x${height} — niente di fisso dentro main${pinned.length ? `: ${pinned.join(', ')}` : ''}`)
+      // Solo dentro <main>: fuori ci sono i devtools e i toast, fissi legittimamente.
+      const pinned = await page.evaluate(() =>
+        [...document.querySelectorAll('main, main *')]
+          .filter((el) => {
+            const { position } = getComputedStyle(el)
+            return position === 'fixed' || position === 'sticky'
+          })
+          .map(el => el.tagName))
+      note(!pinned.length, `${width}x${height} — niente di fisso dentro main${pinned.length ? `: ${pinned.join(', ')}` : ''}`)
 
-    const lines = await page.evaluate(() => {
-      const link = document.querySelector('header a')
-      return Math.round(link.getBoundingClientRect().height / Number.parseFloat(getComputedStyle(link).fontSize))
-    })
-    note(lines <= 2, `${width}x${height} — il nome sta in ${lines} riga/e`)
+      const lines = await page.evaluate(() => {
+        const link = document.querySelector('header a')
+        return Math.round(link.getBoundingClientRect().height / Number.parseFloat(getComputedStyle(link).fontSize))
+      })
+      note(lines <= 2, `${route} ${width}x${height} — il nome sta in ${lines} riga/e`)
 
-    await page.close()
+      await page.close()
+    }
   }
 })
 
