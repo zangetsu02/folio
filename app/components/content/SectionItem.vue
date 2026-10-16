@@ -29,7 +29,10 @@ const slug = computed(() =>
          in silenzio appena il numerale si e' spostato. -->
     <div class="section-mark mb-3 flex items-center gap-4">
       <ThornRule class="flex-1 text-(--ui-border)" />
-      <span :class="numberSize" class="font-mono leading-none opacity-[9%]" aria-hidden="true">
+      <!-- 22% e non 9%: il fondo a retino stampa i suoi punti con lo stesso
+           inchiostro a 24/255, cioe' il 9.4%. A 9% il numerale aveva
+           esattamente il peso dei puntini dietro e spariva dentro il fondo. -->
+      <span :class="numberSize" class="font-mono leading-none opacity-[22%]" aria-hidden="true">
         {{ number }}
       </span>
     </div>
