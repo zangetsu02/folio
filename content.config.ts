@@ -1,6 +1,18 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 import { WORK_CATEGORY_KEYS } from './app/utils/works'
 
+/** Ogni lingua obbligatoria: una traduzione mancante fa fallire la build. */
+function localizedString() {
+  return z.object({ it: z.string().nonempty(), en: z.string().nonempty() })
+}
+
+function localizedStringArray() {
+  return z.object({
+    it: z.array(z.string().nonempty()).nonempty(),
+    en: z.array(z.string().nonempty()).nonempty(),
+  })
+}
+
 export default defineContentConfig({
   collections: {
     // Una collection per lingua, come da documentazione Nuxt Content: i nomi
@@ -44,7 +56,7 @@ export default defineContentConfig({
       source: '1.works/*.json',
       schema: z.object({
         name: z.string().nonempty(),
-        description: z.string().nonempty(),
+        description: localizedString(),
         // enum e non string: una categoria scritta male fa fallire la build
         // invece di produrre in silenzio una sezione vuota su /works
         category: z.enum(WORK_CATEGORY_KEYS),
@@ -63,8 +75,8 @@ export default defineContentConfig({
         company: z.string().nonempty(),
         role: z.string().nonempty(),
         name: z.string().nonempty(),
-        employmentType: z.string().nonempty(),
-        location: z.string().nonempty(),
+        employmentType: localizedString(),
+        location: localizedString(),
         start: z.object({
           month: z.string().optional(),
           year: z.string().nonempty(),
@@ -76,12 +88,12 @@ export default defineContentConfig({
           })
           .optional(),
         isCurrent: z.boolean(),
-        summary: z.array(z.string().nonempty()),
+        summary: localizedStringArray(),
         projects: z
           .array(
             z.object({
               name: z.string().nonempty(),
-              description: z.string().nonempty(),
+              description: localizedString(),
               tech: z.array(z.string().nonempty()),
             }),
           )

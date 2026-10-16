@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { WorksExperienceCollectionItem } from '@nuxt/content'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const { data: works, error } = await useAsyncData(`works-experience`, () => {
   return queryCollection('worksExperience')
@@ -47,9 +47,9 @@ function periodLabel(work: WorksExperienceCollectionItem) {
         <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-muted">
           <span>{{ periodLabel(work) }}</span>
           <span class="size-1 bg-(--ui-border)" />
-          <span>{{ work.location }}</span>
+          <span>{{ pickLocale(work.location, locale) }}</span>
           <span class="size-1 bg-(--ui-border)" />
-          <span>{{ work.employmentType }}</span>
+          <span>{{ pickLocale(work.employmentType, locale) }}</span>
           <span
             v-if="work.isCurrent"
             class="px-1.5 py-0.5 bg-primary text-(--ui-bg) text-[10px] uppercase tracking-wider"
@@ -59,8 +59,8 @@ function periodLabel(work: WorksExperienceCollectionItem) {
         </div>
       </header>
 
-      <ul v-if="work.summary?.length" class="mt-4 list-disc space-y-1.5 pl-4 marker:text-muted text-sm leading-relaxed">
-        <li v-for="(item, idx) in work.summary" :key="idx">
+      <ul v-if="pickLocale(work.summary, locale).length" class="mt-4 list-disc space-y-1.5 pl-4 marker:text-muted text-sm leading-relaxed">
+        <li v-for="(item, idx) in pickLocale(work.summary, locale)" :key="idx">
           {{ item }}
         </li>
       </ul>
@@ -75,7 +75,7 @@ function periodLabel(work: WorksExperienceCollectionItem) {
               {{ project.name }}
             </h4>
             <p class="text-sm text-muted leading-relaxed">
-              {{ project.description }}
+              {{ pickLocale(project.description, locale) }}
             </p>
             <ul v-if="project.tech?.length" class="flex flex-wrap gap-1">
               <li

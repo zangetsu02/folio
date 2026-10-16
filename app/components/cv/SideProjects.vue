@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { locale } = useI18n()
 const { data: works, error } = await useAsyncData(`cv-side-projects`, () => {
   return queryCollection('works')
     .order('date', 'DESC')
@@ -35,7 +36,7 @@ if (error.value) {
           <Icon name="lucide:arrow-up-right" class="size-4 opacity-50 group-hover:opacity-100 transition-opacity" />
         </div>
         <p class="text-sm text-muted leading-relaxed">
-          {{ item.description }}
+          {{ pickLocale(item.description, locale) }}
         </p>
       </NuxtLink>
     </li>
