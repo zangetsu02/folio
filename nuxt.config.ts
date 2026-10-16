@@ -50,8 +50,21 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/seo',
+    '@nuxtjs/i18n',
     '@nuxt/image',
   ],
+
+  i18n: {
+    defaultLocale: 'it',
+    strategy: 'prefix_except_default',
+    // Nessun redirect su Accept-Language: sorprende chi apre un link
+    // condiviso e confonde i crawler. Il selettore in testata e' esplicito.
+    detectBrowserLanguage: false,
+    locales: [
+      { code: 'it', language: 'it-IT', name: 'Italiano', file: 'it.json' },
+      { code: 'en', language: 'en-GB', name: 'English', file: 'en.json' },
+    ],
+  },
 
   css: ['~/assets/css/main.css'],
 
