@@ -96,9 +96,8 @@ export default defineNuxtConfig({
         '/works',
         '/_resume',
       ],
-      // /writing resta raggiungibile ma non si prerenderizza: la collection e'
-      // vuota finche' non ci sono articoli, e una pagina vuota indicizzata vale
-      // meno di nessuna pagina.
+      // Rotte assorbite dalla home: reindirizzano (vedi routeRules), quindi non
+      // vanno ne' prerenderizzate ne' pubblicate nel sitemap.
       ignore: ['/notes', '/notes/**', '/writing', '/about', '/timeline', '/contact', '/__og-image__/**'],
     },
   },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { dotRadius, forEachScreenDot, readInk, SCREEN, stampDot } from '~/utils/halftone'
+import { dotRadius, FALLBACK_INK, forEachScreenDot, readInk, SCREEN, stampDot } from '~/utils/halftone'
 import { cloud, hash2, lerp } from '~/utils/noise'
 
 /** Passo della griglia di campionamento del campo, in px CSS. */
@@ -27,7 +27,7 @@ const motion = usePreferredReducedMotion()
 
 let ctx: CanvasRenderingContext2D | null = null
 let buffer: ImageData | null = null
-let ink: readonly [number, number, number] = [235, 235, 235]
+let ink = FALLBACK_INK
 let timer: ReturnType<typeof setTimeout> | undefined
 let elapsed = 0
 let last = 0

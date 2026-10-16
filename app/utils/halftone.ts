@@ -15,7 +15,8 @@ const ANGLE = 22 * (Math.PI / 180)
 /** Diametro del punto pieno, in multipli del passo. Poco oltre 1 perche' i pieni chiudano. */
 const DOT_MAX = 1.1
 
-const FALLBACK_INK: readonly [number, number, number] = [235, 235, 235]
+/** Usato finche' il canvas non ha un `color` calcolato. */
+export const FALLBACK_INK: readonly [number, number, number] = [235, 235, 235]
 
 export interface ScreenDot {
   px: number
@@ -71,7 +72,7 @@ export function forEachScreenDot(
   }
 }
 
-/** Raggio col quale e' l'area del punto, non il raggio, a seguire la densita': e' cio' che rende lineare il grigio. */
+/** Area proporzionale alla densita', non raggio: e' cio' che rende lineare il grigio. */
 export function dotRadius(density: number, pitch: number = SCREEN) {
   return Math.sqrt(Math.min(1, Math.max(0, density))) * pitch * 0.5 * DOT_MAX
 }

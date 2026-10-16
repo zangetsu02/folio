@@ -88,15 +88,21 @@ function draw() {
   ctx.putImageData(image, 0, 0)
 }
 
-onMounted(() => {
+function load(url: string) {
+  source?.removeEventListener('load', draw)
   const image = new Image()
-  // L'avatar arriva da un altro dominio: senza, il canvas si sporca e getImageData solleva.
+  // L'avatar puo' arrivare da un altro dominio: senza, il canvas si sporca e getImageData solleva.
   image.crossOrigin = 'anonymous'
   image.decoding = 'async'
-  image.addEventListener('load', draw, { once: true })
-  image.src = src
+  image.addEventListener('load', draw)
+  image.addEventListener('error', () => console.warn(`[Portrait] sorgente non caricata: ${url}`))
+  image.src = url
   source = image
-})
+}
+
+// Disegna solo quando serve, non in loop: il fondo costa gia' ~10% di un core
+// in continuo, e un secondo canvas animato lo raddoppierebbe.
+onMounted(() => load(src))
 
 onBeforeUnmount(() => {
   source?.removeEventListener('load', draw)
@@ -104,6 +110,7 @@ onBeforeUnmount(() => {
 })
 
 watch(colorMode, draw)
+watch(() => src, load)
 useEventListener('resize', useDebounceFn(draw, 150))
 </script>
 

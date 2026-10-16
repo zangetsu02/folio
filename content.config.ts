@@ -1,4 +1,5 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
+import { WORK_CATEGORY_KEYS } from './app/utils/works'
 
 export default defineContentConfig({
   collections: {
@@ -36,12 +37,11 @@ export default defineContentConfig({
         description: z.string().nonempty(),
         // enum e non string: una categoria scritta male fa fallire la build
         // invece di produrre in silenzio una sezione vuota su /works
-        category: z.enum(['libraries', 'tools', 'themes']),
+        category: z.enum(WORK_CATEGORY_KEYS),
         release: z.string().optional(),
         date: z.string().nonempty(),
         url: z.string(),
         repo: z.string().optional(),
-        // opzionale: i progetti senza logo disegnano un monogramma
         logo: z.string().optional(),
         tech: z.array(z.string().nonempty()).optional(),
       }),

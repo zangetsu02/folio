@@ -1,7 +1,3 @@
-<script setup lang="ts">
-// Divisore: un filo affilato alle estremita', spazio negativo invece di un bordo.
-</script>
-
 <template>
   <svg
     class="w-full"
