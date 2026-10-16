@@ -56,8 +56,15 @@ Per aggiungere un progetto basta un JSON in `content/1.works/`: lo schema sta in
 
 ## Licenza
 
-Da scegliere. Finché non c'è un file `LICENSE`, valgono i termini di default del
-diritto d'autore: il codice è leggibile ma non riutilizzabile.
+Il **codice** è [MIT](./LICENSE): prendilo, forkalo, usalo.
+
+I **contenuti** no. Testi, CV, immagini e il ritratto in `app.config.ts` sono
+miei e non rientrano nella licenza: se forki, sostituiscili con i tuoi — è anche
+l'unico modo perché il fork abbia senso.
+
+Se lo forki per davvero, due cose da cambiare subito: `NUXT_PRIVATE_RESEND_AUDIENCE_ID`
+in `.env` (altrimenti scrivi in un'audience che non è tua) e l'indirizzo di
+destinazione in `server/service/resendService.ts`.
 
 ---
 
