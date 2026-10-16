@@ -31,27 +31,15 @@ if (error.value) {
         :key="work.name"
         :to="work.url"
         target="_blank"
-        class="group relative flex items-start gap-4 cursor-pointer"
+        class="group relative flex cursor-pointer flex-col"
         data-animate
         :aria-label="`Open ${work.name}`"
         :style="{ '--stagger': index }"
       >
-        <NuxtImg
-          v-if="work.logo"
-          width="80"
-          height="80"
-          class="size-20 shrink-0 object-contain saturate-0 transition duration-300 group-hover:saturate-100"
-          :src="work.logo"
-          :alt="`${work.name} logo`"
-        />
-        <div
-          v-else
-          class="flex size-20 shrink-0 items-center justify-center border border-(--ui-border) font-display text-4xl text-muted transition-colors group-hover:border-primary group-hover:text-primary"
-          aria-hidden="true"
-        >
-          {{ work.name.charAt(0) }}
-        </div>
-
+        <!-- Niente segno accanto al titolo. Due progetti su cinque avevano un
+             logo vero e gli altri ricadevano su un riquadro con l'iniziale:
+             la lista mescolava immagini e quadrati tipografici. E un documento
+             non mette un'icona di fianco a ogni paragrafo. -->
         <div class="flex flex-1 flex-col min-w-0">
           <div class="flex items-start justify-between gap-3">
             <h3 class="font-display text-2xl text-pretty decoration-primary group-hover:underline sm:text-3xl">
