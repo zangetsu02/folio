@@ -51,7 +51,7 @@ if (error.value) {
               />
             </div>
           </div>
-          <span class="text-[--ui-text-muted] font-extralight text-sm sm:text-base">
+          <span class="text-muted font-extralight text-sm sm:text-base">
             {{ work.description }}
           </span>
           <ul v-if="work.tech?.length" class="mt-2 flex flex-wrap gap-1">

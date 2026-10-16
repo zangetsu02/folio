@@ -25,13 +25,13 @@ const slug = computed(() =>
          agganciarla alle utility l'ha gia' fatta smettere di combaciare una volta. -->
     <div class="section-mark mb-3 flex items-center gap-4">
       <ThornRule class="flex-1 text-(--ui-border)" />
-      <!-- 22%: sotto, il numerale ha lo stesso peso dei punti del fondo e sparisce. -->
+      <!-- Il fondo stampa a 24/255, cioe' il 9.4%: sotto quella soglia il numerale sparisce dentro il retino. -->
       <span :class="numberSize" class="font-mono leading-none opacity-[22%]" aria-hidden="true">
         {{ number }}
       </span>
     </div>
 
-    <h2 :id="slug" class="w-fit scroll-mt-24" :class="sizeTitle">
+    <h2 :id="slug" class="w-fit" :class="sizeTitle">
       {{ title }}<span class="text-primary">.</span>
     </h2>
 
