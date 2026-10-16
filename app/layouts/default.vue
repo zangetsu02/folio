@@ -9,8 +9,6 @@ const { socials } = useAppConfig()
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
     <Backdrop />
 
-    <!-- Niente cornice: la scatola stringeva il contenuto due volte, col proprio
-         padding sopra a quello della pagina. -->
     <main class="relative z-10 flex min-h-screen flex-col px-5 py-8 sm:px-10 sm:py-12 print:block print:p-0">
       <LayoutGroup id="main-layout">
         <Motion
@@ -23,8 +21,6 @@ const { socials } = useAppConfig()
           class="mx-auto flex w-full max-w-[100rem] flex-1 flex-col"
         >
           <div class="mx-auto flex w-full min-w-0 max-w-[88ch] flex-1 flex-col print:max-w-none">
-            <!-- Dentro la colonna e non fissa: la testata scorre via col
-                 contenuto, come il frontespizio di un documento. -->
             <Masthead />
 
             <Motion layout class="flex-1">
@@ -33,8 +29,6 @@ const { socials } = useAppConfig()
 
             <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
 
-            <!-- Social e sigillo stavano nel binario: senza di lui finiscono qui,
-                 invece che in una fascia di navigazione dove non c'entrano. -->
             <footer class="mt-20 flex flex-col gap-5 border-t border-(--ui-border) pt-6 text-xs text-muted print:hidden">
               <div class="flex items-center gap-4 font-mono text-[10.5px]">
                 <NuxtLink :to="socials.twitter" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">

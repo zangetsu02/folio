@@ -13,18 +13,8 @@ function isActive(to: string) {
 </script>
 
 <template>
-  <!--
-    Testata, non barra: sta in cima alla pagina e scorre via col contenuto.
-    Un libro non ha una riga che ti insegue mentre leggi, e la metafora del
-    sito e' il documento.
-
-    Prima era una fascia fissa con la foto a 40px: a quella dimensione il
-    ritratto diventava un quadrato scuro illeggibile, e il resto -- marchio a
-    sinistra, voci a destra, bordo e blur -- era la forma di default di
-    qualsiasi template. Qui non c'e' nessuna immagine: solo il serif del nome,
-    il mono numerato delle voci e un filetto, che sono gli stessi materiali di
-    tutto il resto del sito.
-  -->
+  <!-- Testata e non barra: scorre via col contenuto, come il frontespizio di
+       un documento. -->
   <header class="mb-14 flex flex-col gap-6 print:hidden">
     <div>
       <NuxtLink
@@ -33,8 +23,7 @@ function isActive(to: string) {
       >
         christian&thinsp;/&thinsp;zangetsu
       </NuxtLink>
-      <!-- my-0: la regola globale `p { my-5 }` in main.css staccherebbe il
-           sottotitolo dal nome di venti pixel. -->
+      <!-- my-0: la regola globale `p { my-5 }` staccherebbe il sottotitolo dal nome. -->
       <p class="my-0 mt-1.5 text-sm text-muted">
         {{ profile.workTitle }} · Rome
       </p>

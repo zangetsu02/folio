@@ -36,10 +36,6 @@ if (error.value) {
         :aria-label="`Open ${work.name}`"
         :style="{ '--stagger': index }"
       >
-        <!-- Niente segno accanto al titolo. Due progetti su cinque avevano un
-             logo vero e gli altri ricadevano su un riquadro con l'iniziale:
-             la lista mescolava immagini e quadrati tipografici. E un documento
-             non mette un'icona di fianco a ogni paragrafo. -->
         <div class="flex flex-1 flex-col min-w-0">
           <div class="flex items-start justify-between gap-3">
             <h3 class="font-display text-2xl text-pretty decoration-primary group-hover:underline sm:text-3xl">

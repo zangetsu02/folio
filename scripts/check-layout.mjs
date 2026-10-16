@@ -1,109 +1,89 @@
-// Controlli di impaginazione, eseguiti contro il dev server.
-// Non e' un test unitario: misura il sito renderizzato, che e' l'unico
-// posto dove "quanti caratteri per riga" esiste davvero.
-import puppeteer from 'puppeteer'
+// Misura della colonna di lettura, altezza delle pagine, rotte assorbite.
+import { BASE, createReport, openPage, withBrowser } from './lib/check.mjs'
 
-const BASE = process.env.BASE_URL ?? 'http://localhost:3000'
 const PAGES = ['/', '/works', '/resume']
 const WIDTHS = [1280, 1440, 1920, 2560]
 const MIN_CH = 60
 const MAX_CH = 75
+const MIN_HEIGHT = 900
+/** Rotte confluite nella home: devono reindirizzare, non servire la vecchia pagina. */
 const GONE = ['/about', '/contact', '/writing', '/timeline']
 
-const failures = []
-function note(ok, msg) {
-  console.log(`${ok ? '  ok  ' : ' FAIL '} ${msg}`)
-  if (!ok)
-    failures.push(msg)
-}
+const { note, finish } = createReport()
 
-// Misura i caratteri per riga di un paragrafo di prosa vero.
-// Usa un probe con lo stesso font: dividere i px per una larghezza media
-// inventata darebbe un numero che non corrisponde a niente.
-async function measure(page) {
+/** Caratteri per riga del paragrafo piu' largo, misurati col font reale. */
+function measure(page) {
   return page.evaluate(() => {
-    const ps = [...document.querySelectorAll('p, li')]
-      // innerText e non textContent: serve il testo come viene reso, non
-      // quello nel DOM. textContent conterebbe anche figli nascosti e
-      // farebbe sembrare lungo un paragrafo la cui parte visibile e' corta.
+    const paragraphs = [...document.querySelectorAll('p, li')]
+      // innerText e non textContent: serve il testo come viene reso. textContent
+      // conterebbe i figli nascosti e allungherebbe paragrafi quasi vuoti.
       // eslint-disable-next-line unicorn/prefer-dom-node-text-content
-      .filter(e => e.innerText.trim().length > 90 && e.offsetParent !== null)
-    if (!ps.length)
+      .filter(el => el.innerText.trim().length > 90 && el.offsetParent !== null)
+    if (!paragraphs.length)
       return null
+
     const probe = document.createElement('span')
     probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre'
     probe.textContent = '0'.repeat(100)
     document.body.appendChild(probe)
-    let worst = 0
-    for (const p of ps) {
+
+    let widest = 0
+    for (const p of paragraphs) {
       probe.style.font = getComputedStyle(p).font
-      const chW = probe.getBoundingClientRect().width / 100
-      const ch = Math.round(p.getBoundingClientRect().width / chW)
-      if (ch > worst)
-        worst = ch
+      const charWidth = probe.getBoundingClientRect().width / 100
+      widest = Math.max(widest, Math.round(p.getBoundingClientRect().width / charWidth))
     }
     probe.remove()
-    return worst
+    return widest
   })
 }
 
-const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] })
+await withBrowser(async (browser) => {
+  console.log('\n— misura della prosa —')
+  for (const route of PAGES) {
+    for (const width of WIDTHS) {
+      const page = await openPage(browser, { route, width })
+      const ch = await measure(page)
+      if (ch === null)
+        note(true, `${route} @${width} — nessuna prosa lunga da misurare`)
+      else
+        note(ch >= MIN_CH && ch <= MAX_CH, `${route} @${width} — ${ch} caratteri per riga (atteso ${MIN_CH}-${MAX_CH})`)
+      await page.close()
+    }
+  }
 
-console.log('\n— misura della prosa —')
-for (const route of PAGES) {
-  for (const width of WIDTHS) {
-    const page = await browser.newPage()
-    await page.setViewport({ width, height: 900 })
-    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
-    const ch = await measure(page)
-    if (ch === null) {
-      note(true, `${route} @${width} — nessuna prosa lunga da misurare`)
-    }
-    else {
-      note(ch >= MIN_CH && ch <= MAX_CH, `${route} @${width} — ${ch} caratteri per riga (atteso ${MIN_CH}-${MAX_CH})`)
-    }
+  console.log('\n— altezza delle pagine —')
+  for (const route of PAGES) {
+    const page = await openPage(browser, { route })
+    const height = await page.evaluate(() => document.documentElement.scrollHeight)
+    note(height > MIN_HEIGHT, `${route} — alta ${height}px (deve superare la viewport di ${MIN_HEIGHT}px)`)
     await page.close()
   }
-}
 
-console.log('\n— altezza delle pagine —')
-for (const route of PAGES) {
-  const page = await browser.newPage()
-  await page.setViewport({ width: 1440, height: 900 })
-  await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
-  const h = await page.evaluate(() => document.documentElement.scrollHeight)
-  note(h > 900, `${route} — alta ${h}px (deve superare la viewport di 900px)`)
-  await page.close()
-}
+  console.log('\n— rotte assorbite —')
+  for (const route of GONE) {
+    const page = await browser.newPage()
+    await page.goto(BASE + route, { waitUntil: 'domcontentloaded', timeout: 60000 })
+    const landed = new URL(page.url()).pathname
+    note(landed !== route, `${route} — reindirizza a ${landed}`)
+    await page.close()
+  }
 
-console.log('\n— rotte eliminate —')
-for (const route of GONE) {
-  const page = await browser.newPage()
-  await page.goto(BASE + route, { waitUntil: 'domcontentloaded', timeout: 60000 })
-  const landed = new URL(page.url()).pathname
-  note(landed !== route, `${route} — reindirizza a ${landed} invece di servire la vecchia pagina`)
-  await page.close()
-}
-
-console.log('\n— link interni rotti —')
-{
-  const page = await browser.newPage()
-  await page.setViewport({ width: 1440, height: 900 })
+  console.log('\n— link interni —')
+  const page = await openPage(browser)
   const seen = new Set()
   for (const route of PAGES) {
     await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
     const hrefs = await page.evaluate(() =>
       [...document.querySelectorAll('a[href^="/"]')].map(a => a.getAttribute('href')))
-    for (const h of hrefs) seen.add(h.split('#')[0])
+    for (const href of hrefs) seen.add(href.split('#')[0])
   }
-  for (const href of [...seen].filter(h => GONE.includes(h)))
+  const dangling = [...seen].filter(href => GONE.includes(href))
+  for (const href of dangling)
     note(false, `un link interno punta ancora a ${href}`)
-  if (![...seen].some(h => GONE.includes(h)))
-    note(true, 'nessun link interno verso le rotte eliminate')
+  if (!dangling.length)
+    note(true, 'nessun link interno verso le rotte assorbite')
   await page.close()
-}
+})
 
-await browser.close()
-
-console.log(`\n${failures.length ? `${failures.length} controlli falliti` : 'tutti i controlli passati'}\n`)
-process.exit(failures.length ? 1 : 0)
+finish()

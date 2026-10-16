@@ -1,43 +1,35 @@
-/*
- * La lastra tipografica del sito, condivisa da chi la usa.
- *
- * Serve a due cose diverse: il fondo a nuvole (`Backdrop.vue`), che la fa
- * derivare nel tempo, e il ritratto in cima alla home (`Portrait.vue`), che la
- * usa ferma sulla luminanza di un'immagine. Il motore sta qui perche' se le due
- * avessero inclinazioni o passi diversi si vedrebbe al primo sguardo: sono due
- * retini sulla stessa pagina.
- *
- * Inchiostro di densita' costante e punto che cambia dimensione, su reticolo
- * inclinato: e' un retino vero, non un dot-matrix da schermo con l'alpha che
- * varia. Il raggio va con la radice della densita' perche' e' l'area a dover
- * essere proporzionale, ed e' cio' che rende lineare il grigio all'occhio.
- */
-
-// Passo del retino, in px di canvas. Il fondo usa questo; un'immagine ne vuole
-// uno piu' fitto, come in stampa una foto si retina piu' fine di un fondino:
-// il numero di punti e' il limite di risoluzione, e un viso in 24 punti di
-// larghezza non esiste.
-export const SCREEN = 10
-export const ANGLE = 22 * (Math.PI / 180) // inclinazione della lastra
-export const DOT_MAX = 1.1 // diametro del punto pieno, in multipli del passo
-
 /**
- * Un punto del reticolo: posizione in px di canvas, piu' le sue coordinate
- * `u`/`v` nel riferimento della lastra -- servono a chi vuole un dither
- * stabile per punto, che deve dipendere dal punto e non da dove cade.
+ * Il retino tipografico del sito: inchiostro di densita' costante e punto che
+ * cambia dimensione, su reticolo inclinato.
+ *
+ * Vive qui perche' lo usano sia il fondo che il ritratto, e due retini sulla
+ * stessa pagina con inclinazioni diverse si noterebbero subito.
  */
+
+/** Passo del reticolo, in px di canvas. Il ritratto ne passa uno piu' fitto. */
+export const SCREEN = 10
+
+/** Inclinazione della lastra: allineata agli assi entrerebbe in moire' coi pixel. */
+const ANGLE = 22 * (Math.PI / 180)
+
+/** Diametro del punto pieno, in multipli del passo. Poco oltre 1 perche' i pieni chiudano. */
+const DOT_MAX = 1.1
+
+const FALLBACK_INK: readonly [number, number, number] = [235, 235, 235]
+
 export interface ScreenDot {
   px: number
   py: number
+  /** Coordinate nel riferimento della lastra, per un dither stabile per punto. */
   u: number
   v: number
 }
 
 /**
- * Scorre il reticolo ruotato che copre un canvas `cw x ch`, chiamando `fn` su
- * ogni punto. `offU` e `offV` spostano la lastra: sono modulo `SCREEN`, e il
- * wrap non si vede perche' spostare di un passo esatto rimappa ogni punto sulla
- * posizione del vicino.
+ * Scorre il reticolo che copre un canvas `cw x ch`.
+ *
+ * `offU` e `offV` spostano la lastra; prenderli modulo `pitch` non si vede,
+ * perche' uno spostamento di un passo esatto rimappa ogni punto su quello del vicino.
  */
 export function forEachScreenDot(
   cw: number,
@@ -52,8 +44,7 @@ export function forEachScreenDot(
   const mx = cw / 2
   const my = ch / 2
 
-  // Scorro nel riferimento del reticolo e torno indietro. Gli estremi sono i
-  // quattro angoli del canvas visti da li'.
+  // Gli estremi del ciclo sono i quattro angoli del canvas visti dal reticolo.
   let u0 = Infinity
   let u1 = -Infinity
   let v0 = Infinity
@@ -80,14 +71,16 @@ export function forEachScreenDot(
   }
 }
 
-/** Il raggio del punto per una densita' 0..1. Area proporzionale, non raggio. */
+/** Raggio col quale e' l'area del punto, non il raggio, a seguire la densita': e' cio' che rende lineare il grigio. */
 export function dotRadius(density: number, pitch: number = SCREEN) {
   return Math.sqrt(Math.min(1, Math.max(0, density))) * pitch * 0.5 * DOT_MAX
 }
 
 /**
- * Stampa un punto tondo dentro una ImageData, fondendo in max e non in somma:
- * i punti vicini si toccano, e sommare farebbe cuciture piu' scure sui bordi.
+ * Stampa un punto tondo antialiasato dentro una ImageData.
+ *
+ * Fonde in max e non in somma: i punti vicini si toccano, e sommare lascerebbe
+ * cuciture piu' scure dove si sovrappongono.
  */
 export function stampDot(
   data: Uint8ClampedArray,
@@ -101,31 +94,33 @@ export function stampDot(
 ) {
   if (rad < 0.35)
     return
+
   const x0 = Math.max(0, Math.floor(px - rad - 1))
   const x1 = Math.min(cw - 1, Math.ceil(px + rad + 1))
   const y0 = Math.max(0, Math.floor(py - rad - 1))
   const y1 = Math.min(ch - 1, Math.ceil(py + rad + 1))
-  for (let yy = y0; yy <= y1; yy++) {
-    for (let xx = x0; xx <= x1; xx++) {
-      const cov = rad + 0.5 - Math.hypot(xx + 0.5 - px, yy + 0.5 - py)
-      if (cov <= 0)
+
+  for (let y = y0; y <= y1; y++) {
+    for (let x = x0; x <= x1; x++) {
+      const coverage = rad + 0.5 - Math.hypot(x + 0.5 - px, y + 0.5 - py)
+      if (coverage <= 0)
         continue
-      const alpha = Math.round(maxAlpha * Math.min(1, cov))
-      const p = (yy * cw + xx) * 4
-      if (alpha <= data[p + 3]!)
+      const alpha = Math.round(maxAlpha * Math.min(1, coverage))
+      const i = (y * cw + x) * 4
+      if (alpha <= data[i + 3]!)
         continue
-      data[p] = ink[0]
-      data[p + 1] = ink[1]
-      data[p + 2] = ink[2]
-      data[p + 3] = alpha
+      data[i] = ink[0]
+      data[i + 1] = ink[1]
+      data[i + 2] = ink[2]
+      data[i + 3] = alpha
     }
   }
 }
 
-/** L'inchiostro corrente di un elemento, letto dal suo `color`. */
-export function readInk(el: HTMLElement): [number, number, number] {
+/** L'inchiostro di un elemento, letto dal suo `color`: segue il tema senza saperne nulla. */
+export function readInk(el: HTMLElement): readonly [number, number, number] {
   const parsed = getComputedStyle(el).color.match(/\d+/g)
   if (parsed && parsed.length >= 3)
     return [Number(parsed[0]), Number(parsed[1]), Number(parsed[2])]
-  return [235, 235, 235]
+  return FALLBACK_INK
 }

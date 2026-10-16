@@ -14,8 +14,8 @@ defineProps<{
         {{ title }}
       </h3>
     </header>
-    <!-- measure qui e non sulla sezione: il corpo e' text-sm, e 88ch
-         calcolati sul font del genitore diventano 98 caratteri a 14px. -->
+    <!-- measure qui e non sulla sezione: `ch` si risolve sul font dell'elemento,
+         e questo e' text-sm. -->
     <div class="measure mt-2 text-sm leading-relaxed text-muted *:my-0">
       <slot />
     </div>

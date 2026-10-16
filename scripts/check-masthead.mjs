@@ -1,66 +1,53 @@
-// La testata non e' una barra: sta in cima alla pagina e deve scorrere via
-// col contenuto. Prima era sticky e questo controllo verificava che restasse
-// incollata; il requisito e' cambiato, quindi verifica l'opposto -- e che
-// nient'altro sia rimasto fisso sopra il testo.
-import process from 'node:process'
-import puppeteer from 'puppeteer'
+// La testata scorre via col contenuto. Verifica che non sia tornata una barra
+// fissa, e che niente nel flusso di lettura resti appiccicato sopra il testo.
+import { createReport, openPage, settle, withBrowser } from './lib/check.mjs'
 
-const BASE = process.env.BASE_URL ?? 'http://localhost:3000'
-const failures = []
-function note(ok, msg) {
-  console.log(`${ok ? '  ok  ' : ' FAIL '} ${msg}`)
-  if (!ok)
-    failures.push(msg)
-}
+/** 320px incluso: e' la larghezza dove il nome andava a capo. */
+const VIEWPORTS = [[320, 568], [390, 844], [1280, 768], [1440, 900]]
+const MAX_HEIGHT_RATIO = 0.33
+const SCROLL_TO = 1200
+/** Lenis interpola lo scroll: senza attesa si misura il viaggio, non l'arrivo. */
+const SCROLL_SETTLE = 1200
 
-const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] })
+const { note, finish } = createReport()
 
-// 320px incluso: a quella larghezza il nome andava a capo e il sottotitolo
-// veniva troncato, e il controllo precedente partiva da 390 senza vederlo.
-for (const [w, h] of [[320, 568], [390, 844], [1280, 768], [1440, 900]]) {
-  const page = await browser.newPage()
-  await page.setViewport({ width: w, height: h })
-  await page.goto(`${BASE}/`, { waitUntil: 'networkidle0', timeout: 60000 })
+await withBrowser(async (browser) => {
+  for (const [width, height] of VIEWPORTS) {
+    const page = await openPage(browser, { width, height })
 
-  const head = await page.evaluate(() => {
-    const el = document.querySelector('header')
-    const r = el.getBoundingClientRect()
-    return { altezza: Math.round(r.height), position: getComputedStyle(el).position }
-  })
+    const head = await page.evaluate(() => {
+      const el = document.querySelector('header')
+      return { height: Math.round(el.getBoundingClientRect().height), position: getComputedStyle(el).position }
+    })
+    note(head.position === 'static', `${width}x${height} — la testata non e' fissa (position: ${head.position})`)
+    note(
+      head.height <= height * MAX_HEIGHT_RATIO,
+      `${width}x${height} — testata alta ${head.height}px (max ${Math.round(height * MAX_HEIGHT_RATIO)}px)`,
+    )
 
-  note(head.position === 'static', `${w}x${h} — la testata non e' fissa (position: ${head.position})`)
-  // non e' piu' una fascia, puo' respirare: il vincolo e' che non si mangi
-  // la prima schermata prima che il titolo compaia
-  note(head.altezza <= h * 0.33, `${w}x${h} — testata alta ${head.altezza}px (max ${Math.round(h * 0.33)}px)`)
+    await page.evaluate(y => window.scrollTo(0, y), SCROLL_TO)
+    await settle(SCROLL_SETTLE)
+    const top = await page.evaluate(() => Math.round(document.querySelector('header').getBoundingClientRect().top))
+    note(top < -100, `${width}x${height} — dopo lo scroll la testata e' uscita (top=${top})`)
 
-  await page.evaluate(() => window.scrollTo(0, 1200))
-  await new Promise(r => setTimeout(r, 1200)) // Lenis arriva a destinazione con calma
-  const dopo = await page.evaluate(() => Math.round(document.querySelector('header').getBoundingClientRect().top))
-  note(dopo < -100, `${w}x${h} — dopo lo scroll la testata e' uscita (top=${dopo})`)
+    // Solo dentro <main>: fuori ci sono i devtools e i toast, fissi legittimamente.
+    const pinned = await page.evaluate(() =>
+      [...document.querySelectorAll('main, main *')]
+        .filter((el) => {
+          const { position } = getComputedStyle(el)
+          return position === 'fixed' || position === 'sticky'
+        })
+        .map(el => el.tagName))
+    note(!pinned.length, `${width}x${height} — niente di fisso dentro main${pinned.length ? `: ${pinned.join(', ')}` : ''}`)
 
-  // Niente dentro <main> deve restare fisso sopra il testo. Cerco li' dentro
-  // e non in tutto il body di proposito: fuori ci sono i devtools di Nuxt e il
-  // contenitore dei toast, che sono fissi legittimamente e in produzione non
-  // ci sono nemmeno. Il fondo a retino e' fuori da main per la stessa ragione.
-  const fissi = await page.evaluate(() =>
-    [...document.querySelectorAll('main, main *')]
-      .filter((el) => {
-        const pos = getComputedStyle(el).position
-        return pos === 'fixed' || pos === 'sticky'
-      })
-      .map(el => el.tagName + (el.className ? `.${String(el.className).split(' ')[0]}` : '')))
-  note(fissi.length === 0, `${w}x${h} — niente di fisso dentro main${fissi.length ? `: ${fissi.join(', ')}` : ''}`)
+    const lines = await page.evaluate(() => {
+      const link = document.querySelector('header a')
+      return Math.round(link.getBoundingClientRect().height / Number.parseFloat(getComputedStyle(link).fontSize))
+    })
+    note(lines <= 2, `${width}x${height} — il nome sta in ${lines} riga/e`)
 
-  // il nome non deve andare a capo
-  const righe = await page.evaluate(() => {
-    const a = document.querySelector('header a')
-    return Math.round(a.getBoundingClientRect().height / Number.parseFloat(getComputedStyle(a).fontSize))
-  })
-  note(righe <= 2, `${w}x${h} — il nome sta in ${righe} riga/e`)
+    await page.close()
+  }
+})
 
-  await page.close()
-}
-
-await browser.close()
-console.log(`\n${failures.length ? `${failures.length} controlli falliti` : 'tutti i controlli passati'}\n`)
-process.exit(failures.length ? 1 : 0)
+finish()

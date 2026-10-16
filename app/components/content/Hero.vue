@@ -7,9 +7,8 @@ const picture = computed(() =>
 </script>
 
 <template>
-  <!-- La tavola sta qui e non nella testata: li' sopra portava l'altezza da
-       115 a 439px e spingeva la tesi sotto la piega. Di fianco al titolo
-       riempie spazio che era vuoto, invece di aggiungerne. -->
+  <!-- La tavola sta di fianco al titolo, che e' su misura corta: riempie
+       spazio gia' vuoto invece di aggiungerne sopra la tesi. -->
   <div class="flex flex-col gap-8 sm:flex-row sm:items-start sm:gap-10" data-animate style="--stagger: 1">
     <div class="flex min-w-0 flex-1 flex-col gap-6">
       <h1 class="font-display max-w-[20ch] text-pretty text-3xl leading-[1.14] tracking-tight sm:text-5xl">
