@@ -29,7 +29,7 @@ function isActive(to: string) {
       </NuxtLink>
       <!-- my-0: la regola globale `p { my-5 }` staccherebbe il sottotitolo dal nome. -->
       <p class="my-0 mt-1.5 text-sm text-muted">
-        {{ profile.workTitle }} · Rome
+        {{ profile.workTitle }} · {{ t('masthead.city') }}
       </p>
     </div>
 

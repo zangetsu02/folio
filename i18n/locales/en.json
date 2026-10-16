@@ -35,5 +35,8 @@
   },
   "locale": {
     "switch": "Italiano"
+  },
+  "masthead": {
+    "city": "Rome"
   }
 }
