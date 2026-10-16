@@ -1,6 +1,12 @@
 {
-  "nav": { "works": "Works", "resume": "Resume" },
-  "hero": { "message": "Send me a message", "call": "Make a call" },
+  "nav": {
+    "works": "Works",
+    "resume": "Resume"
+  },
+  "hero": {
+    "message": "Send me a message",
+    "call": "Make a call"
+  },
   "contact": {
     "name": "Name",
     "email": "Email",
@@ -13,8 +19,21 @@
     "download": "Download PDF",
     "present": "Present",
     "current": "Current",
-    "projects": "Projects"
+    "projects": "Projects",
+    "about": "About",
+    "experience": "Work Experience",
+    "sideProjects": "Side Projects",
+    "certificates": "Certificates",
+    "languages": "Languages",
+    "italian": "Italian",
+    "english": "English",
+    "native": "Native speaker",
+    "b2": "B2 · Upper-Intermediate"
   },
-  "footer": { "openSource": "This website is fully open-source, you can find the source code on" },
-  "locale": { "switch": "Italiano" }
+  "footer": {
+    "openSource": "This website is fully open-source, you can find the source code on"
+  },
+  "locale": {
+    "switch": "Italiano"
+  }
 }

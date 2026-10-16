@@ -1,6 +1,12 @@
 {
-  "nav": { "works": "Lavori", "resume": "CV" },
-  "hero": { "message": "Scrivimi", "call": "Sentiamoci" },
+  "nav": {
+    "works": "Lavori",
+    "resume": "CV"
+  },
+  "hero": {
+    "message": "Scrivimi",
+    "call": "Sentiamoci"
+  },
   "contact": {
     "name": "Nome",
     "email": "Email",
@@ -13,8 +19,21 @@
     "download": "Scarica il PDF",
     "present": "Oggi",
     "current": "In corso",
-    "projects": "Progetti"
+    "projects": "Progetti",
+    "about": "Chi sono",
+    "experience": "Esperienza",
+    "sideProjects": "Progetti personali",
+    "certificates": "Certificazioni",
+    "languages": "Lingue",
+    "italian": "Italiano",
+    "english": "Inglese",
+    "native": "Madrelingua",
+    "b2": "B2 · Intermedio superiore"
   },
-  "footer": { "openSource": "Questo sito è open source, il codice sta su" },
-  "locale": { "switch": "English" }
+  "footer": {
+    "openSource": "Questo sito è open source, il codice sta su"
+  },
+  "locale": {
+    "switch": "English"
+  }
 }
