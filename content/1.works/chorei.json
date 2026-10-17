@@ -1,0 +1,10 @@
+{
+  "name": "chorei",
+  "category": "tools",
+  "description": "Assembles your daily stand-up from one day of git history, coding-agent sessions and tickets, with every line carrying the source it came from.",
+  "url": "https://skills.sh/zangetsu02/chorei",
+  "repo": "https://github.com/zangetsu02/chorei",
+  "tech": ["Shell", "Claude Code", "Jira"],
+  "release": "2026",
+  "date": "2026-10-17"
+}
