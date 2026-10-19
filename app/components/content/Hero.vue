@@ -21,7 +21,7 @@ const picture = computed(() =>
       </p>
 
       <div class="mt-1 flex flex-wrap gap-3">
-        <UButton to="/#let-s-talk" size="lg">
+        <UButton :to="`/#${t('hero.contactAnchor')}`" size="lg">
           {{ t('hero.message') }}
         </UButton>
         <UButton :to="global.meetingLink" color="secondary" size="lg">

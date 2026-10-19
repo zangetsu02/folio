@@ -41,8 +41,8 @@ const { t, locale } = useI18n()
                 <NuxtLink :to="socials.linkedin" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   LinkedIn
                 </NuxtLink>
-                <NuxtLink v-if="route.path === '/resume'" :to="locale === 'en' ? '/resume-en.pdf' : '/resume.pdf'" external target="_blank" class="hover:text-primary transition-colors">
-                  Download PDF
+                <NuxtLink v-if="route.path.endsWith('/resume')" :to="locale === 'en' ? '/resume-en.pdf' : '/resume.pdf'" external target="_blank" class="hover:text-primary transition-colors">
+                  {{ t('cv.download') }}
                 </NuxtLink>
               </div>
 

@@ -5,14 +5,19 @@
   },
   "hero": {
     "message": "Send me a message",
-    "call": "Make a call"
+    "call": "Make a call",
+    "contactAnchor": "let-s-talk"
   },
   "contact": {
     "name": "Name",
     "email": "Email",
     "message": "Message",
     "sent": "Your message has been sent!",
-    "failed": "An error occurred while sending your message."
+    "failed": "An error occurred while sending your message.",
+    "send": "Send",
+    "invalidEmail": "Invalid email",
+    "tooShort": "Too short",
+    "required": "Please fill in all required fields."
   },
   "cv": {
     "location": "Rome, Latium, Italy",
@@ -38,5 +43,9 @@
   },
   "masthead": {
     "city": "Rome"
+  },
+  "error": {
+    "lost": "I think you're lost, let's go back",
+    "home": "home"
   }
 }

@@ -1,3 +1,5 @@
+import { pickLocale } from './localized'
+
 /**
  * Le categorie dei progetti.
  *
@@ -6,15 +8,16 @@
  * `content/works.md`: sono contenuto, e non passano da questa mappa.
  */
 export const WORK_CATEGORIES = {
-  libraries: 'Libraries & SDKs',
-  tools: 'Developer tools',
-  themes: 'Editor themes',
+  libraries: { it: 'Librerie e SDK', en: 'Libraries & SDKs' },
+  tools: { it: 'Strumenti', en: 'Developer tools' },
+  themes: { it: 'Temi per editor', en: 'Editor themes' },
 } as const
 
 export type WorkCategory = keyof typeof WORK_CATEGORIES
 
 export const WORK_CATEGORY_KEYS = Object.keys(WORK_CATEGORIES) as [WorkCategory, ...WorkCategory[]]
 
-export function categoryLabel(key: string): string {
-  return WORK_CATEGORIES[key as WorkCategory] ?? key
+export function categoryLabel(key: string, locale: string): string {
+  const label = WORK_CATEGORIES[key as WorkCategory]
+  return label ? pickLocale(label, locale) ?? key : key
 }

@@ -30,7 +30,10 @@ const pageSEO = getPageSEO()
 // pagina rompe il prerender della home. L'immagine va quindi dichiarata a mano,
 // altrimenti ogni condivisione esce senza anteprima e twitterCard
 // 'summary_large_image' mostra un riquadro vuoto.
-const ogImageUrl = new URL(page.image ?? '/og/index.png', seo.url).href
+const { locale } = useI18n()
+// Il file unico non esiste piu': una card per lingua, e il fallback deve
+// seguire la lingua o /works e /resume condividono una card inglese.
+const ogImageUrl = computed(() => new URL(page.image ?? `/og/index-${locale.value}.png`, seo.url).href)
 
 useSeoMeta({
   ogSiteName: seo.title,
@@ -41,8 +44,8 @@ useSeoMeta({
   twitterTitle: pageSEO.title,
   twitterDescription: pageSEO.description,
   twitterCard: 'summary_large_image',
-  ogImage: ogImageUrl,
-  twitterImage: ogImageUrl,
+  ogImage: ogImageUrl.value,
+  twitterImage: ogImageUrl.value,
 })
 
 useHead({

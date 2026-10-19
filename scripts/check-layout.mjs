@@ -87,6 +87,45 @@ await withBrowser(async (browser) => {
       [...document.querySelectorAll('a[href^="/"]')].map(a => a.getAttribute('href')))
     for (const href of hrefs) seen.add(href.split('#')[0])
   }
+  // Un link non localizzato nella testata riporta in italiano chi legge inglese.
+  console.log('\n— i link restano nella lingua corrente —')
+  for (const route of ['/en', '/en/works', '/en/resume']) {
+    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
+    const escaped = await page.evaluate(() =>
+      // il selettore di lingua punta all'altra lingua per definizione
+      [...document.querySelectorAll('header a[href^="/"]:not([data-locale-switch])')]
+        .map(a => a.getAttribute('href'))
+        .filter(href => !href.startsWith('/en') && href !== '/'))
+    note(!escaped.length, `${route} — link di testata fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
+  }
+
+  // Le ancore sono il punto cieco storico: gli id derivano dai titoli, che sono
+  // tradotti, mentre i link che ci puntano sono scritti a mano.
+  console.log('\n— ancore dei link interni —')
+  for (const route of PAGES) {
+    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
+    const broken = await page.evaluate(() =>
+      [...document.querySelectorAll('a[href*="#"]')]
+        .map(a => a.getAttribute('href'))
+        .filter(href => href.startsWith('/') || href.startsWith('#'))
+        .map(href => href.slice(href.indexOf('#') + 1))
+        .filter(id => id && !document.getElementById(id)))
+    note(!broken.length, `${route} — ancore che non esistono: ${broken.join(', ') || 'nessuna'}`)
+  }
+
+  // Un link non localizzato nella testata riporta in italiano chi legge inglese.
+  console.log('\n— i link restano nella lingua corrente —')
+  for (const route of ['/en', '/en/works', '/en/resume']) {
+    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
+    const escaped = await page.evaluate(() =>
+      // il selettore di lingua punta all'altra lingua per definizione
+      [...document.querySelectorAll('header a[href^="/"]:not([data-locale-switch])')]
+        .map(a => a.getAttribute('href'))
+        .filter(href => !href.startsWith('/en') && href !== '/'))
+    note(!escaped.length, `${route} — link di testata fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
+  }
+
+  console.log('\n— link interni —')
   const dangling = [...seen].filter(href => GONE.includes(href))
   for (const href of dangling)
     note(false, `un link interno punta ancora a ${href}`)

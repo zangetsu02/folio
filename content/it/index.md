@@ -1,4 +1,6 @@
 ---
+title: Christian Palladini
+description: Full stack developer a Roma, tech lead in Links Management & Technology. Backend enterprise di giorno, strumenti piccoli e affilati per scelta.
 image: "/og/index-it.png"
 ---
 

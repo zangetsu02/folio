@@ -4,7 +4,7 @@ const { category, limit } = defineProps<{
   limit?: number
 }>()
 
-const { locale } = useI18n()
+const { localized } = useLocalized()
 
 // Senza `category` mostra una selezione trasversale: serve alla home, che
 // porta i progetti in prima pagina invece di lasciarli solo su /works.
@@ -54,7 +54,7 @@ if (error.value) {
             </div>
           </div>
           <span class="text-muted font-extralight text-sm sm:text-base">
-            {{ pickLocale(work.description, locale) }}
+            {{ localized(work.description) }}
           </span>
           <ul v-if="work.tech?.length" class="mt-2 flex flex-wrap gap-1">
             <li

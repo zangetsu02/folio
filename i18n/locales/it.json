@@ -1,18 +1,23 @@
 {
   "nav": {
-    "works": "Lavori",
-    "resume": "CV"
+    "works": "Works",
+    "resume": "Resume"
   },
   "hero": {
     "message": "Scrivimi",
-    "call": "Sentiamoci"
+    "call": "Sentiamoci",
+    "contactAnchor": "parliamone"
   },
   "contact": {
     "name": "Nome",
     "email": "Email",
     "message": "Messaggio",
     "sent": "Messaggio inviato.",
-    "failed": "Qualcosa è andato storto nell'invio."
+    "failed": "Qualcosa è andato storto nell'invio.",
+    "send": "Invia",
+    "invalidEmail": "Email non valida",
+    "tooShort": "Troppo corto",
+    "required": "Compila tutti i campi."
   },
   "cv": {
     "location": "Roma, IT",
@@ -38,5 +43,9 @@
   },
   "masthead": {
     "city": "Roma"
+  },
+  "error": {
+    "lost": "Mi sa che ti sei perso, torniamo alla",
+    "home": "home"
   }
 }

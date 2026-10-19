@@ -8,7 +8,7 @@
   "isCurrent": true,
   "summary": {
     "it": [
-      "Full stack developer nel competence centre dell'azienda, e tech lead sulle commesse Sifer e Sintesi: direzione tecnica, coordinamento del team e gli standard su cui quei team hanno lavorato",
+      "Full stack developer nel competence centre dell'azienda, e tech lead sulle commesse Sifer e Sintesi: direzione tecnica, coordinamento del team e gli standard che quei team hanno seguito",
       "Fatto crescere altri sviluppatori e spinto il riuso del codice, le buone pratiche e gli standard di qualità fra i team",
       "Scritto e mantenuto la documentazione tecnica per sviluppatori e stakeholder"
     ],
@@ -30,7 +30,7 @@
     {
       "name": "Sintesi — Regione Puglia",
       "description": {
-        "it": "Guidato e coordinato un team di quattro persone nel rinnovamento di una piattaforma regionale per i servizi al lavoro, dal monolite legacy a oltre quindici microservizi. Fissati gli standard DDD e clean architecture per manutenibilità e copertura dei test, restando nel codice.",
+        "it": "Guidato e coordinato un team di quattro persone nell'ammodernamento di una piattaforma regionale per i servizi al lavoro, dal monolite legacy a oltre quindici microservizi. Fissati gli standard DDD e clean architecture per manutenibilità e copertura dei test, restando nel codice.",
         "en": "Led and coordinated a team of 4 engineers in modernizing a regional employment-services platform, guiding the transition from a legacy monolith to 15+ microservices. Established DDD and Clean Architecture standards to improve maintainability and test coverage, while remaining hands-on in development."
       },
       "tech": ["Spring Boot 3", "Java 21", "Kafka", "SQL Server", "Kubernetes"]

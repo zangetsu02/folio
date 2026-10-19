@@ -10,6 +10,11 @@ export interface Localized<T> {
 }
 
 /** L'inglese è il ripiego: è la lingua che chiunque legge. */
-export function pickLocale<T>(field: Localized<T>, locale: string): T {
+export function pickLocale<T>(field: Localized<T> | undefined, locale: string): T | undefined {
+  // Senza la guardia un campo assente butta giu' la pagina in SSR, invece di
+  // lasciare un buco: check:i18n lo intercetta prima, ma non e' una ragione
+  // per far esplodere il sito se gli sfugge.
+  if (!field)
+    return undefined
   return locale === 'it' ? field.it : field.en
 }

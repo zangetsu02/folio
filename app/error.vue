@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const { t } = useI18n()
+const localePath = useLocalePath()
+</script>
+
 <template>
   <UApp class="relative flex h-screen flex-col items-center justify-center">
     <Backdrop />
@@ -7,9 +12,9 @@
         404
       </h1>
       <p class="text-center">
-        I think you're lost, let's go back
-        <ProseA to="/" class="link">
-          home
+        {{ t('error.lost') }}
+        <ProseA :to="localePath('/')" class="link">
+          {{ t('error.home') }}
         </ProseA>.
       </p>
     </div>

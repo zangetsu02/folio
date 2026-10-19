@@ -4,11 +4,14 @@ const route = useRoute()
 
 const { t, locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
+const localePath = useLocalePath()
 const other = computed(() => (locale.value === 'it' ? 'en' : 'it'))
 
+// localePath e non il path nudo: NuxtLink non aggiunge il prefisso di lingua,
+// e chi legge in inglese finirebbe sulle pagine italiane.
 const nav = computed(() => [
-  { label: t('nav.works'), to: '/works' },
-  { label: t('nav.resume'), to: '/resume' },
+  { label: t('nav.works'), to: localePath('/works') },
+  { label: t('nav.resume'), to: localePath('/resume') },
 ])
 
 function isActive(to: string) {
@@ -22,7 +25,7 @@ function isActive(to: string) {
   <header class="mb-14 flex flex-col gap-6 print:hidden">
     <div>
       <NuxtLink
-        to="/"
+        :to="localePath('/')"
         class="font-display text-2xl leading-none tracking-tight transition-colors hover:text-primary sm:text-3xl"
       >
         christian&thinsp;/&thinsp;zangetsu
@@ -51,6 +54,7 @@ function isActive(to: string) {
            nell'altra lingua resta condivisibile. -->
       <NuxtLink
         :to="switchLocalePath(other)"
+        data-locale-switch
         class="font-mono text-xs text-muted transition-colors hover:text-primary"
       >
         {{ t('locale.switch') }}
