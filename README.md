@@ -54,8 +54,6 @@ Adding a project is one JSON file in `content/1.works/`: the schema lives in
 `content.config.ts`, and the category must be one of those in
 `app/utils/works.ts`.
 
-Code comments are in Italian — same language the author thinks in.
-
 ## Licence
 
 The **code** is [MIT](./LICENSE). Take it, fork it, use it.
