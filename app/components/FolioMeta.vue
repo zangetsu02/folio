@@ -44,8 +44,8 @@ useSeoMeta({
   twitterTitle: pageSEO.title,
   twitterDescription: pageSEO.description,
   twitterCard: 'summary_large_image',
-  ogImage: ogImageUrl.value,
-  twitterImage: ogImageUrl.value,
+  ogImage: () => ogImageUrl.value,
+  twitterImage: () => ogImageUrl.value,
 })
 
 useHead({

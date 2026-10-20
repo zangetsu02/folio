@@ -2,10 +2,10 @@
 // marcisce: una lingua si aggiorna, l'altra no, e nessuno se ne accorge.
 import assert from 'node:assert/strict'
 import { globSync, readdirSync, readFileSync } from 'node:fs'
+import { LOCALES } from '../app/utils/locales.ts'
 import { pickLocale } from '../app/utils/localized.ts'
 import { createReport } from './lib/check.mjs'
 
-const LOCALES = ['it', 'en']
 const { note, finish } = createReport()
 
 /** Tutte le chiavi di un oggetto annidato, in notazione puntata. */
@@ -110,8 +110,8 @@ console.log('\n— pickLocale —')
 try {
   assert.equal(pickLocale({ it: 'ciao', en: 'hello' }, 'it'), 'ciao')
   assert.equal(pickLocale({ it: 'ciao', en: 'hello' }, 'en'), 'hello')
-  // Ripiego sull'inglese e non sull'italiano: e' la lingua che chiunque legge.
-  assert.equal(pickLocale({ it: 'ciao', en: 'hello' }, 'fr'), 'hello')
+  // Ripiego sulla lingua di default, come fa il modulo i18n con le sue chiavi.
+  assert.equal(pickLocale({ it: 'ciao', en: 'hello' }, 'fr'), 'ciao')
   assert.deepEqual(pickLocale({ it: ['a'], en: ['b'] }, 'it'), ['a'])
   note(true, 'quattro asserzioni passate')
 }

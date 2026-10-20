@@ -1,5 +1,3 @@
-import { pickLocale } from './localized'
-
 /**
  * Le categorie dei progetti.
  *
@@ -16,8 +14,3 @@ export const WORK_CATEGORIES = {
 export type WorkCategory = keyof typeof WORK_CATEGORIES
 
 export const WORK_CATEGORY_KEYS = Object.keys(WORK_CATEGORIES) as [WorkCategory, ...WorkCategory[]]
-
-export function categoryLabel(key: string, locale: string): string {
-  const label = WORK_CATEGORIES[key as WorkCategory]
-  return label ? pickLocale(label, locale) ?? key : key
-}

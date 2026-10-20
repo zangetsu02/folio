@@ -3,13 +3,13 @@ import { createServer } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
 import process from 'node:process'
 import puppeteer from 'puppeteer'
+import { localePrefix, LOCALES, resumePdf } from '../app/utils/locales.ts'
 
 const ROOT = resolve('./.output/public')
-// L'italiano tiene il nome storico: l'URL /resume.pdf e' gia' in giro.
-const TARGETS = [
-  { path: '/_resume/index.html', out: './public/resume.pdf' },
-  { path: '/en/_resume/index.html', out: './public/resume-en.pdf' },
-]
+const TARGETS = LOCALES.map(locale => ({
+  path: `${localePrefix(locale)}/_resume/index.html`,
+  out: `./public${resumePdf(locale)}`,
+}))
 
 for (const { path } of TARGETS) {
   if (!existsSync(join(ROOT, path))) {

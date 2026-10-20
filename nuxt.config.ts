@@ -1,3 +1,9 @@
+import { DEFAULT_LOCALE, LOCALES } from './app/utils/locales'
+
+/** Tag BCP 47 e nomi nativi: servono solo qui, non meritano il modulo condiviso. */
+const LANGUAGE_TAGS = { it: 'it-IT', en: 'en-GB' } as const
+const LOCALE_NAMES = { it: 'Italiano', en: 'English' } as const
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
@@ -8,7 +14,7 @@ export default defineNuxtConfig({
   },
 
   site: {
-    defaultLocale: 'it',
+    defaultLocale: DEFAULT_LOCALE,
     indexable: true,
   },
 
@@ -67,15 +73,17 @@ export default defineNuxtConfig({
   ],
 
   i18n: {
-    defaultLocale: 'it',
+    defaultLocale: DEFAULT_LOCALE,
     strategy: 'prefix_except_default',
     // Nessun redirect su Accept-Language: sorprende chi apre un link
     // condiviso e confonde i crawler. Il selettore in testata e' esplicito.
     detectBrowserLanguage: false,
-    locales: [
-      { code: 'it', language: 'it-IT', name: 'Italiano', file: 'it.json' },
-      { code: 'en', language: 'en-GB', name: 'English', file: 'en.json' },
-    ],
+    locales: LOCALES.map(code => ({
+      code,
+      language: LANGUAGE_TAGS[code],
+      name: LOCALE_NAMES[code],
+      file: `${code}.json`,
+    })),
   },
 
   css: ['~/assets/css/main.css'],

@@ -3,11 +3,12 @@
 // combaciare in silenzio, e nessun controllo guardava la stampa.
 import { execFileSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
+import { LOCALES, resumePdf } from '../app/utils/locales.ts'
 import { createReport, openPage, settle, withBrowser } from './lib/check.mjs'
 
 /** Un CV di due pagine viene letto, uno di tre spesso no. */
 const MAX_PAGES = 2
-const PDFS = ['public/resume.pdf', 'public/resume-en.pdf']
+const PDFS = LOCALES.map(locale => `public${resumePdf(locale)}`)
 
 const { note, finish } = createReport()
 

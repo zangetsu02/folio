@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { LOCALES } from '~/utils/locales'
+
 const { profile } = useAppConfig()
 const route = useRoute()
 
 const { t, locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const localePath = useLocalePath()
-const other = computed(() => (locale.value === 'it' ? 'en' : 'it'))
+const other = computed(() => LOCALES.find(code => code !== locale.value) ?? locale.value)
 
 // localePath e non il path nudo: NuxtLink non aggiunge il prefisso di lingua,
 // e chi legge in inglese finirebbe sulle pagine italiane.

@@ -1,22 +1,19 @@
 // Misura della colonna di lettura, altezza delle pagine, rotte assorbite.
+import { DEFAULT_LOCALE, localePrefix, LOCALES } from '../app/utils/locales.ts'
 import { BASE, createReport, openPage, withBrowser } from './lib/check.mjs'
 
-const PAGES = ['/', '/works', '/resume', '/en', '/en/works', '/en/resume']
+/** La rotta nella lingua: `/works` in italiano, `/en/works` in inglese. */
+const localeRoute = (locale, route) => (localePrefix(locale) + route).replace(/\/$/, '') || '/'
+
+const ROUTES = ['/', '/works', '/resume']
+const PAGES = LOCALES.flatMap(locale => ROUTES.map(route => localeRoute(locale, route)))
 const WIDTHS = [1280, 1440, 1920, 2560]
 const MIN_CH = 60
 const MAX_CH = 75
 const MIN_HEIGHT = 900
 /** Rotte confluite nella home: devono reindirizzare, non servire la vecchia pagina. */
-const GONE = [
-  '/about',
-  '/contact',
-  '/writing',
-  '/timeline',
-  '/en/about',
-  '/en/contact',
-  '/en/writing',
-  '/en/timeline',
-]
+const GONE = LOCALES.flatMap(locale =>
+  ['/about', '/contact', '/writing', '/timeline'].map(route => localeRoute(locale, route)))
 
 const { note, finish } = createReport()
 
@@ -87,18 +84,6 @@ await withBrowser(async (browser) => {
       [...document.querySelectorAll('a[href^="/"]')].map(a => a.getAttribute('href')))
     for (const href of hrefs) seen.add(href.split('#')[0])
   }
-  // Un link non localizzato nella testata riporta in italiano chi legge inglese.
-  console.log('\n— i link restano nella lingua corrente —')
-  for (const route of ['/en', '/en/works', '/en/resume']) {
-    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
-    const escaped = await page.evaluate(() =>
-      // il selettore di lingua punta all'altra lingua per definizione
-      [...document.querySelectorAll('header a[href^="/"]:not([data-locale-switch])')]
-        .map(a => a.getAttribute('href'))
-        .filter(href => !href.startsWith('/en') && href !== '/'))
-    note(!escaped.length, `${route} — link di testata fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
-  }
-
   // Le ancore sono il punto cieco storico: gli id derivano dai titoli, che sono
   // tradotti, mentre i link che ci puntano sono scritti a mano.
   console.log('\n— ancore dei link interni —')
@@ -115,14 +100,17 @@ await withBrowser(async (browser) => {
 
   // Un link non localizzato nella testata riporta in italiano chi legge inglese.
   console.log('\n— i link restano nella lingua corrente —')
-  for (const route of ['/en', '/en/works', '/en/resume']) {
-    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
-    const escaped = await page.evaluate(() =>
-      // il selettore di lingua punta all'altra lingua per definizione
-      [...document.querySelectorAll('header a[href^="/"]:not([data-locale-switch])')]
-        .map(a => a.getAttribute('href'))
-        .filter(href => !href.startsWith('/en') && href !== '/'))
-    note(!escaped.length, `${route} — link di testata fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
+  for (const locale of LOCALES.filter(code => code !== DEFAULT_LOCALE)) {
+    const prefix = localePrefix(locale)
+    for (const route of ROUTES.map(route => localeRoute(locale, route))) {
+      await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
+      const escaped = await page.evaluate(prefix => (
+        // il selettore di lingua punta all'altra lingua per definizione
+        [...document.querySelectorAll('header a[href^="/"]:not([data-locale-switch])')]
+          .map(a => a.getAttribute('href'))
+          .filter(href => !href.startsWith(prefix) && href !== '/')), prefix)
+      note(!escaped.length, `${route} — link di testata fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
+    }
   }
 
   console.log('\n— link interni —')

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { LayoutGroup } from 'motion-v'
 
+import { resumePdf } from '~/utils/locales'
+
 const route = useRoute()
 const { socials } = useAppConfig()
 const { t, locale } = useI18n()
@@ -41,7 +43,7 @@ const { t, locale } = useI18n()
                 <NuxtLink :to="socials.linkedin" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   LinkedIn
                 </NuxtLink>
-                <NuxtLink v-if="route.path.endsWith('/resume')" :to="locale === 'en' ? '/resume-en.pdf' : '/resume.pdf'" external target="_blank" class="hover:text-primary transition-colors">
+                <NuxtLink v-if="route.path.endsWith('/resume')" :to="resumePdf(locale)" external target="_blank" class="hover:text-primary transition-colors">
                   {{ t('cv.download') }}
                 </NuxtLink>
               </div>

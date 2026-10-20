@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import type { Locale } from '~/utils/locales'
+import { localePrefix } from '~/utils/locales'
+
 const route = useRoute()
 const { locale } = useI18n()
 
 // Il path della rotta porta il prefisso di lingua (`/en/works`), i percorsi di
 // contenuto no: la collection e' gia' per lingua, quindi il prefisso va tolto.
-const contentPath = computed(() => route.path.replace(/^\/en(?=\/|$)/, '') || '/')
+const contentPath = computed(() => {
+  const prefix = localePrefix(locale.value)
+  return (prefix ? route.path.slice(prefix.length) : route.path) || '/'
+})
 
 const { data: page } = await useAsyncData(() => `${locale.value}:${contentPath.value}`, () =>
-  queryCollection(`content_${locale.value}` as 'content_it' | 'content_en').path(contentPath.value).first())
+  queryCollection(`content_${locale.value}` as `content_${Locale}`).path(contentPath.value).first())
 
 if (!page.value)
   throw createError({ statusCode: 404, statusMessage: 'Page not found' })

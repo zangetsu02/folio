@@ -15,7 +15,6 @@ export default defineAppConfig({
     description:
       'Full stack developer in Rome. Enterprise backends by day, open-source tools by choice.',
     url: 'https://christianpalladini.me',
-    lang: 'en',
   },
   socials: {
     github: 'https://github.com/zangetsu02',
