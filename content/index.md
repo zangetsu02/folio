@@ -4,7 +4,7 @@ image: "/og/index.png"
 
 ::hero
 #title
-I build things that stay simple [after]{.italic .text-muted} they get complicated.
+I build things that stay simple [after]{.italic .text-primary} they get complicated.
 
 #default
 Full stack developer in Rome, tech lead on the rewrites at Links Management & Technology.
