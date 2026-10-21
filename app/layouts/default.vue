@@ -40,6 +40,9 @@ const { socials } = useAppConfig()
                 <NuxtLink :to="socials.linkedin" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   LinkedIn
                 </NuxtLink>
+                <NuxtLink :to="socials.devnull" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
+                  /dev/null
+                </NuxtLink>
                 <NuxtLink v-if="route.path === '/resume'" to="/resume.pdf" external target="_blank" class="hover:text-primary transition-colors">
                   Download PDF
                 </NuxtLink>

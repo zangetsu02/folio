@@ -21,6 +21,7 @@ export default defineAppConfig({
     github: 'https://github.com/zangetsu02',
     twitter: 'https://x.com/_zangetsu02',
     linkedin: 'https://www.linkedin.com/in/christian-palladini/',
+    devnull: 'https://dev-null.sh/@zangetsu02',
   },
   link: [
     {
