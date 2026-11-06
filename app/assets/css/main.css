@@ -28,7 +28,7 @@
 }
 
 :root {
-  --ui-primary: rgb(26, 26, 24) !important;
+  --ui-primary: #d9480f !important;
   --ui-bg: rgb(247, 246, 243) !important;
   --ui-border: rgb(228, 226, 220) !important;
   --ui-text-muted: rgb(115, 115, 110) !important;
@@ -41,7 +41,7 @@
 }
 
 .dark {
-  --ui-primary: rgb(240, 238, 232) !important;
+  --ui-primary: #ff8a4c !important;
   --ui-bg: rgb(16, 16, 14) !important;
   --ui-border: rgb(42, 41, 38) !important;
   --ui-text-muted: rgb(140, 138, 132) !important;

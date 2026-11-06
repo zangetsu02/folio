@@ -20,6 +20,7 @@ export default defineAppConfig({
     github: 'https://github.com/zangetsu02',
     twitter: 'https://x.com/_zangetsu02',
     linkedin: 'https://www.linkedin.com/in/christian-palladini/',
+    devnull: 'https://dev-null.sh/@zangetsu02',
   },
   link: [
     {
@@ -54,12 +55,12 @@ export default defineAppConfig({
     },
     input: {
       slots: {
-        base: 'bg-primary rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-primary',
+        base: 'bg-(--ui-text) rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-(--ui-text)',
       },
     },
     textarea: {
       slots: {
-        base: 'bg-primary rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-primary',
+        base: 'bg-(--ui-text) rounded-none ring-0 px-2 py-1 focus:outline-none resize-none caret-(--ui-text)',
       },
     },
     button: {

@@ -134,6 +134,13 @@ export default defineNuxtSchema({
           icon: 'lucide:linkedin',
           default: 'https://www.linkedin.com/in/myusername',
         }),
+        devnull: field({
+          type: 'string',
+          title: '/dev/null',
+          description: 'Your /dev/null account.',
+          icon: 'lucide:terminal',
+          default: 'https://dev-null.sh/@myusername',
+        }),
         instagram: field({
           type: 'string',
           title: 'Instagram',

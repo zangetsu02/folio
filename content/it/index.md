@@ -6,7 +6,7 @@ image: "/og/index-it.png"
 
 ::hero
 #title
-Costruisco cose che restano semplici [dopo]{.italic .text-muted} che si sono complicate.
+Costruisco cose che restano semplici [dopo]{.italic .text-primary} che si sono complicate.
 
 #default
 Full stack developer a Roma, tech lead sulle riscritture in Links Management & Technology.
