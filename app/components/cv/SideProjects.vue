@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n()
+const { localized } = useLocalized()
 const { data: works, error } = await useAsyncData(`cv-side-projects`, () => {
   return queryCollection('works')
     .order('date', 'DESC')
@@ -27,7 +29,7 @@ if (error.value) {
             {{ item.name }}
           </span>
           <span class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono uppercase tracking-wider">
-            {{ categoryLabel(item.category) }}
+            {{ t(`categories.${item.category}`) }}
           </span>
           <span class="ml-auto text-xs font-mono whitespace-nowrap">
             {{ item.release }}
@@ -35,7 +37,7 @@ if (error.value) {
           <Icon name="lucide:arrow-up-right" class="size-4 opacity-50 group-hover:opacity-100 transition-opacity" />
         </div>
         <p class="text-sm text-muted leading-relaxed">
-          {{ item.description }}
+          {{ localized(item.description) }}
         </p>
       </NuxtLink>
     </li>

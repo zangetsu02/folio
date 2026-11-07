@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "works": "Progetti",
+    "resume": "CV"
+  },
+  "hero": {
+    "message": "Scrivimi",
+    "call": "Prenota una call"
+  },
+  "contact": {
+    "name": "Nome",
+    "email": "Email",
+    "message": "Messaggio",
+    "sent": "Messaggio inviato. Ti rispondo presto.",
+    "failed": "Il messaggio non è partito. Riprova, o scrivimi via email.",
+    "send": "Invia",
+    "invalidEmail": "Email non valida",
+    "tooShort": "Troppo corto",
+    "required": "Email e messaggio sono obbligatori."
+  },
+  "cv": {
+    "location": "Roma, Italia",
+    "download": "Scarica il PDF",
+    "present": "Oggi",
+    "current": "In corso",
+    "projects": "Progetti",
+    "about": "Chi sono",
+    "experience": "Esperienza",
+    "sideProjects": "Progetti personali",
+    "certificates": "Certificazioni",
+    "languages": "Lingue",
+    "italian": "Italiano",
+    "english": "Inglese",
+    "native": "Madrelingua",
+    "b2": "B2 · Intermedio superiore"
+  },
+  "footer": {
+    "openSource": "Questo sito è open source. Il codice è su"
+  },
+  "masthead": {
+    "city": "Roma"
+  },
+  "error": {
+    "lost": "Questa pagina non esiste. Torna alla",
+    "home": "home"
+  },
+  "categories": {
+    "libraries": "Librerie e SDK",
+    "tools": "Strumenti",
+    "themes": "Temi per editor"
+  }
+}

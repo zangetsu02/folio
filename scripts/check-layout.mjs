@@ -1,13 +1,16 @@
 // Misura della colonna di lettura, altezza delle pagine, rotte assorbite.
+import { DEFAULT_LOCALE, LOCALES, localizePath } from '../app/utils/locales.ts'
 import { BASE, createReport, openPage, withBrowser } from './lib/check.mjs'
 
-const PAGES = ['/', '/works', '/resume']
+const ROUTES = ['/', '/works', '/resume']
+const PAGES = LOCALES.flatMap(locale => ROUTES.map(route => localizePath(route, locale)))
 const WIDTHS = [1280, 1440, 1920, 2560]
 const MIN_CH = 60
 const MAX_CH = 75
 const MIN_HEIGHT = 900
 /** Rotte confluite nella home: devono reindirizzare, non servire la vecchia pagina. */
-const GONE = ['/about', '/contact', '/writing', '/timeline']
+const GONE = LOCALES.flatMap(locale =>
+  ['/about', '/contact', '/writing', '/timeline'].map(route => localizePath(route, locale)))
 
 const { note, finish } = createReport()
 
@@ -78,6 +81,37 @@ await withBrowser(async (browser) => {
       [...document.querySelectorAll('a[href^="/"]')].map(a => a.getAttribute('href')))
     for (const href of hrefs) seen.add(href.split('#')[0])
   }
+  // Le ancore sono il punto cieco storico: gli id derivano dai titoli, che sono
+  // tradotti, mentre i link che ci puntano sono scritti a mano.
+  console.log('\n— ancore dei link interni —')
+  for (const route of PAGES) {
+    await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
+    const broken = await page.evaluate(() =>
+      [...document.querySelectorAll('a[href*="#"]')]
+        .map(a => a.getAttribute('href'))
+        .filter(href => href.startsWith('/') || href.startsWith('#'))
+        .map(href => href.slice(href.indexOf('#') + 1))
+        .filter(id => id && !document.getElementById(id)))
+    note(!broken.length, `${route} — ancore che non esistono: ${broken.join(', ') || 'nessuna'}`)
+  }
+
+  // Un link non localizzato, in testata o nel testo, riporta in italiano chi legge inglese.
+  console.log('\n— i link restano nella lingua corrente —')
+  for (const locale of LOCALES.filter(code => code !== DEFAULT_LOCALE)) {
+    const prefix = localizePath('/', locale)
+    for (const route of ROUTES.map(route => localizePath(route, locale))) {
+      await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
+      const escaped = await page.evaluate(prefix => (
+        // La testata sta dentro main. Esclusi il selettore di lingua, che punta
+        // all'altra per definizione, e i _blank, che sono i PDF.
+        [...document.querySelectorAll('main a[href^="/"]:not([data-locale-switch]):not([target="_blank"])')]
+          .map(a => a.getAttribute('href'))
+          .filter(href => !href.startsWith(prefix) && href !== '/')), prefix)
+      note(!escaped.length, `${route} — link fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
+    }
+  }
+
+  console.log('\n— link interni —')
   const dangling = [...seen].filter(href => GONE.includes(href))
   for (const href of dangling)
     note(false, `un link interno punta ancora a ${href}`)

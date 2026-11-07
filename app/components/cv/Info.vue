@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { resumePdf } from '~/utils/locales'
+
+const { t, locale } = useI18n()
 const { profile, socials, seo } = useAppConfig()
 </script>
 
@@ -27,7 +30,7 @@ const { profile, socials, seo } = useAppConfig()
     <div class="flex flex-col gap-2 text-sm">
       <div class="flex items-center gap-2 text-muted">
         <Icon name="lucide:map-pin" class="size-4 shrink-0" />
-        <span>Rome, Latium, Italy</span>
+        <span>{{ t('cv.location') }}</span>
       </div>
       <NuxtLink
         :to="`mailto:${profile.email}`"
@@ -38,13 +41,13 @@ const { profile, socials, seo } = useAppConfig()
         <span class="truncate">{{ profile.email }}</span>
       </NuxtLink>
       <NuxtLink
-        to="/resume.pdf"
+        :to="resumePdf(locale)"
         external
         target="_blank"
         class="screen-only flex items-center gap-2 text-muted hover:text-primary transition-colors"
       >
         <Icon name="lucide:file-down" class="size-4 shrink-0" />
-        <span>Download PDF</span>
+        <span>{{ t('cv.download') }}</span>
       </NuxtLink>
       <NuxtLink
         :to="seo.url"

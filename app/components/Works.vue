@@ -4,6 +4,8 @@ const { category, limit } = defineProps<{
   limit?: number
 }>()
 
+const { localized } = useLocalized()
+
 // Senza `category` mostra una selezione trasversale: serve alla home, che
 // porta i progetti in prima pagina invece di lasciarli solo su /works.
 const { data: works, error } = await useAsyncData(`works-${category ?? 'all'}-${limit ?? 0}`, () => {
@@ -52,7 +54,7 @@ if (error.value) {
             </div>
           </div>
           <span class="text-muted font-extralight text-sm sm:text-base">
-            {{ work.description }}
+            {{ localized(work.description) }}
           </span>
           <ul v-if="work.tech?.length" class="mt-2 flex flex-wrap gap-1">
             <li

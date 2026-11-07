@@ -2,10 +2,17 @@
 const { profile } = useAppConfig()
 const route = useRoute()
 
-const nav = [
-  { label: 'Works', to: '/works' },
-  { label: 'Resume', to: '/resume' },
-]
+const { t, locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+const localePath = useLocalePath()
+const other = computed(() => locales.value.find(l => l.code !== locale.value))
+
+// localePath e non il path nudo: NuxtLink non aggiunge il prefisso di lingua,
+// e chi legge in inglese finirebbe sulle pagine italiane.
+const nav = computed(() => [
+  { label: t('nav.works'), to: localePath('/works') },
+  { label: t('nav.resume'), to: localePath('/resume') },
+])
 
 function isActive(to: string) {
   return route.path === to || route.path.startsWith(`${to}/`)
@@ -18,14 +25,14 @@ function isActive(to: string) {
   <header class="mb-14 flex flex-col gap-6 print:hidden">
     <div>
       <NuxtLink
-        to="/"
+        :to="localePath('/')"
         class="font-display text-2xl leading-none tracking-tight transition-colors hover:text-primary sm:text-3xl"
       >
         christian&thinsp;/&thinsp;zangetsu
       </NuxtLink>
       <!-- my-0: la regola globale `p { my-5 }` staccherebbe il sottotitolo dal nome. -->
       <p class="my-0 mt-1.5 text-sm text-muted">
-        {{ profile.workTitle }} · Rome
+        {{ profile.workTitle }} · {{ t('masthead.city') }}
       </p>
     </div>
 
@@ -43,6 +50,19 @@ function isActive(to: string) {
         </NuxtLink>
       </nav>
 
+      <!-- Un link vero e non un bottone: il crawler lo segue, e la pagina
+           nell'altra lingua resta condivisibile. -->
+      <!-- lang: il nome della lingua va letto nella sua pronuncia, non in quella della pagina. -->
+      <NuxtLink
+        v-if="other"
+        :to="switchLocalePath(other.code)"
+        :lang="other.language"
+        :hreflang="other.language"
+        data-locale-switch
+        class="font-mono text-xs text-muted transition-colors hover:text-primary"
+      >
+        {{ other.name }}
+      </NuxtLink>
       <ThemeSelector />
     </div>
   </header>

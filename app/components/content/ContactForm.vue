@@ -2,13 +2,16 @@
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
-const schema = z.object({
-  email: z.string().email('Invalid email'),
-  message: z.string().min(2, 'Too short'),
-  name: z.string().optional(),
-})
+const { t } = useI18n()
 
-type Schema = z.output<typeof schema>
+// computed: i messaggi di errore seguono la lingua corrente
+const schema = computed(() => z.object({
+  email: z.string().email(t('contact.invalidEmail')),
+  message: z.string().min(2, t('contact.tooShort')),
+  name: z.string().optional(),
+}))
+
+type Schema = z.output<typeof schema.value>
 
 const toast = useToast()
 
@@ -20,7 +23,7 @@ const state = reactive<Partial<Schema>>({
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (!event.data.email || !event.data.message) {
-    toast.add({ title: 'Please fill in all required fields.', color: 'error' })
+    toast.add({ title: t('contact.required'), color: 'error' })
     return
   }
   try {
@@ -32,25 +35,25 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         name: event.data.name,
       },
     })
-    toast.add({ title: 'Your message has been sent!', color: 'success' })
+    toast.add({ title: t('contact.sent'), color: 'success' })
   }
   catch {
-    toast.add({ title: 'An error occurred while sending your message.', color: 'error' })
+    toast.add({ title: t('contact.failed'), color: 'error' })
   }
 }
 </script>
 
 <template>
-  <UForm :schema :state class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit" @keydown.enter.prevent="onSubmit">
+  <UForm :schema :state class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit">
     <UFormField name="name">
-      <UInput v-model="state.name" placeholder="Name" class="w-full" />
+      <UInput v-model="state.name" :placeholder="t('contact.name')" class="w-full" />
     </UFormField>
     <UFormField name="email">
-      <UInput v-model="state.email" type="email" placeholder="Email" class="w-full" />
+      <UInput v-model="state.email" type="email" :placeholder="t('contact.email')" class="w-full" />
     </UFormField>
     <UFormField name="message">
-      <UTextarea v-model="state.message" autoresize placeholder="Message" :rows="4" class="w-full rounded-none" />
+      <UTextarea v-model="state.message" autoresize :placeholder="t('contact.message')" :rows="4" class="w-full rounded-none" />
     </UFormField>
-    <UButton type="submit" color="secondary" label="Send" class="rounded-none" loading-auto block />
+    <UButton type="submit" color="secondary" :label="t('contact.send')" class="rounded-none" loading-auto block />
   </UForm>
 </template>

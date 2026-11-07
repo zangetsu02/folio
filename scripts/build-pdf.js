@@ -3,14 +3,19 @@ import { createServer } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
 import process from 'node:process'
 import puppeteer from 'puppeteer'
+import { LOCALES, localizePath, resumePdf } from '../app/utils/locales.ts'
 
 const ROOT = resolve('./.output/public')
-const PAGE_PATH = '/_resume/index.html'
-const OUTPUT = './public/resume.pdf'
+const TARGETS = LOCALES.map(locale => ({
+  path: `${localizePath('/_resume', locale)}/index.html`,
+  out: `./public${resumePdf(locale)}`,
+}))
 
-if (!existsSync(join(ROOT, PAGE_PATH))) {
-  console.error(`✗ ${join(ROOT, PAGE_PATH)} not found. Run "pnpm build" first.`)
-  process.exit(1)
+for (const { path } of TARGETS) {
+  if (!existsSync(join(ROOT, path))) {
+    console.error(`✗ ${join(ROOT, path)} not found. Run "pnpm build" first.`)
+    process.exit(1)
+  }
 }
 
 const MIME = {
@@ -47,27 +52,26 @@ const server = createServer((req, res) => {
 
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
 const { port } = server.address()
-const url = `http://127.0.0.1:${port}${PAGE_PATH}`
-
-console.log(`Serving ${ROOT} on ${url}`)
-console.log('Generating PDF…')
+console.log(`Serving ${ROOT} on http://127.0.0.1:${port}`)
 
 const browser = await puppeteer.launch({ headless: true })
 try {
-  const page = await browser.newPage()
-  // Esplicito: lo stile del CV vive in @media print (app/assets/css/print.css),
-  // condiviso con la stampa da browser. page.pdf() lo farebbe comunque, ma
-  // dipendere da un default implicito su cui si regge tutto il layout no.
-  await page.emulateMediaType('print')
-  await page.goto(url, { waitUntil: 'networkidle0' })
-  await page.waitForFunction(
-    () => Array.from(document.querySelectorAll('.iconify, [class*="i-lucide"], [class*="i-simple-icons"]'))
-      .every(el => el.querySelector('svg') || el.tagName === 'SVG'),
-    { timeout: 10000 },
-  ).catch(() => {})
-  // Nome e numero di pagina in fondo a ogni foglio: un CV stampato su due
-  // pagine che si separano, senza questo, ha una seconda pagina anonima.
-  const footerTemplate = `
+  for (const { path: pagePath, out } of TARGETS) {
+    const url = `http://127.0.0.1:${port}${pagePath}`
+    const page = await browser.newPage()
+    // Esplicito: lo stile del CV vive in @media print (app/assets/css/print.css),
+    // condiviso con la stampa da browser. page.pdf() lo farebbe comunque, ma
+    // dipendere da un default implicito su cui si regge tutto il layout no.
+    await page.emulateMediaType('print')
+    await page.goto(url, { waitUntil: 'networkidle0' })
+    await page.waitForFunction(
+      () => Array.from(document.querySelectorAll('.iconify, [class*="i-lucide"], [class*="i-simple-icons"]'))
+        .every(el => el.querySelector('svg') || el.tagName === 'SVG'),
+      { timeout: 10000 },
+    ).catch(() => {})
+    // Nome e numero di pagina in fondo a ogni foglio: un CV stampato su due
+    // pagine che si separano, senza questo, ha una seconda pagina anonima.
+    const footerTemplate = `
     <div style="
       width: 100%;
       padding: 0 14mm;
@@ -81,18 +85,20 @@ try {
       <span><span class="pageNumber"></span> / <span class="totalPages"></span></span>
     </div>`
 
-  const pdfBuffer = await page.pdf({
-    format: 'A4',
-    printBackground: true,
-    displayHeaderFooter: true,
-    headerTemplate: '<span></span>',
-    footerTemplate,
-    // I margini li impone qui Puppeteer e non il @page del CSS, perche' servono
-    // a riservare lo spazio al footer. Il @page resta per la stampa da browser.
-    margin: { top: '18mm', right: '0', bottom: '18mm', left: '0' },
-  })
-  writeFileSync(OUTPUT, pdfBuffer)
-  console.log(`✔ PDF saved to ${OUTPUT}`)
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      displayHeaderFooter: true,
+      headerTemplate: '<span></span>',
+      footerTemplate,
+      // I margini li impone qui Puppeteer e non il @page del CSS, perche' servono
+      // a riservare lo spazio al footer. Il @page resta per la stampa da browser.
+      margin: { top: '18mm', right: '0', bottom: '18mm', left: '0' },
+    })
+    writeFileSync(out, pdfBuffer)
+    console.log(`✔ PDF saved to ${out}`)
+    await page.close()
+  }
 }
 finally {
   await browser.close()

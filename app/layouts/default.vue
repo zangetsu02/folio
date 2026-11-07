@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { LayoutGroup } from 'motion-v'
 
+import { resumePdf } from '~/utils/locales'
+
 const route = useRoute()
 const { socials } = useAppConfig()
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 </script>
 
 <template>
@@ -43,14 +47,14 @@ const { socials } = useAppConfig()
                 <NuxtLink :to="socials.devnull" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   /dev/null
                 </NuxtLink>
-                <NuxtLink v-if="route.path === '/resume'" to="/resume.pdf" external target="_blank" class="hover:text-primary transition-colors">
-                  Download PDF
+                <NuxtLink v-if="route.path === localePath('/resume')" :to="resumePdf(locale)" external target="_blank" class="hover:text-primary transition-colors">
+                  {{ t('cv.download') }}
                 </NuxtLink>
               </div>
 
               <div class="flex items-end justify-between gap-6">
                 <p class="max-w-prose">
-                  This website is fully open-source, you can find the source code on
+                  {{ t('footer.openSource') }}
                   <NuxtLink to="https://github.com/zangetsu02/folio" class="underline hover:text-primary transition-colors">
                     GitHub
                   </NuxtLink>

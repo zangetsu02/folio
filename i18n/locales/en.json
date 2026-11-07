@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "works": "Works",
+    "resume": "Resume"
+  },
+  "hero": {
+    "message": "Send me a message",
+    "call": "Book a call"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "sent": "Message sent. I'll get back to you.",
+    "failed": "The message didn't go through. Try again, or email me.",
+    "send": "Send",
+    "invalidEmail": "Invalid email",
+    "tooShort": "Too short",
+    "required": "Email and message are required."
+  },
+  "cv": {
+    "location": "Rome, Italy",
+    "download": "Download PDF",
+    "present": "Present",
+    "current": "Current",
+    "projects": "Projects",
+    "about": "About",
+    "experience": "Work Experience",
+    "sideProjects": "Side Projects",
+    "certificates": "Certificates",
+    "languages": "Languages",
+    "italian": "Italian",
+    "english": "English",
+    "native": "Native speaker",
+    "b2": "B2 · Upper-Intermediate"
+  },
+  "footer": {
+    "openSource": "This site is open source. The code is on"
+  },
+  "masthead": {
+    "city": "Rome"
+  },
+  "error": {
+    "lost": "This page doesn't exist. Back to the",
+    "home": "home"
+  },
+  "categories": {
+    "libraries": "Libraries & SDKs",
+    "tools": "Developer tools",
+    "themes": "Editor themes"
+  }
+}

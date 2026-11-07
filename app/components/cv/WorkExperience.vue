@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { WorksExperienceCollectionItem } from '@nuxt/content'
 
+const { localized } = useLocalized()
+const { t, locale } = useI18n()
+
 const { data: works, error } = await useAsyncData(`works-experience`, () => {
   return queryCollection('worksExperience')
     .all()
@@ -13,12 +16,19 @@ if (error.value) {
   })
 }
 
+/** "feb 2023" / "Feb 2023": il nome del mese lo da' Intl nella lingua corrente. */
+function monthYear({ month, year }: { month?: number, year: string }) {
+  return month
+    ? new Intl.DateTimeFormat(locale.value, { month: 'short', year: 'numeric' }).format(new Date(Number(year), month - 1))
+    : year
+}
+
 function periodLabel(work: WorksExperienceCollectionItem) {
-  const start = `${work.start.month} ${work.start.year}`
+  const start = monthYear(work.start)
   const end = work.isCurrent
-    ? 'Present'
+    ? t('cv.present')
     : work.end
-      ? `${work.end.month} ${work.end.year}`
+      ? monthYear(work.end)
       : ''
   return end ? `${start} — ${end}` : start
 }
@@ -45,27 +55,27 @@ function periodLabel(work: WorksExperienceCollectionItem) {
         <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-muted">
           <span>{{ periodLabel(work) }}</span>
           <span class="size-1 bg-(--ui-border)" />
-          <span>{{ work.location }}</span>
+          <span>{{ localized(work.location) }}</span>
           <span class="size-1 bg-(--ui-border)" />
-          <span>{{ work.employmentType }}</span>
+          <span>{{ localized(work.employmentType) }}</span>
           <span
             v-if="work.isCurrent"
             class="px-1.5 py-0.5 bg-primary text-(--ui-bg) text-[10px] uppercase tracking-wider"
           >
-            Current
+            {{ t('cv.current') }}
           </span>
         </div>
       </header>
 
-      <ul v-if="work.summary?.length" class="mt-4 list-disc space-y-1.5 pl-4 marker:text-muted text-sm leading-relaxed">
-        <li v-for="(item, idx) in work.summary" :key="idx">
+      <ul v-if="localized(work.summary)?.length" class="mt-4 list-disc space-y-1.5 pl-4 marker:text-muted text-sm leading-relaxed">
+        <li v-for="(item, idx) in localized(work.summary)" :key="idx">
           {{ item }}
         </li>
       </ul>
 
       <div v-if="work.projects?.length" class="mt-4">
         <p class="mb-2 text-xs font-mono uppercase tracking-wider text-muted">
-          Projects
+          {{ t('cv.projects') }}
         </p>
         <ul class="flex flex-col divide-y divide-(--ui-border) border-t border-b border-(--ui-border)">
           <li v-for="(project, idx) in work.projects" :key="idx" class="py-2.5 flex flex-col gap-1.5">
@@ -73,15 +83,15 @@ function periodLabel(work: WorksExperienceCollectionItem) {
               {{ project.name }}
             </h4>
             <p class="text-sm text-muted leading-relaxed">
-              {{ project.description }}
+              {{ localized(project.description) }}
             </p>
             <ul v-if="project.tech?.length" class="flex flex-wrap gap-1">
               <li
-                v-for="(t, tIdx) in project.tech"
-                :key="tIdx"
+                v-for="(tech, techIdx) in project.tech"
+                :key="techIdx"
                 class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono text-muted"
               >
-                {{ t }}
+                {{ tech }}
               </li>
             </ul>
           </li>

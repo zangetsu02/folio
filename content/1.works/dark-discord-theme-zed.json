@@ -1,7 +1,10 @@
 {
   "name": "Dark Discord Theme for Zed",
   "category": "themes",
-  "description": "The same palette, rebuilt for Zed's theme format.",
+  "description": {
+    "it": "La stessa palette, ricostruita nel formato dei temi di Zed.",
+    "en": "The same palette, rebuilt for Zed's theme format."
+  },
   "logo": "/assets/works/dark-discord-theme-zed.png",
   "url": "https://zed.dev/extensions/dark-discord",
   "repo": "https://github.com/zangetsu02/zed-discord-theme",

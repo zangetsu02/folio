@@ -1,8 +1,15 @@
 <script setup lang="ts">
-const route = useRoute()
+import type { Locale } from '~/utils/locales'
 
-const { data: page } = await useAsyncData(route.path, () =>
-  queryCollection('content').path(route.path).first())
+const route = useRoute()
+const { locale } = useI18n()
+
+// Lo slug non porta il prefisso di lingua: e' gia' il path nella collection
+// della lingua corrente.
+const contentPath = computed(() => `/${([] as string[]).concat(route.params.slug ?? []).join('/')}`)
+
+const { data: page } = await useAsyncData(() => `${locale.value}:${contentPath.value}`, () =>
+  queryCollection(`content_${locale.value}` as `content_${Locale}`).path(contentPath.value).first())
 
 if (!page.value)
   throw createError({ statusCode: 404, statusMessage: 'Page not found' })

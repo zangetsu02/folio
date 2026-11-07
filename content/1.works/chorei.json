@@ -1,7 +1,10 @@
 {
   "name": "chorei",
   "category": "tools",
-  "description": "Assembles your daily stand-up from one day of git history, coding-agent sessions and tickets, with every line carrying the source it came from.",
+  "description": {
+    "it": "Compone lo stand-up quotidiano da una giornata di storia git, sessioni con gli agenti di coding e ticket, e ogni riga porta con sé la fonte da cui viene.",
+    "en": "Assembles your daily stand-up from one day of git history, coding-agent sessions and tickets, with every line carrying the source it came from."
+  },
   "url": "https://skills.sh/zangetsu02/chorei",
   "repo": "https://github.com/zangetsu02/chorei",
   "tech": ["Shell", "Git", "Agent Skills"],
