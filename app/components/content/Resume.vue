@@ -14,7 +14,7 @@ const { t } = useI18n()
           :number="1"
           :title="t('cv.about')"
           size="measure"
-          size-title="text-xl md:text-2xl"
+          size-title="font-display text-2xl md:text-3xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
           <!-- Prosa d'autore: vive in content/{it,en}/resume.md, dove si rivede
@@ -26,7 +26,7 @@ const { t } = useI18n()
           :number="2"
           :title="t('cv.experience')"
           size="bleed"
-          size-title="text-xl md:text-2xl"
+          size-title="font-display text-2xl md:text-3xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
           <CvWorkExperience />
@@ -36,7 +36,7 @@ const { t } = useI18n()
           :number="3"
           :title="t('cv.sideProjects')"
           size="bleed"
-          size-title="text-xl md:text-2xl"
+          size-title="font-display text-2xl md:text-3xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
           <CvSideProjects />
@@ -46,7 +46,7 @@ const { t } = useI18n()
           :number="4"
           :title="t('cv.certificates')"
           size="bleed"
-          size-title="text-xl md:text-2xl"
+          size-title="font-display text-2xl md:text-3xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
           <CvCertificates />
@@ -56,7 +56,7 @@ const { t } = useI18n()
           :number="5"
           :title="t('cv.languages')"
           size="bleed"
-          size-title="text-xl md:text-2xl"
+          size-title="font-display text-2xl md:text-3xl"
           number-size="text-2xl sm:text-3xl md:text-4xl"
         >
           <ul class="flex flex-col divide-y divide-(--ui-border) border-t border-b border-(--ui-border)">

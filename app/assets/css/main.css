@@ -31,7 +31,7 @@
   --ui-primary: #d9480f !important;
   --ui-bg: rgb(247, 246, 243) !important;
   --ui-border: rgb(228, 226, 220) !important;
-  --ui-text-muted: rgb(115, 115, 110) !important;
+  --ui-text-muted: rgb(100, 100, 95) !important;
   --ui-text: rgb(26, 26, 24) !important;
   --ui-radius: 0;
 
@@ -76,10 +76,19 @@
   span.iconify {
     vertical-align: sub;
   }
+}
 
-  .print-only {
-    display: none;
-  }
+/* Fuori dal layer: dentro @layer base perdeva contro `flex` e il link da
+   stampa compariva a schermo. print.css lo riaccende con !important. */
+.print-only {
+  display: none;
+}
+
+/* Un anello solo, nel colore d'accento: quello di Nuxt UI al 25% in chiaro
+   non si vedeva. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: 3px;
 }
 
 * {

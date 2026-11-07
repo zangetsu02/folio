@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
+const { t } = useI18n()
 
 const nextTheme = computed(() => (colorMode.value === 'dark' ? 'light' : 'dark'))
 
@@ -44,20 +45,18 @@ function startViewTransition(event: MouseEvent) {
 </script>
 
 <template>
-  <!-- La parola e non il pallino: un cerchio nero non dice cosa fa, e il
-       resto della fascia e' tipografia. L'etichetta dice l'azione, non lo
-       stato, cosi' combacia con l'aria-label. -->
+  <!-- Icona dell'azione (luna per passare allo scuro, sole per il chiaro);
+       l'aria-label dice a parole cosa fa. -->
   <ClientOnly>
     <UButton
-      class="p-0 font-mono text-xs text-muted hover:text-primary transition-colors"
+      class="-m-2.5 p-2.5 text-muted hover:text-primary transition-colors"
       variant="link"
-      :aria-label="`Switch to ${nextTheme} mode`"
+      :icon="nextTheme === 'dark' ? 'lucide:moon' : 'lucide:sun'"
+      :aria-label="t(`theme.to.${nextTheme}`)"
       @click="startViewTransition"
-    >
-      {{ nextTheme }}
-    </UButton>
+    />
     <template #fallback>
-      <span class="font-mono text-xs text-muted">theme</span>
+      <span class="block size-4" />
     </template>
   </ClientOnly>
 </template>

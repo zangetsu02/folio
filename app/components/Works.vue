@@ -5,6 +5,7 @@ const { category, limit } = defineProps<{
 }>()
 
 const { localized } = useLocalized()
+const { t } = useI18n()
 
 // Senza `category` mostra una selezione trasversale: serve alla home, che
 // porta i progetti in prima pagina invece di lasciarli solo su /works.
@@ -33,9 +34,9 @@ if (error.value) {
         :key="work.name"
         :to="work.url"
         target="_blank"
+        rel="noopener noreferrer"
         class="group relative flex cursor-pointer flex-col"
         data-animate
-        :aria-label="`Open ${work.name}`"
         :style="{ '--stagger': index }"
       >
         <div class="flex flex-1 flex-col min-w-0">
@@ -49,8 +50,9 @@ if (error.value) {
               </span>
               <UIcon
                 name="lucide:arrow-up-right"
-                class="size-4 text-muted opacity-0 transition-opacity group-hover:opacity-100"
+                class="size-4 text-muted opacity-50 transition-opacity group-hover:opacity-100"
               />
+              <span class="sr-only">{{ t('a11y.newTab') }}</span>
             </div>
           </div>
           <span class="text-muted font-extralight text-sm sm:text-base">
@@ -58,11 +60,11 @@ if (error.value) {
           </span>
           <ul v-if="work.tech?.length" class="mt-2 flex flex-wrap gap-1">
             <li
-              v-for="t in work.tech"
-              :key="t"
-              class="border border-(--ui-border) px-1.5 py-0.5 font-mono text-[10px] text-muted"
+              v-for="tech in work.tech"
+              :key="tech"
+              class="border border-(--ui-border) px-1.5 py-0.5 font-mono text-[11px] text-muted"
             >
-              {{ t }}
+              {{ tech }}
             </li>
           </ul>
         </div>
@@ -70,7 +72,7 @@ if (error.value) {
     </div>
 
     <p v-if="!works?.length" class="font-mono text-sm text-muted">
-      Nothing here yet.
+      {{ t('works.empty') }}
     </p>
   </div>
 </template>

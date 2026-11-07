@@ -4,8 +4,8 @@
     "resume": "Resume"
   },
   "hero": {
-    "message": "Send me a message",
-    "call": "Make a call",
+    "message": "or write to me",
+    "call": "Book a call",
     "contactAnchor": "let-s-talk"
   },
   "contact": {
@@ -15,9 +15,10 @@
     "sent": "Your message has been sent!",
     "failed": "An error occurred while sending your message.",
     "send": "Send",
-    "invalidEmail": "Invalid email",
-    "tooShort": "Too short",
-    "required": "Please fill in all required fields."
+    "invalidEmail": "This email doesn’t look complete.",
+    "tooShort": "Write at least a couple of words.",
+    "required": "Please fill in all required fields.",
+    "optional": "optional"
   },
   "cv": {
     "location": "Rome, Latium, Italy",
@@ -46,6 +47,23 @@
   },
   "error": {
     "lost": "I think you're lost, let's go back",
-    "home": "home"
+    "home": "home",
+    "generic": "Something broke on our side. Try again, or head back"
+  },
+  "works": {
+    "empty": "Nothing here yet."
+  },
+  "theme": {
+    "label": "theme",
+    "dark": "dark",
+    "light": "light",
+    "to": {
+      "dark": "Switch to dark theme",
+      "light": "Switch to light theme"
+    }
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "newTab": "(opens in a new tab)"
   }
 }

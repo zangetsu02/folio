@@ -35,6 +35,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       },
     })
     toast.add({ title: t('contact.sent'), color: 'success' })
+    Object.assign(state, { email: undefined, message: undefined, name: undefined })
   }
   catch {
     toast.add({ title: t('contact.failed'), color: 'error' })
@@ -43,15 +44,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema :state class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit" @keydown.enter.prevent="onSubmit">
-    <UFormField name="name">
-      <UInput v-model="state.name" :placeholder="t('contact.name')" class="w-full" />
+  <UForm :schema :state class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit">
+    <UFormField name="name" :label="t('contact.name')" :hint="t('contact.optional')">
+      <UInput v-model="state.name" autocomplete="name" class="w-full" />
     </UFormField>
-    <UFormField name="email">
-      <UInput v-model="state.email" type="email" :placeholder="t('contact.email')" class="w-full" />
+    <UFormField name="email" :label="t('contact.email')">
+      <UInput v-model="state.email" type="email" autocomplete="email" class="w-full" />
     </UFormField>
-    <UFormField name="message">
-      <UTextarea v-model="state.message" autoresize :placeholder="t('contact.message')" :rows="4" class="w-full rounded-none" />
+    <UFormField name="message" :label="t('contact.message')">
+      <UTextarea v-model="state.message" autoresize :rows="4" class="w-full rounded-none" />
     </UFormField>
     <UButton type="submit" color="secondary" :label="t('contact.send')" class="rounded-none" loading-auto block />
   </UForm>

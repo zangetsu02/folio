@@ -19,9 +19,9 @@ const { profile, socials, seo } = useAppConfig()
     />
 
     <div class="flex flex-col gap-0.5">
-      <h3 class="text-2xl font-medium leading-tight">
-        {{ profile.name }}
-      </h3>
+      <h1 class="font-display text-3xl leading-tight tracking-tight">
+        {{ profile.name }}<span class="text-primary">.</span>
+      </h1>
       <span class="text-muted text-base leading-tight">
         {{ profile.workTitle }}
       </span>
@@ -67,7 +67,7 @@ const { profile, socials, seo } = useAppConfig()
         target="_blank"
         rel="noopener noreferrer"
         aria-label="X / Twitter"
-        class="hover:text-primary transition-colors"
+        class="-m-3 p-3 hover:text-primary transition-colors"
       >
         <Icon name="simple-icons:x" class="size-4" />
       </NuxtLink>
@@ -78,7 +78,7 @@ const { profile, socials, seo } = useAppConfig()
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
-        class="hover:text-primary transition-colors"
+        class="-m-3 p-3 hover:text-primary transition-colors"
       >
         <Icon name="simple-icons:linkedin" class="size-4" />
       </NuxtLink>
@@ -89,7 +89,7 @@ const { profile, socials, seo } = useAppConfig()
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub"
-        class="hover:text-primary transition-colors"
+        class="-m-3 p-3 hover:text-primary transition-colors"
       >
         <Icon name="simple-icons:github" class="size-4" />
       </NuxtLink>

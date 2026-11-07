@@ -10,9 +10,12 @@ const { t, locale } = useI18n()
 
 <template>
   <UApp :tooltip="{ delayDuration: 0 }" class="relative">
+    <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-(--ui-bg) focus:px-3 focus:py-2 font-mono text-xs">
+      {{ t('a11y.skip') }}
+    </a>
     <Backdrop />
 
-    <main class="relative z-10 flex min-h-screen flex-col px-5 py-8 sm:px-10 sm:py-12 print:block print:p-0">
+    <main id="content" class="relative z-10 flex min-h-screen flex-col px-5 py-8 sm:px-10 sm:py-12 print:block print:p-0">
       <LayoutGroup id="main-layout">
         <Motion
           layout
@@ -33,7 +36,7 @@ const { t, locale } = useI18n()
             <CopyLink v-if="route.path.includes('/writing/') && route.name !== 'writing'" />
 
             <footer class="mt-20 flex flex-col gap-5 border-t border-(--ui-border) pt-6 text-xs text-muted print:hidden">
-              <div class="flex items-center gap-4 font-mono text-[10.5px]">
+              <div class="flex items-center gap-4 font-mono text-xs">
                 <NuxtLink :to="socials.twitter" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   X
                 </NuxtLink>

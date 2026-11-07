@@ -103,12 +103,12 @@
 
   /* Il nome e' la prima informazione della pagina e deve pesare: i riferimenti
      stanno fra 20 e 28pt, a schermo qui e' text-2xl. */
-  .cv > :first-child aside h3 {
+  .cv > :first-child aside h1 {
     font-size: 2rem;
     line-height: 1.05;
   }
 
-  .cv > :first-child aside h3 + span {
+  .cv > :first-child aside h1 + span {
     font-size: 1rem;
   }
 

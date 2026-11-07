@@ -3,6 +3,10 @@ title: Works
 description: Libraries, developer tools and editor themes I build and maintain in the open.
 ---
 
+::page-title{title="Works"}
+Libraries, developer tools and editor themes I build and maintain in the open. Each card opens the project in a new tab.
+::
+
 ::section-item{:number='1' size="bleed" title="Libraries & SDKs"}
 :::works{category="libraries"}
 :::

@@ -22,32 +22,25 @@ function isActive(to: string) {
 </script>
 
 <template>
-  <!-- Testata e non barra: scorre via col contenuto, come il frontespizio di
-       un documento. -->
-  <header class="mb-14 flex flex-col gap-6 print:hidden">
-    <div>
-      <NuxtLink
-        :to="localePath('/')"
-        class="font-display text-2xl leading-none tracking-tight transition-colors hover:text-primary sm:text-3xl"
-      >
-        christian&thinsp;/&thinsp;zangetsu
-      </NuxtLink>
-      <!-- my-0: la regola globale `p { my-5 }` staccherebbe il sottotitolo dal nome. -->
-      <p class="my-0 mt-1.5 text-sm text-muted">
-        {{ profile.workTitle }} · {{ t('masthead.city') }}
-      </p>
-    </div>
+  <!-- Testata e non barra: una riga sola che scorre via col contenuto. Nome a
+       sinistra, pagine e preferenze a destra. -->
+  <header class="mb-14 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 sm:gap-x-8 border-b border-(--ui-border) pb-4 print:hidden">
+    <NuxtLink
+      :to="localePath('/')"
+      class="font-display text-xl leading-none tracking-tight transition-colors hover:text-primary sm:text-2xl"
+    >
+      {{ profile.name }}
+    </NuxtLink>
 
-    <div class="flex items-baseline justify-between gap-6 border-t border-(--ui-border) pt-3">
-      <nav class="flex flex-wrap items-baseline gap-x-6 gap-y-2 font-mono text-xs">
+    <div class="flex items-center gap-x-4 text-sm sm:gap-x-6">
+      <nav class="flex items-center gap-x-4 sm:gap-x-6">
         <NuxtLink
-          v-for="(item, index) in nav"
+          v-for="item in nav"
           :key="item.to"
           :to="item.to"
-          class="transition-colors hover:text-primary"
-          :class="isActive(item.to) ? 'text-highlighted' : 'text-muted'"
+          class="-my-3 py-3 underline-offset-[6px] transition-colors hover:text-primary"
+          :class="isActive(item.to) ? 'text-highlighted underline decoration-primary' : 'text-muted'"
         >
-          <span class="opacity-55">{{ String(index + 1).padStart(2, '0') }}</span>
           {{ item.label }}
         </NuxtLink>
       </nav>
@@ -56,10 +49,12 @@ function isActive(to: string) {
            nell'altra lingua resta condivisibile. -->
       <NuxtLink
         :to="switchLocalePath(other)"
+        :hreflang="other"
+        :aria-label="t('locale.switch')"
         data-locale-switch
-        class="font-mono text-xs text-muted transition-colors hover:text-primary"
+        class="-my-3 py-3 font-mono text-xs uppercase text-muted transition-colors hover:text-primary"
       >
-        {{ t('locale.switch') }}
+        {{ other }}
       </NuxtLink>
       <ThemeSelector />
     </div>

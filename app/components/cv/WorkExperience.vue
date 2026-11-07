@@ -53,14 +53,14 @@ function periodLabel(work: WorksExperienceCollectionItem) {
           <span>{{ localized(work.employmentType) }}</span>
           <span
             v-if="work.isCurrent"
-            class="px-1.5 py-0.5 bg-primary text-(--ui-bg) text-[10px] uppercase tracking-wider"
+            class="px-1.5 py-0.5 bg-(--ui-text) text-(--ui-bg) text-[11px] uppercase tracking-wider"
           >
             {{ t('cv.current') }}
           </span>
         </div>
       </header>
 
-      <ul v-if="localized(work.summary)?.length" class="mt-4 list-disc space-y-1.5 pl-4 marker:text-muted text-sm leading-relaxed">
+      <ul v-if="localized(work.summary)?.length" class="measure mt-4 list-disc space-y-1.5 pl-4 marker:text-muted text-sm leading-relaxed">
         <li v-for="(item, idx) in localized(work.summary)" :key="idx">
           {{ item }}
         </li>
@@ -75,14 +75,14 @@ function periodLabel(work: WorksExperienceCollectionItem) {
             <h4 class="text-sm font-medium text-highlighted">
               {{ project.name }}
             </h4>
-            <p class="text-sm text-muted leading-relaxed">
+            <p class="measure my-0 text-sm text-muted leading-relaxed">
               {{ localized(project.description) }}
             </p>
             <ul v-if="project.tech?.length" class="flex flex-wrap gap-1">
               <li
                 v-for="(tech, techIdx) in project.tech"
                 :key="techIdx"
-                class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono text-muted"
+                class="px-1.5 py-0.5 border border-(--ui-border) text-[11px] font-mono text-muted"
               >
                 {{ tech }}
               </li>

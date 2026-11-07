@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { global, profile } = useAppConfig()
 const { t } = useI18n()
+const localePath = useLocalePath()
 const colorMode = useColorMode()
 
 const picture = computed(() =>
@@ -20,13 +21,14 @@ const picture = computed(() =>
         <slot mdc-unwrap="p" />
       </p>
 
-      <div class="mt-1 flex flex-wrap gap-3">
-        <UButton :to="`/#${t('hero.contactAnchor')}`" size="lg">
-          {{ t('hero.message') }}
-        </UButton>
-        <UButton :to="global.meetingLink" color="secondary" size="lg">
+      <div class="mt-1 flex flex-wrap items-center gap-x-5 gap-y-3">
+        <UButton :to="global.meetingLink" target="_blank" color="secondary" size="lg" trailing-icon="lucide:arrow-up-right">
           {{ t('hero.call') }}
+          <span class="sr-only">{{ t('a11y.newTab') }}</span>
         </UButton>
+        <NuxtLink :to="`${localePath('/')}#${t('hero.contactAnchor')}`" class="link text-sm">
+          {{ t('hero.message') }}
+        </NuxtLink>
       </div>
     </div>
 

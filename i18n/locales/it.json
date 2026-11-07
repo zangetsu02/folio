@@ -4,8 +4,8 @@
     "resume": "Resume"
   },
   "hero": {
-    "message": "Scrivimi",
-    "call": "Sentiamoci",
+    "message": "oppure scrivimi",
+    "call": "Prenota una call",
     "contactAnchor": "parliamone"
   },
   "contact": {
@@ -15,9 +15,10 @@
     "sent": "Messaggio inviato.",
     "failed": "Qualcosa è andato storto nell'invio.",
     "send": "Invia",
-    "invalidEmail": "Email non valida",
-    "tooShort": "Troppo corto",
-    "required": "Compila tutti i campi."
+    "invalidEmail": "Questa email non sembra valida: manca un pezzo?",
+    "tooShort": "Scrivi almeno un paio di parole.",
+    "required": "Compila tutti i campi.",
+    "optional": "facoltativo"
   },
   "cv": {
     "location": "Roma, IT",
@@ -46,6 +47,23 @@
   },
   "error": {
     "lost": "Mi sa che ti sei perso, torniamo alla",
-    "home": "home"
+    "home": "home",
+    "generic": "Qualcosa si è rotto da questa parte. Riprova, o torna alla"
+  },
+  "works": {
+    "empty": "Ancora niente qui."
+  },
+  "theme": {
+    "label": "tema",
+    "dark": "scuro",
+    "light": "chiaro",
+    "to": {
+      "dark": "Passa al tema scuro",
+      "light": "Passa al tema chiaro"
+    }
+  },
+  "a11y": {
+    "skip": "Vai al contenuto",
+    "newTab": "(si apre in una nuova scheda)"
   }
 }

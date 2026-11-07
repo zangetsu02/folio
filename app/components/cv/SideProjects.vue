@@ -30,7 +30,7 @@ if (error.value) {
           <span class="text-sm text-highlighted group-hover:underline">
             {{ item.name }}
           </span>
-          <span class="px-1.5 py-0.5 border border-(--ui-border) text-[10px] font-mono uppercase tracking-wider">
+          <span class="px-1.5 py-0.5 border border-(--ui-border) text-[11px] font-mono uppercase tracking-wider">
             {{ localized(WORK_CATEGORIES[item.category as WorkCategory]) ?? item.category }}
           </span>
           <span class="ml-auto text-xs font-mono whitespace-nowrap">
@@ -38,7 +38,7 @@ if (error.value) {
           </span>
           <Icon name="lucide:arrow-up-right" class="size-4 opacity-50 group-hover:opacity-100 transition-opacity" />
         </div>
-        <p class="text-sm text-muted leading-relaxed">
+        <p class="measure my-0 text-sm text-muted leading-relaxed">
           {{ localized(item.description) }}
         </p>
       </NuxtLink>
