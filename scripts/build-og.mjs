@@ -4,7 +4,7 @@
 //
 // Uso: pnpm og  (richiede il dev server, o BASE_URL verso una build)
 import process from 'node:process'
-import { DEFAULT_LOCALE, localePrefix } from '../app/utils/locales.ts'
+import { DEFAULT_LOCALE, localizePath } from '../app/utils/locales.ts'
 import { openPage, settle, withBrowser } from './lib/check.mjs'
 
 /** Misura che Open Graph e Twitter ritagliano senza intervenire. */
@@ -51,7 +51,7 @@ function trimToHero() {
 }
 
 await withBrowser(async (browser) => {
-  const page = await openPage(browser, { route: localePrefix(LOCALE) || '/', width: WIDTH, height: HEIGHT, scale: 2, theme: 'light' })
+  const page = await openPage(browser, { route: localizePath('/', LOCALE), width: WIDTH, height: HEIGHT, scale: 2, theme: 'light' })
   await page.evaluate(trimToHero)
   await settle(1800) // il fondo disegna a ~10fps
   await page.screenshot({ path: OUT })

@@ -1,11 +1,11 @@
 ---
 title: Resume
-description: Christian Palladini's track record: Links Management & Technology, the Sifer and Sintesi rewrites, the stack and the certifications.
+description: Christian Palladini, full stack engineer and tech lead. Links Management & Technology, the Sifer and Sintesi rewrites, the stack and the certifications.
 ---
 
 ::resume
-Full stack developer specializing in designing and developing scalable web applications
-and enterprise systems. Adept at combining modern frontend ecosystems with solid backend
-architectures. Experienced in modernizing complex legacy platforms through microservices,
-domain modeling, and clean architecture practices.
+Full stack engineer on enterprise and public-sector systems, from the domain model and the
+APIs to the interface. I've led two platform rewrites, one of them from a legacy monolith to
+microservices, and set the DDD and Clean Architecture standards the teams worked to. I also
+mentor developers and write the technical documentation those teams rely on.
 ::

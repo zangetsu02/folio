@@ -4,13 +4,14 @@ import * as z from 'zod'
 
 const { t } = useI18n()
 
-const schema = z.object({
+// computed: i messaggi di errore seguono la lingua corrente
+const schema = computed(() => z.object({
   email: z.string().email(t('contact.invalidEmail')),
   message: z.string().min(2, t('contact.tooShort')),
   name: z.string().optional(),
-})
+}))
 
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof schema.value>
 
 const toast = useToast()
 
@@ -43,7 +44,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema :state class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit" @keydown.enter.prevent="onSubmit">
+  <UForm :schema :state class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit">
     <UFormField name="name">
       <UInput v-model="state.name" :placeholder="t('contact.name')" class="w-full" />
     </UFormField>

@@ -5,22 +5,21 @@
   },
   "hero": {
     "message": "Send me a message",
-    "call": "Make a call",
-    "contactAnchor": "let-s-talk"
+    "call": "Book a call"
   },
   "contact": {
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "sent": "Your message has been sent!",
-    "failed": "An error occurred while sending your message.",
+    "sent": "Message sent. I'll get back to you.",
+    "failed": "The message didn't go through. Try again, or email me.",
     "send": "Send",
     "invalidEmail": "Invalid email",
     "tooShort": "Too short",
-    "required": "Please fill in all required fields."
+    "required": "Email and message are required."
   },
   "cv": {
-    "location": "Rome, Latium, Italy",
+    "location": "Rome, Italy",
     "download": "Download PDF",
     "present": "Present",
     "current": "Current",
@@ -36,16 +35,18 @@
     "b2": "B2 · Upper-Intermediate"
   },
   "footer": {
-    "openSource": "This website is fully open-source, you can find the source code on"
-  },
-  "locale": {
-    "switch": "Italiano"
+    "openSource": "This site is open source. The code is on"
   },
   "masthead": {
     "city": "Rome"
   },
   "error": {
-    "lost": "I think you're lost, let's go back",
+    "lost": "This page doesn't exist. Back to the",
     "home": "home"
+  },
+  "categories": {
+    "libraries": "Libraries & SDKs",
+    "tools": "Developer tools",
+    "themes": "Editor themes"
   }
 }

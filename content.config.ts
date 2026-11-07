@@ -1,17 +1,27 @@
+import type { Locale } from './app/utils/locales'
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
+import { LOCALES } from './app/utils/locales'
 import { WORK_CATEGORY_KEYS } from './app/utils/works'
 
-/** Ogni lingua obbligatoria: una traduzione mancante fa fallire la build. */
-function localizedString() {
-  return z.object({ it: z.string().nonempty(), en: z.string().nonempty() })
+/**
+ * Un campo tradotto: una chiave per lingua.
+ *
+ * Lo schema da' la forma e i tipi, ma non e' un cancello: @nuxt/content salva
+ * anche i record che lo violano. Le traduzioni mancanti le ferma `check:i18n`.
+ */
+function localized<T extends z.ZodTypeAny>(schema: T) {
+  return z.object(Object.fromEntries(LOCALES.map(locale => [locale, schema])) as Record<Locale, T>)
 }
 
-function localizedStringArray() {
-  return z.object({
-    it: z.array(z.string().nonempty()).nonempty(),
-    en: z.array(z.string().nonempty()).nonempty(),
-  })
-}
+const localizedString = localized(z.string().nonempty())
+
+const pageSchema = z.object({
+  title: z.string().nonempty(),
+  description: z.string().nonempty(),
+  // opzionali davvero: nessuna pagina ha `date`, solo index.md ha `image`
+  date: z.string().optional(),
+  image: z.string().optional(),
+})
 
 export default defineContentConfig({
   collections: {
@@ -21,26 +31,15 @@ export default defineContentConfig({
     content_it: defineCollection({
       type: 'page',
       source: { include: 'it/**', prefix: '/' },
-      schema: z.object({
-        title: z.string().nonempty(),
-        description: z.string().nonempty(),
-        // opzionali davvero: nessuna pagina ha `date`, solo index.md ha `image`
-        date: z.string().optional(),
-        image: z.string().optional(),
-      }),
+      schema: pageSchema,
     }),
 
     content_en: defineCollection({
       type: 'page',
       source: { include: 'en/**', prefix: '/' },
-      schema: z.object({
-        title: z.string().nonempty(),
-        description: z.string().nonempty(),
-        // opzionali davvero: nessuna pagina ha `date`, solo index.md ha `image`
-        date: z.string().optional(),
-        image: z.string().optional(),
-      }),
+      schema: pageSchema,
     }),
+
     writing: defineCollection({
       type: 'page',
       source: '2.writing/*.md',
@@ -56,7 +55,7 @@ export default defineContentConfig({
       source: '1.works/*.json',
       schema: z.object({
         name: z.string().nonempty(),
-        description: localizedString(),
+        description: localizedString,
         // enum e non string: una categoria scritta male fa fallire la build
         // invece di produrre in silenzio una sezione vuota su /works
         category: z.enum(WORK_CATEGORY_KEYS),
@@ -75,25 +74,25 @@ export default defineContentConfig({
         company: z.string().nonempty(),
         role: z.string().nonempty(),
         name: z.string().nonempty(),
-        employmentType: localizedString(),
-        location: localizedString(),
+        employmentType: localizedString,
+        location: localizedString,
         start: z.object({
-          month: z.string().optional(),
+          month: z.number().int().min(1).max(12).optional(),
           year: z.string().nonempty(),
         }),
         end: z
           .object({
-            month: z.string().optional(),
+            month: z.number().int().min(1).max(12).optional(),
             year: z.string().nonempty(),
           })
           .optional(),
         isCurrent: z.boolean(),
-        summary: localizedStringArray(),
+        summary: localized(z.array(z.string().nonempty()).nonempty()),
         projects: z
           .array(
             z.object({
               name: z.string().nonempty(),
-              description: localizedString(),
+              description: localizedString,
               tech: z.array(z.string().nonempty()),
             }),
           )

@@ -1,19 +1,16 @@
 // Misura della colonna di lettura, altezza delle pagine, rotte assorbite.
-import { DEFAULT_LOCALE, localePrefix, LOCALES } from '../app/utils/locales.ts'
+import { DEFAULT_LOCALE, LOCALES, localizePath } from '../app/utils/locales.ts'
 import { BASE, createReport, openPage, withBrowser } from './lib/check.mjs'
 
-/** La rotta nella lingua: `/works` in italiano, `/en/works` in inglese. */
-const localeRoute = (locale, route) => (localePrefix(locale) + route).replace(/\/$/, '') || '/'
-
 const ROUTES = ['/', '/works', '/resume']
-const PAGES = LOCALES.flatMap(locale => ROUTES.map(route => localeRoute(locale, route)))
+const PAGES = LOCALES.flatMap(locale => ROUTES.map(route => localizePath(route, locale)))
 const WIDTHS = [1280, 1440, 1920, 2560]
 const MIN_CH = 60
 const MAX_CH = 75
 const MIN_HEIGHT = 900
 /** Rotte confluite nella home: devono reindirizzare, non servire la vecchia pagina. */
 const GONE = LOCALES.flatMap(locale =>
-  ['/about', '/contact', '/writing', '/timeline'].map(route => localeRoute(locale, route)))
+  ['/about', '/contact', '/writing', '/timeline'].map(route => localizePath(route, locale)))
 
 const { note, finish } = createReport()
 
@@ -98,18 +95,19 @@ await withBrowser(async (browser) => {
     note(!broken.length, `${route} — ancore che non esistono: ${broken.join(', ') || 'nessuna'}`)
   }
 
-  // Un link non localizzato nella testata riporta in italiano chi legge inglese.
+  // Un link non localizzato, in testata o nel testo, riporta in italiano chi legge inglese.
   console.log('\n— i link restano nella lingua corrente —')
   for (const locale of LOCALES.filter(code => code !== DEFAULT_LOCALE)) {
-    const prefix = localePrefix(locale)
-    for (const route of ROUTES.map(route => localeRoute(locale, route))) {
+    const prefix = localizePath('/', locale)
+    for (const route of ROUTES.map(route => localizePath(route, locale))) {
       await page.goto(BASE + route, { waitUntil: 'networkidle0', timeout: 60000 })
       const escaped = await page.evaluate(prefix => (
-        // il selettore di lingua punta all'altra lingua per definizione
-        [...document.querySelectorAll('header a[href^="/"]:not([data-locale-switch])')]
+        // La testata sta dentro main. Esclusi il selettore di lingua, che punta
+        // all'altra per definizione, e i _blank, che sono i PDF.
+        [...document.querySelectorAll('main a[href^="/"]:not([data-locale-switch]):not([target="_blank"])')]
           .map(a => a.getAttribute('href'))
           .filter(href => !href.startsWith(prefix) && href !== '/')), prefix)
-      note(!escaped.length, `${route} — link di testata fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
+      note(!escaped.length, `${route} — link fuori lingua: ${escaped.join(', ') || 'nessuno'}`)
     }
   }
 

@@ -1,26 +1,25 @@
 {
   "nav": {
-    "works": "Works",
-    "resume": "Resume"
+    "works": "Progetti",
+    "resume": "CV"
   },
   "hero": {
     "message": "Scrivimi",
-    "call": "Sentiamoci",
-    "contactAnchor": "parliamone"
+    "call": "Prenota una call"
   },
   "contact": {
     "name": "Nome",
     "email": "Email",
     "message": "Messaggio",
-    "sent": "Messaggio inviato.",
-    "failed": "Qualcosa è andato storto nell'invio.",
+    "sent": "Messaggio inviato. Ti rispondo presto.",
+    "failed": "Il messaggio non è partito. Riprova, o scrivimi via email.",
     "send": "Invia",
     "invalidEmail": "Email non valida",
     "tooShort": "Troppo corto",
-    "required": "Compila tutti i campi."
+    "required": "Email e messaggio sono obbligatori."
   },
   "cv": {
-    "location": "Roma, IT",
+    "location": "Roma, Italia",
     "download": "Scarica il PDF",
     "present": "Oggi",
     "current": "In corso",
@@ -36,16 +35,18 @@
     "b2": "B2 · Intermedio superiore"
   },
   "footer": {
-    "openSource": "Questo sito è open source, il codice sta su"
-  },
-  "locale": {
-    "switch": "English"
+    "openSource": "Questo sito è open source. Il codice è su"
   },
   "masthead": {
     "city": "Roma"
   },
   "error": {
-    "lost": "Mi sa che ti sei perso, torniamo alla",
+    "lost": "Questa pagina non esiste. Torna alla",
     "home": "home"
+  },
+  "categories": {
+    "libraries": "Librerie e SDK",
+    "tools": "Strumenti",
+    "themes": "Temi per editor"
   }
 }

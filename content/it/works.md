@@ -1,5 +1,5 @@
 ---
-title: Lavori
+title: Progetti
 description: Librerie, strumenti per sviluppatori e temi per editor che costruisco e mantengo in pubblico.
 ---
 

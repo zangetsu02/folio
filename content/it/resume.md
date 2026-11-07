@@ -1,10 +1,12 @@
 ---
-title: Resume
-description: Il percorso di Christian Palladini: Links Management & Technology, le riscritture Sifer e Sintesi, lo stack e le certificazioni.
+title: CV
+description: Christian Palladini, full stack engineer e tech lead. Links Management & Technology, le riscritture di Sifer e Sintesi, lo stack e le certificazioni.
 ---
 
 ::resume
-Full stack developer: applicazioni web ed enterprise che devono reggere. Unisco gli
-ecosistemi frontend moderni ad architetture backend solide, e rinnovo piattaforme legacy
-complesse con microservizi, domain modeling e clean architecture.
+Full stack engineer su sistemi enterprise e della pubblica amministrazione, dal modello di
+dominio e dalle API fino all'interfaccia. Ho guidato due riscritture di piattaforme, una delle
+quali da un monolite legacy a microservizi, e fissato gli standard DDD e Clean Architecture
+seguiti dai team. Faccio anche da mentor agli sviluppatori e scrivo la documentazione tecnica
+su cui quei team si appoggiano.
 ::

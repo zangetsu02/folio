@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { ContentCollectionItem } from '@nuxt/content'
+import type { ContentEnCollectionItem, ContentItCollectionItem } from '@nuxt/content'
 
 const { page, isWriting } = defineProps<{
-  page: ContentCollectionItem
+  page: ContentItCollectionItem | ContentEnCollectionItem
   isWriting: boolean
 }>()
 
-const route = useRoute()
 const { link, seo, profile } = useAppConfig()
 
 function getPageSEO() {
@@ -17,11 +16,12 @@ function getPageSEO() {
 }
 
 function getTitleTemplate(title: string | undefined) {
-  if (route.path === '/')
-    return title || `${seo.title} | Full stack developer`
+  // il path del contenuto e non quello della rotta: la home inglese e' `/en`
+  if (page.path === '/')
+    return title || `${seo.title} | ${profile.workTitle}`
   if (isWriting)
     return title
-  return `${title} | ${seo.title} - Full stack developer`
+  return `${title} | ${seo.title} - ${profile.workTitle}`
 }
 
 const pageSEO = getPageSEO()

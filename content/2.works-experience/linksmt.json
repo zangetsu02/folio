@@ -4,34 +4,34 @@
   "name": "Links Management & Technology S.p.A.",
   "employmentType": { "it": "Tempo pieno", "en": "Full-time" },
   "location": { "it": "Roma, IT", "en": "Rome, IT" },
-  "start": { "month": "Feb", "year": "2023" },
+  "start": { "month": 2, "year": "2023" },
   "isCurrent": true,
   "summary": {
     "it": [
       "Full stack developer nel competence centre dell'azienda, e tech lead sulle commesse Sifer e Sintesi: direzione tecnica, coordinamento del team e gli standard che quei team hanno seguito",
-      "Fatto crescere altri sviluppatori e spinto il riuso del codice, le buone pratiche e gli standard di qualità fra i team",
-      "Scritto e mantenuto la documentazione tecnica per sviluppatori e stakeholder"
+      "Mentoring degli sviluppatori e riuso del codice fra i team, a partire dalla libreria di componenti condivisa",
+      "Documentazione tecnica per sviluppatori e stakeholder, scritta e tenuta aggiornata"
     ],
     "en": [
       "Full stack developer in the company's competence centre, and tech lead on the Sifer and Sintesi engagements: technical direction, team coordination, and the standards those teams worked to",
-      "Mentored engineers and drove code reuse, engineering best practices and quality standards across teams",
-      "Authored and maintained detailed technical documentation for developers and stakeholders"
+      "Mentored developers and pushed code reuse across teams, starting from the shared component library",
+      "Wrote and maintained the technical documentation for developers and stakeholders"
     ]
   },
   "projects": [
     {
       "name": "Sifer — Regione Emilia-Romagna",
       "description": {
-        "it": "Tech lead sulla riscrittura completa di Sifer, alla guida di un team di quattro persone, con la direzione tecnica e il ritmo di consegna. Progettata una libreria di oltre venticinque componenti, poi adottata da altri team del competence centre.",
-        "en": "Tech Lead on the full rewrite of Sifer, leading a 4-engineer team and setting the technical direction and delivery cadence. Architected a reusable component library of 25+ components, later adopted by other teams across the competence center."
+        "it": "Tech lead sulla riscrittura completa di Sifer: un team di quattro persone, la direzione tecnica e il ritmo delle consegne. Progettata una libreria di oltre 25 componenti riusabili, poi adottata da altri team del competence centre.",
+        "en": "Tech lead on the full rewrite of Sifer: a team of four, the technical direction and the delivery cadence. Designed a library of 25+ reusable components, later adopted by other teams in the competence centre."
       },
       "tech": ["Symfony", "Nuxt", "PostgreSQL"]
     },
     {
       "name": "Sintesi — Regione Puglia",
       "description": {
-        "it": "Guidato e coordinato un team di quattro persone nell'ammodernamento di una piattaforma regionale per i servizi al lavoro, dal monolite legacy a oltre quindici microservizi. Fissati gli standard DDD e clean architecture per manutenibilità e copertura dei test, restando nel codice.",
-        "en": "Led and coordinated a team of 4 engineers in modernizing a regional employment-services platform, guiding the transition from a legacy monolith to 15+ microservices. Established DDD and Clean Architecture standards to improve maintainability and test coverage, while remaining hands-on in development."
+        "it": "Guidato un team di quattro persone nella modernizzazione di una piattaforma regionale per i servizi al lavoro, da un monolite legacy a oltre 15 microservizi. Fissati gli standard DDD e Clean Architecture, per servizi manutenibili e testabili, senza smettere di scrivere codice.",
+        "en": "Led a team of four through the modernization of a regional employment-services platform, from a legacy monolith to 15+ microservices. Set the DDD and Clean Architecture standards that kept the services maintainable and testable, and stayed hands-on in the code."
       },
       "tech": ["Spring Boot 3", "Java 21", "Kafka", "SQL Server", "Kubernetes"]
     }

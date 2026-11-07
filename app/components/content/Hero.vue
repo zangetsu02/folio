@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { global, profile } = useAppConfig()
 const { t } = useI18n()
+const localePath = useLocalePath()
 const colorMode = useColorMode()
 
 const picture = computed(() =>
@@ -21,7 +22,7 @@ const picture = computed(() =>
       </p>
 
       <div class="mt-1 flex flex-wrap gap-3">
-        <UButton :to="`/#${t('hero.contactAnchor')}`" size="lg">
+        <UButton :to="localePath('/#contact')" size="lg">
           {{ t('hero.message') }}
         </UButton>
         <UButton :to="global.meetingLink" color="secondary" size="lg">

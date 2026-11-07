@@ -3,11 +3,11 @@ import { createServer } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
 import process from 'node:process'
 import puppeteer from 'puppeteer'
-import { localePrefix, LOCALES, resumePdf } from '../app/utils/locales.ts'
+import { LOCALES, localizePath, resumePdf } from '../app/utils/locales.ts'
 
 const ROOT = resolve('./.output/public')
 const TARGETS = LOCALES.map(locale => ({
-  path: `${localePrefix(locale)}/_resume/index.html`,
+  path: `${localizePath('/_resume', locale)}/index.html`,
   out: `./public${resumePdf(locale)}`,
 }))
 

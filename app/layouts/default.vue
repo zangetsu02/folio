@@ -6,6 +6,7 @@ import { resumePdf } from '~/utils/locales'
 const route = useRoute()
 const { socials } = useAppConfig()
 const { t, locale } = useI18n()
+const localePath = useLocalePath()
 </script>
 
 <template>
@@ -46,7 +47,7 @@ const { t, locale } = useI18n()
                 <NuxtLink :to="socials.devnull" external target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
                   /dev/null
                 </NuxtLink>
-                <NuxtLink v-if="route.path.endsWith('/resume')" :to="resumePdf(locale)" external target="_blank" class="hover:text-primary transition-colors">
+                <NuxtLink v-if="route.path === localePath('/resume')" :to="resumePdf(locale)" external target="_blank" class="hover:text-primary transition-colors">
                   {{ t('cv.download') }}
                 </NuxtLink>
               </div>

@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import type { Locale } from '~/utils/locales'
-import { localePrefix } from '~/utils/locales'
 
 const route = useRoute()
 const { locale } = useI18n()
 
-// Il path della rotta porta il prefisso di lingua (`/en/works`), i percorsi di
-// contenuto no: la collection e' gia' per lingua, quindi il prefisso va tolto.
-const contentPath = computed(() => {
-  const prefix = localePrefix(locale.value)
-  return (prefix ? route.path.slice(prefix.length) : route.path) || '/'
-})
+// Lo slug non porta il prefisso di lingua: e' gia' il path nella collection
+// della lingua corrente.
+const contentPath = computed(() => `/${([] as string[]).concat(route.params.slug ?? []).join('/')}`)
 
 const { data: page } = await useAsyncData(() => `${locale.value}:${contentPath.value}`, () =>
   queryCollection(`content_${locale.value}` as `content_${Locale}`).path(contentPath.value).first())

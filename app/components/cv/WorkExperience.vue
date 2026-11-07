@@ -2,7 +2,7 @@
 import type { WorksExperienceCollectionItem } from '@nuxt/content'
 
 const { localized } = useLocalized()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const { data: works, error } = await useAsyncData(`works-experience`, () => {
   return queryCollection('worksExperience')
@@ -16,12 +16,19 @@ if (error.value) {
   })
 }
 
+/** "feb 2023" / "Feb 2023": il nome del mese lo da' Intl nella lingua corrente. */
+function monthYear({ month, year }: { month?: number, year: string }) {
+  return month
+    ? new Intl.DateTimeFormat(locale.value, { month: 'short', year: 'numeric' }).format(new Date(Number(year), month - 1))
+    : year
+}
+
 function periodLabel(work: WorksExperienceCollectionItem) {
-  const start = `${work.start.month} ${work.start.year}`
+  const start = monthYear(work.start)
   const end = work.isCurrent
     ? t('cv.present')
     : work.end
-      ? `${work.end.month} ${work.end.year}`
+      ? monthYear(work.end)
       : ''
   return end ? `${start} — ${end}` : start
 }

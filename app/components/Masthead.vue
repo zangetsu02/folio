@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { LOCALES } from '~/utils/locales'
-
 const { profile } = useAppConfig()
 const route = useRoute()
 
-const { t, locale } = useI18n()
+const { t, locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const localePath = useLocalePath()
-const other = computed(() => LOCALES.find(code => code !== locale.value) ?? locale.value)
+const other = computed(() => locales.value.find(l => l.code !== locale.value))
 
 // localePath e non il path nudo: NuxtLink non aggiunge il prefisso di lingua,
 // e chi legge in inglese finirebbe sulle pagine italiane.
@@ -54,12 +52,16 @@ function isActive(to: string) {
 
       <!-- Un link vero e non un bottone: il crawler lo segue, e la pagina
            nell'altra lingua resta condivisibile. -->
+      <!-- lang: il nome della lingua va letto nella sua pronuncia, non in quella della pagina. -->
       <NuxtLink
-        :to="switchLocalePath(other)"
+        v-if="other"
+        :to="switchLocalePath(other.code)"
+        :lang="other.language"
+        :hreflang="other.language"
         data-locale-switch
         class="font-mono text-xs text-muted transition-colors hover:text-primary"
       >
-        {{ t('locale.switch') }}
+        {{ other.name }}
       </NuxtLink>
       <ThemeSelector />
     </div>

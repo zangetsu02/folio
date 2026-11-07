@@ -2,7 +2,7 @@
   "name": "Fatturazione Elettronica Aruba",
   "category": "libraries",
   "description": {
-    "it": "SDK TypeScript per l'API di fatturazione elettronica di Aruba v2. Invia, riceve e gestisce fatture elettroniche attraverso il Sistema di Interscambio.",
+    "it": "SDK TypeScript per la v2 dell'API di fatturazione elettronica di Aruba. Invia, riceve e gestisce fatture elettroniche attraverso il Sistema di Interscambio.",
     "en": "TypeScript SDK for Aruba's Electronic Invoicing API v2. Send, receive and manage Italian electronic invoices through the Sistema di Interscambio."
   },
   "url": "https://fatturazione-elettronica-aruba-docs.vercel.app/",

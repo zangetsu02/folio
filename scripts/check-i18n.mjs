@@ -85,7 +85,7 @@ const byDir = {}
 for (const file of globSync('content/**/*.json'))
   (byDir[file.slice(0, file.lastIndexOf('/'))] ??= []).push(file)
 
-for (const [dir, files] of Object.entries(byDir)) {
+for (const files of Object.values(byDir)) {
   if (files.length < 2)
     continue
   const paths = files.map(f => new Set(localizedPaths(JSON.parse(readFileSync(f, 'utf8')))))
@@ -94,7 +94,6 @@ for (const [dir, files] of Object.entries(byDir)) {
     const missing = [...all].filter(p => !own.has(p))
     note(!missing.length, `${files[i]} — campi tradotti che i fratelli hanno: ${missing.join(', ') || 'nessuno'}`)
   }
-  void dir
 }
 
 console.log('\n— frontmatter delle pagine —')

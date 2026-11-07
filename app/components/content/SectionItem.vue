@@ -1,6 +1,8 @@
 <script setup lang="ts">
 interface SectionItemProps {
   title: string
+  /** Ancora stabile fra le lingue: i link e i redirect puntano qui, non al titolo. */
+  id?: string
   number: number
   size?: string
   sizeTitle?: string
@@ -9,14 +11,11 @@ interface SectionItemProps {
 
 const {
   title,
+  id,
   size = 'measure',
   sizeTitle = 'font-display text-3xl sm:text-4xl',
   numberSize = 'text-5xl sm:text-6xl',
 } = defineProps<SectionItemProps>()
-
-// Ancora per i redirect dalle rotte assorbite nella home.
-const slug = computed(() =>
-  title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''))
 </script>
 
 <template>
@@ -31,7 +30,7 @@ const slug = computed(() =>
       </span>
     </div>
 
-    <h2 :id="slug" class="w-fit" :class="sizeTitle">
+    <h2 :id class="w-fit" :class="sizeTitle">
       {{ title }}<span class="text-primary">.</span>
     </h2>
 

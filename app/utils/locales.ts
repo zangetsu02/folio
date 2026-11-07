@@ -13,9 +13,15 @@ export type Locale = typeof LOCALES[number]
 /** La lingua servita senza prefisso. */
 export const DEFAULT_LOCALE: Locale = 'it'
 
-/** Il prefisso di una lingua nelle URL: vuoto per quella di default. */
-export function localePrefix(locale: string) {
-  return locale === DEFAULT_LOCALE ? '' : `/${locale}`
+/**
+ * Un path nella lingua data: `/works` in italiano, `/en/works` in inglese.
+ *
+ * Serve a config e script, che girano fuori dall'app. Nei componenti si usa
+ * `useLocalePath()` del modulo.
+ */
+export function localizePath(path: string, locale: string) {
+  const prefix = locale === DEFAULT_LOCALE ? '' : `/${locale}`
+  return (prefix + path).replace(/(.)\/$/, '$1')
 }
 
 /** Il PDF del CV di una lingua: l'italiano tiene `/resume.pdf`, URL gia' in giro. */
