@@ -1,0 +1,13 @@
+{
+  "name": "Prism",
+  "category": "tools",
+  "description": {
+    "it": "Più agenti di coding da CLI (Claude Code, Codex) in parallelo, ognuno sul suo worktree git: leggi il diff, commenta gli hunk, rimanda la review all'agente e apri la pull request.",
+    "en": "Several CLI coding agents (Claude Code, Codex) in parallel, each on its own git worktree: read the diff, comment on hunks, send the review back to the agent and open the pull request."
+  },
+  "url": "https://github.com/zangetsu02/prism",
+  "repo": "https://github.com/zangetsu02/prism",
+  "tech": ["Rust", "GPUI", "Tokio", "SQLite"],
+  "release": "2026",
+  "date": "2026-11-11"
+}
